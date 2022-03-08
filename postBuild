@@ -6,3 +6,5 @@ npm install bash-language-server
 
 condax install -c conda-forge -c bioconda samtools
 condax install -c conda-forge -c bioconda seqkit
+
+echo 'export babatest=keketest' >> ~/.bashrc
