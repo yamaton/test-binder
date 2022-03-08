@@ -1,3 +1,8 @@
-npm install -g bash-language-server
+npm install -g npm
+
+# bash-language-server does not work if installed with '-g'.
+# Related? https://github.com/jupyter-lsp/jupyterlab-lsp/issues/181
+npm install bash-language-server
+
 condax install -c conda-forge -c bioconda samtools
 condax install -c conda-forge -c bioconda seqkit
