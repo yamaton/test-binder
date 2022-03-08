@@ -1,0 +1,3 @@
+npm install -g bash-language-server
+condax install -c conda-forge -c bioconda samtools
+condax install -c conda-forge -c bioconda seqkit

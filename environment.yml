@@ -1,0 +1,7 @@
+name: base-environment
+channels:
+  - conda-forge
+dependencies:
+  - condax
+  - nodejs
+  - jupyterlab-lsp
