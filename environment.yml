@@ -3,7 +3,6 @@ channels:
   - conda-forge
 dependencies:
   - condax
-  - nodejs
   - r-base=4.0  # temporary https://github.com/jupyterhub/repo2docker/pull/1141
   - rpy2
   - jupyterlab-lsp
