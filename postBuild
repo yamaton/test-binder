@@ -1,6 +1,6 @@
 npm install -g npm
 
-# bash-language-server does not work if installed with '-g'.
+# jupyterlab-lsp fails to find bash-language-server if installed with '-g'.
 # Related? https://github.com/jupyter-lsp/jupyterlab-lsp/issues/181
 npm install bash-language-server
 
