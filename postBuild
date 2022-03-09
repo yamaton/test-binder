@@ -1,10 +1,10 @@
-npm install -g npm
-
 # jupyterlab-lsp fails to find bash-language-server if installed with '-g'.
 # Related? https://github.com/jupyter-lsp/jupyterlab-lsp/issues/181
+
 npm install bash-language-server
+wget https://raw.githubusercontent.com/yamaton/bash-language-server/fix-get-options/server/src/get-options.sh
+chmod +x get-options.sh
+mv -f get-options.sh node_modules/bash-language-server/src/
 
 condax install -c conda-forge -c bioconda samtools
 condax install -c conda-forge -c bioconda seqkit
-
-echo 'export babatest=keketest' >> ~/.bashrc
