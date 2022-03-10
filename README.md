@@ -1,2 +1,3 @@
 # test-binder
-Test creating an environment for Jupyter
+Test creating an Jupyter environment using Binder.
+This image is for bioinformaticians.

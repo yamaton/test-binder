@@ -3,6 +3,14 @@ channels:
   - conda-forge
   - bioconda
 dependencies:
+  - python=3.9
+  - pandas
+  - numpy
+  - dask
+  - scikit-learn
+  - matplotlib
+  - bokeh
+  - plotly
   - condax
   - r-base=4.0  # temporary https://github.com/jupyterhub/repo2docker/pull/1141
   - r-tidyverse
