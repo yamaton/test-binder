@@ -1,0 +1,30 @@
+# Auto-generated with h2o
+
+_vcfremap()
+{
+    local i=1 cmd cur word_list
+    cur="${COMP_WORDS[COMP_CWORD]}"
+
+    # take the last word that's NOT starting with -
+    while [[ ( "$i" < "$COMP_CWORD" ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          -*) ;;
+          *)
+            cmd="$s"
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    case "$cmd" in
+      *)
+          word_list="  -w --ref-window-size -s --alt-window-size -r --reference -m --match-score -x --mismatch-score -o --gap-open-penalty -e --gap-extend-penalty -z --entropy-gap-open -R --repeat-gap-extend -a --adjust-vcf" 
+          COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+          ;;
+    esac
+
+}
+
+## -o bashdefault and -o default are fallback
+complete -o bashdefault -o default -F _vcfremap vcfremap

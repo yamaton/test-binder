@@ -1,0 +1,30 @@
+# Auto-generated with h2o
+
+_skesa()
+{
+    local i=1 cmd cur word_list
+    cur="${COMP_WORDS[COMP_CWORD]}"
+
+    # take the last word that's NOT starting with -
+    while [[ ( "$i" < "$COMP_CWORD" ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          -*) ;;
+          *)
+            cmd="$s"
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    case "$cmd" in
+      *)
+          word_list="  -h -v --cores --memory --hash_count --estimated_kmers --skip_bloom_filter --fasta --fastq --gz --sra_run --seeds --contigs_out --kmer --min_count --max_kmer_count --vector_percent --use_paired_ends --insert_size --steps --fraction --max_snp_len --min_contig --allow_snps --all --dbg_out --hist --connected_reads" 
+          COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+          ;;
+    esac
+
+}
+
+## -o bashdefault and -o default are fallback
+complete -o bashdefault -o default -F _skesa skesa

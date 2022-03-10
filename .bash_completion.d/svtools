@@ -1,0 +1,158 @@
+# Auto-generated with h2o
+
+_svtools()
+{
+    local i=1 cmd cur word_list
+    cur="${COMP_WORDS[COMP_CWORD]}"
+
+    # take the last word that's NOT starting with -
+    while [[ ( "$i" < "$COMP_CWORD" ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          -*) ;;
+          *)
+            cmd="$s"
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    case "$cmd" in
+          vcftobedpe) _svtools_vcftobedpe
+            return
+            ;;
+
+          bedpetovcf) _svtools_bedpetovcf
+            return
+            ;;
+
+          bedpetobed12) _svtools_bedpetobed12
+            return
+            ;;
+
+          vcfsort) _svtools_vcfsort
+            return
+            ;;
+
+          bedpesort) _svtools_bedpesort
+            return
+            ;;
+
+          prune) _svtools_prune
+            return
+            ;;
+
+          varlookup) _svtools_varlookup
+            return
+            ;;
+
+          afreq) _svtools_afreq
+            return
+            ;;
+
+          lsort) _svtools_lsort
+            return
+            ;;
+
+          lmerge) _svtools_lmerge
+            return
+            ;;
+
+          genotype) _svtools_genotype
+            return
+            ;;
+
+          copynumber) _svtools_copynumber
+            return
+            ;;
+
+          vcfpaste) _svtools_vcfpaste
+            return
+            ;;
+
+          classify) _svtools_classify
+            return
+            ;;
+
+      *)
+          word_list=" vcftobedpe bedpetovcf bedpetobed12 vcfsort bedpesort prune varlookup afreq lsort lmerge genotype copynumber vcfpaste classify --help --version --contact" 
+          COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+          ;;
+    esac
+
+}
+
+_svtools_vcftobedpe ()
+{
+    local cur word_list
+    word_list=" -h --help -i --input -o --output -ci --confidence" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_svtools_bedpetovcf ()
+{
+    local cur word_list
+    word_list=" -h --help -b --bedpe -o --output" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_svtools_bedpetobed12 ()
+{
+    local cur word_list
+    word_list=" -h --help -i --bedpe -n --name -d --maxdist" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_svtools_prune ()
+{
+    local cur word_list
+    word_list=" -h --help -d --distance -e --eval_param -s --is_sorted -o --output" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_svtools_varlookup ()
+{
+    local cur word_list
+    word_list=" -h --help -d --distance -a --aFile -b --bFile -c --cohort -o --output" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_svtools_afreq ()
+{
+    local cur word_list
+    word_list=" -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_svtools_lmerge ()
+{
+    local cur word_list
+    word_list=" -h --help -i --inFile -p --percent_slop -f --fixed_slop --product" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_svtools_copynumber ()
+{
+    local cur word_list
+    word_list=" -h --help -v --input_vcf -c --coordinates -r --root -w --window -s --sample --cnvnator -o --output_vcf --debug" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_svtools_vcfpaste ()
+{
+    local cur word_list
+    word_list=" -h --help -m --master" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+## -o bashdefault and -o default are fallback
+complete -o bashdefault -o default -F _svtools svtools

@@ -1,0 +1,30 @@
+# Auto-generated with h2o
+
+_fastqp()
+{
+    local i=1 cmd cur word_list
+    cur="${COMP_WORDS[COMP_CWORD]}"
+
+    # take the last word that's NOT starting with -
+    while [[ ( "$i" < "$COMP_CWORD" ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          -*) ;;
+          *)
+            cmd="$s"
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    case "$cmd" in
+      *)
+          word_list="  -h --help -q --quiet -s --binsize -a --name -n --nreads -p --base-probs -k --kmer -o --output -e --text -t --type -ll --leftlimit -rl --rightlimit -mq --median-qual --aligned-only --unaligned-only -d --count-duplicates" 
+          COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+          ;;
+    esac
+
+}
+
+## -o bashdefault and -o default are fallback
+complete -o bashdefault -o default -F _fastqp fastqp

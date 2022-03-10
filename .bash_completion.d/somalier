@@ -1,0 +1,78 @@
+# Auto-generated with h2o
+
+_somalier()
+{
+    local i=1 cmd cur word_list
+    cur="${COMP_WORDS[COMP_CWORD]}"
+
+    # take the last word that's NOT starting with -
+    while [[ ( "$i" < "$COMP_CWORD" ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          -*) ;;
+          *)
+            cmd="$s"
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    case "$cmd" in
+          extract) _somalier_extract
+            return
+            ;;
+
+          relate) _somalier_relate
+            return
+            ;;
+
+          ancestry) _somalier_ancestry
+            return
+            ;;
+
+          find-sites) _somalier_find-sites
+            return
+            ;;
+
+      *)
+          word_list=" extract relate ancestry find-sites " 
+          COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+          ;;
+    esac
+
+}
+
+_somalier_extract ()
+{
+    local cur word_list
+    word_list=" -s --sites -f --fasta -d --out-dir --sample-prefix -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_somalier_relate ()
+{
+    local cur word_list
+    word_list=" -g --groups --sample-prefix -p --ped -d --min-depth --min-ab -u --unknown -i --infer -o --output-prefix -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_somalier_ancestry ()
+{
+    local cur word_list
+    word_list=" --labels -o --output-prefix --n-pcs --nn-hidden-size --nn-batch-size --nn-test-samples -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_somalier_find-sites ()
+{
+    local cur word_list
+    word_list=" -x --exclude -i --include --gnotate-exclude --snp-dist --min-AN --min-AF -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+## -o bashdefault and -o default are fallback
+complete -o bashdefault -o default -F _somalier somalier

@@ -1,0 +1,30 @@
+# Auto-generated with h2o
+
+_zindex()
+{
+    local i=1 cmd cur word_list
+    cur="${COMP_WORDS[COMP_CWORD]}"
+
+    # take the last word that's NOT starting with -
+    while [[ ( "$i" < "$COMP_CWORD" ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          -*) ;;
+          *)
+            cmd="$s"
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    case "$cmd" in
+      *)
+          word_list="  --index-file -p --pipe --tab-delimiter -d --delimiter -c --config -f --field --skip-first --capture --regex --checkpoint-every -w --warnings -s --sparse -u --unique -n --numeric --color --colour --debug -v --verbose -- --ignore_rest --version -h --help" 
+          COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+          ;;
+    esac
+
+}
+
+## -o bashdefault and -o default are fallback
+complete -o bashdefault -o default -F _zindex zindex

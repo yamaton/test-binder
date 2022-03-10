@@ -1,6 +1,6 @@
 # Auto-generated with h2o
 
-_condax()
+_assess_homopolymers()
 {
     local i=1 cmd cur word_list
     cur="${COMP_WORDS[COMP_CWORD]}"
@@ -18,61 +18,37 @@ _condax()
     done
 
     case "$cmd" in
-          ensure-path) _condax_ensure-path
+          count) _assess_homopolymers_count
             return
             ;;
 
-          install) _condax_install
-            return
-            ;;
-
-          remove) _condax_remove
-            return
-            ;;
-
-          update) _condax_update
+          analyse) _assess_homopolymers_analyse
             return
             ;;
 
       *)
-          word_list=" ensure-path install remove update --help" 
+          word_list=" count analyse -h --help" 
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
 
 }
 
-_condax_ensure-path ()
+_assess_homopolymers_count ()
 {
     local cur word_list
-    word_list=" --help" 
+    word_list=" -h --help -o --output_dir -l --homo_len -b --bed" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_condax_install ()
+_assess_homopolymers_analyse ()
 {
     local cur word_list
-    word_list=" -c --channel --help" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
-_condax_remove ()
-{
-    local cur word_list
-    word_list=" --help" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
-_condax_update ()
-{
-    local cur word_list
-    word_list=" --all --help" 
+    word_list=" -h --help -o --output_dir" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
 ## -o bashdefault and -o default are fallback
-complete -o bashdefault -o default -F _condax condax
+complete -o bashdefault -o default -F _assess_homopolymers assess_homopolymers

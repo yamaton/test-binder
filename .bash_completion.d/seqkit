@@ -1,3321 +1,474 @@
-# bash completion for seqkit                               -*- shell-script -*-
+# Auto-generated with h2o
 
-__seqkit_debug()
+_seqkit()
 {
-    if [[ -n ${BASH_COMP_DEBUG_FILE} ]]; then
-        echo "$*" >> "${BASH_COMP_DEBUG_FILE}"
-    fi
-}
+    local i=1 cmd cur word_list
+    cur="${COMP_WORDS[COMP_CWORD]}"
 
-# Homebrew on Macs have version 1.3 of bash-completion which doesn't include
-# _init_completion. This is a very minimal version of that function.
-__seqkit_init_completion()
-{
-    COMPREPLY=()
-    _get_comp_words_by_ref "$@" cur prev words cword
-}
-
-__seqkit_index_of_word()
-{
-    local w word=$1
-    shift
-    index=0
-    for w in "$@"; do
-        [[ $w = "$word" ]] && return
-        index=$((index+1))
-    done
-    index=-1
-}
-
-__seqkit_contains_word()
-{
-    local w word=$1; shift
-    for w in "$@"; do
-        [[ $w = "$word" ]] && return
-    done
-    return 1
-}
-
-__seqkit_handle_go_custom_completion()
-{
-    __seqkit_debug "${FUNCNAME[0]}: cur is ${cur}, words[*] is ${words[*]}, #words[@] is ${#words[@]}"
-
-    local shellCompDirectiveError=1
-    local shellCompDirectiveNoSpace=2
-    local shellCompDirectiveNoFileComp=4
-    local shellCompDirectiveFilterFileExt=8
-    local shellCompDirectiveFilterDirs=16
-
-    local out requestComp lastParam lastChar comp directive args
-
-    # Prepare the command to request completions for the program.
-    # Calling ${words[0]} instead of directly seqkit allows to handle aliases
-    args=("${words[@]:1}")
-    requestComp="${words[0]} __completeNoDesc ${args[*]}"
-
-    lastParam=${words[$((${#words[@]}-1))]}
-    lastChar=${lastParam:$((${#lastParam}-1)):1}
-    __seqkit_debug "${FUNCNAME[0]}: lastParam ${lastParam}, lastChar ${lastChar}"
-
-    if [ -z "${cur}" ] && [ "${lastChar}" != "=" ]; then
-        # If the last parameter is complete (there is a space following it)
-        # We add an extra empty parameter so we can indicate this to the go method.
-        __seqkit_debug "${FUNCNAME[0]}: Adding extra empty parameter"
-        requestComp="${requestComp} \"\""
-    fi
-
-    __seqkit_debug "${FUNCNAME[0]}: calling ${requestComp}"
-    # Use eval to handle any environment variables and such
-    out=$(eval "${requestComp}" 2>/dev/null)
-
-    # Extract the directive integer at the very end of the output following a colon (:)
-    directive=${out##*:}
-    # Remove the directive
-    out=${out%:*}
-    if [ "${directive}" = "${out}" ]; then
-        # There is not directive specified
-        directive=0
-    fi
-    __seqkit_debug "${FUNCNAME[0]}: the completion directive is: ${directive}"
-    __seqkit_debug "${FUNCNAME[0]}: the completions are: ${out[*]}"
-
-    if [ $((directive & shellCompDirectiveError)) -ne 0 ]; then
-        # Error code.  No completion.
-        __seqkit_debug "${FUNCNAME[0]}: received error from custom completion go code"
-        return
-    else
-        if [ $((directive & shellCompDirectiveNoSpace)) -ne 0 ]; then
-            if [[ $(type -t compopt) = "builtin" ]]; then
-                __seqkit_debug "${FUNCNAME[0]}: activating no space"
-                compopt -o nospace
-            fi
-        fi
-        if [ $((directive & shellCompDirectiveNoFileComp)) -ne 0 ]; then
-            if [[ $(type -t compopt) = "builtin" ]]; then
-                __seqkit_debug "${FUNCNAME[0]}: activating no file completion"
-                compopt +o default
-            fi
-        fi
-    fi
-
-    if [ $((directive & shellCompDirectiveFilterFileExt)) -ne 0 ]; then
-        # File extension filtering
-        local fullFilter filter filteringCmd
-        # Do not use quotes around the $out variable or else newline
-        # characters will be kept.
-        for filter in ${out[*]}; do
-            fullFilter+="$filter|"
-        done
-
-        filteringCmd="_filedir $fullFilter"
-        __seqkit_debug "File filtering command: $filteringCmd"
-        $filteringCmd
-    elif [ $((directive & shellCompDirectiveFilterDirs)) -ne 0 ]; then
-        # File completion for directories only
-        local subDir
-        # Use printf to strip any trailing newline
-        subdir=$(printf "%s" "${out[0]}")
-        if [ -n "$subdir" ]; then
-            __seqkit_debug "Listing directories in $subdir"
-            __seqkit_handle_subdirs_in_dir_flag "$subdir"
-        else
-            __seqkit_debug "Listing directories in ."
-            _filedir -d
-        fi
-    else
-        while IFS='' read -r comp; do
-            COMPREPLY+=("$comp")
-        done < <(compgen -W "${out[*]}" -- "$cur")
-    fi
-}
-
-__seqkit_handle_reply()
-{
-    __seqkit_debug "${FUNCNAME[0]}"
-    local comp
-    case $cur in
-        -*)
-            if [[ $(type -t compopt) = "builtin" ]]; then
-                compopt -o nospace
-            fi
-            local allflags
-            if [ ${#must_have_one_flag[@]} -ne 0 ]; then
-                allflags=("${must_have_one_flag[@]}")
-            else
-                allflags=("${flags[*]} ${two_word_flags[*]}")
-            fi
-            while IFS='' read -r comp; do
-                COMPREPLY+=("$comp")
-            done < <(compgen -W "${allflags[*]}" -- "$cur")
-            if [[ $(type -t compopt) = "builtin" ]]; then
-                [[ "${COMPREPLY[0]}" == *= ]] || compopt +o nospace
-            fi
-
-            # complete after --flag=abc
-            if [[ $cur == *=* ]]; then
-                if [[ $(type -t compopt) = "builtin" ]]; then
-                    compopt +o nospace
-                fi
-
-                local index flag
-                flag="${cur%=*}"
-                __seqkit_index_of_word "${flag}" "${flags_with_completion[@]}"
-                COMPREPLY=()
-                if [[ ${index} -ge 0 ]]; then
-                    PREFIX=""
-                    cur="${cur#*=}"
-                    ${flags_completion[${index}]}
-                    if [ -n "${ZSH_VERSION}" ]; then
-                        # zsh completion needs --flag= prefix
-                        eval "COMPREPLY=( \"\${COMPREPLY[@]/#/${flag}=}\" )"
-                    fi
-                fi
-            fi
-            return 0;
+    # take the last word that's NOT starting with -
+    while [[ ( "$i" < "$COMP_CWORD" ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          -*) ;;
+          *)
+            cmd="$s"
             ;;
+        esac
+        (( i++ ))
+    done
+
+    case "$cmd" in
+          amplicon) _seqkit_amplicon
+            return
+            ;;
+
+          bam) _seqkit_bam
+            return
+            ;;
+
+          common) _seqkit_common
+            return
+            ;;
+
+          concat) _seqkit_concat
+            return
+            ;;
+
+          convert) _seqkit_convert
+            return
+            ;;
+
+          duplicate) _seqkit_duplicate
+            return
+            ;;
+
+          faidx) _seqkit_faidx
+            return
+            ;;
+
+          fish) _seqkit_fish
+            return
+            ;;
+
+          fq2fa) _seqkit_fq2fa
+            return
+            ;;
+
+          fx2tab) _seqkit_fx2tab
+            return
+            ;;
+
+          genautocomplete) _seqkit_genautocomplete
+            return
+            ;;
+
+          grep) _seqkit_grep
+            return
+            ;;
+
+          head) _seqkit_head
+            return
+            ;;
+
+          help) _seqkit_help
+            return
+            ;;
+
+          locate) _seqkit_locate
+            return
+            ;;
+
+          mutate) _seqkit_mutate
+            return
+            ;;
+
+          pair) _seqkit_pair
+            return
+            ;;
+
+          range) _seqkit_range
+            return
+            ;;
+
+          rename) _seqkit_rename
+            return
+            ;;
+
+          replace) _seqkit_replace
+            return
+            ;;
+
+          restart) _seqkit_restart
+            return
+            ;;
+
+          rmdup) _seqkit_rmdup
+            return
+            ;;
+
+          sample) _seqkit_sample
+            return
+            ;;
+
+          sana) _seqkit_sana
+            return
+            ;;
+
+          scat) _seqkit_scat
+            return
+            ;;
+
+          seq) _seqkit_seq
+            return
+            ;;
+
+          shuffle) _seqkit_shuffle
+            return
+            ;;
+
+          sliding) _seqkit_sliding
+            return
+            ;;
+
+          sort) _seqkit_sort
+            return
+            ;;
+
+          split) _seqkit_split
+            return
+            ;;
+
+          split2) _seqkit_split2
+            return
+            ;;
+
+          stats) _seqkit_stats
+            return
+            ;;
+
+          subseq) _seqkit_subseq
+            return
+            ;;
+
+          tab2fx) _seqkit_tab2fx
+            return
+            ;;
+
+          translate) _seqkit_translate
+            return
+            ;;
+
+          version) _seqkit_version
+            return
+            ;;
+
+          watch) _seqkit_watch
+            return
+            ;;
+
+      *)
+          word_list=" amplicon bam common concat convert duplicate faidx fish fq2fa fx2tab genautocomplete grep head help locate mutate pair range rename replace restart rmdup sample sana scat seq shuffle sliding sort split split2 stats subseq tab2fx translate version watch --alphabet-guess-seq-length -h --help --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
+          COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+          ;;
     esac
 
-    # check if we are handling a flag with special work handling
-    local index
-    __seqkit_index_of_word "${prev}" "${flags_with_completion[@]}"
-    if [[ ${index} -ge 0 ]]; then
-        ${flags_completion[${index}]}
-        return
-    fi
-
-    # we are parsing a flag and don't have a special handler, no completion
-    if [[ ${cur} != "${words[cword]}" ]]; then
-        return
-    fi
-
-    local completions
-    completions=("${commands[@]}")
-    if [[ ${#must_have_one_noun[@]} -ne 0 ]]; then
-        completions+=("${must_have_one_noun[@]}")
-    elif [[ -n "${has_completion_function}" ]]; then
-        # if a go completion function is provided, defer to that function
-        __seqkit_handle_go_custom_completion
-    fi
-    if [[ ${#must_have_one_flag[@]} -ne 0 ]]; then
-        completions+=("${must_have_one_flag[@]}")
-    fi
-    while IFS='' read -r comp; do
-        COMPREPLY+=("$comp")
-    done < <(compgen -W "${completions[*]}" -- "$cur")
-
-    if [[ ${#COMPREPLY[@]} -eq 0 && ${#noun_aliases[@]} -gt 0 && ${#must_have_one_noun[@]} -ne 0 ]]; then
-        while IFS='' read -r comp; do
-            COMPREPLY+=("$comp")
-        done < <(compgen -W "${noun_aliases[*]}" -- "$cur")
-    fi
-
-    if [[ ${#COMPREPLY[@]} -eq 0 ]]; then
-		if declare -F __seqkit_custom_func >/dev/null; then
-			# try command name qualified custom func
-			__seqkit_custom_func
-		else
-			# otherwise fall back to unqualified for compatibility
-			declare -F __custom_func >/dev/null && __custom_func
-		fi
-    fi
-
-    # available in bash-completion >= 2, not always present on macOS
-    if declare -F __ltrim_colon_completions >/dev/null; then
-        __ltrim_colon_completions "$cur"
-    fi
-
-    # If there is only 1 completion and it is a flag with an = it will be completed
-    # but we don't want a space after the =
-    if [[ "${#COMPREPLY[@]}" -eq "1" ]] && [[ $(type -t compopt) = "builtin" ]] && [[ "${COMPREPLY[0]}" == --*= ]]; then
-       compopt -o nospace
-    fi
 }
 
-# The arguments should be in the form "ext1|ext2|extn"
-__seqkit_handle_filename_extension_flag()
+_seqkit_amplicon ()
 {
-    local ext="$1"
-    _filedir "@(${ext})"
+    local cur word_list
+    word_list=" --bed -f --flanking-region -F --forward -h --help -I --immediate-output -m --max-mismatch -P --only-positive-strand -p --primer-file -r --region -R --reverse -s --strict-mode --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-__seqkit_handle_subdirs_in_dir_flag()
+_seqkit_bam ()
 {
-    local dir="$1"
-    pushd "${dir}" >/dev/null 2>&1 && _filedir -d && popd >/dev/null 2>&1 || return
+    local cur word_list
+    word_list=" -B --bins -N --bundle -c --count -W --delay -y --dump -G --exclude-ids -e --exec-after -E --exec-before -f --field -g --grep-ids -h --help -C --idx-count -i --idx-stat -O --img -H --list-fields -L --log -q --map-qual -x --pass -k --pretty -F --prim-only -p --print-freq -Q --quiet-mode -M --range-max -m --range-min -R --reset -Z --silent-mode -s --stat -T --tool -@ --top-bam -? --top-size" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-__seqkit_handle_flag()
+_seqkit_common ()
 {
-    __seqkit_debug "${FUNCNAME[0]}: c is $c words[c] is ${words[c]}"
-
-    # if a command required a flag, and we found it, unset must_have_one_flag()
-    local flagname=${words[c]}
-    local flagvalue
-    # if the word contained an =
-    if [[ ${words[c]} == *"="* ]]; then
-        flagvalue=${flagname#*=} # take in as flagvalue after the =
-        flagname=${flagname%=*} # strip everything after the =
-        flagname="${flagname}=" # but put the = back
-    fi
-    __seqkit_debug "${FUNCNAME[0]}: looking for ${flagname}"
-    if __seqkit_contains_word "${flagname}" "${must_have_one_flag[@]}"; then
-        must_have_one_flag=()
-    fi
-
-    # if you set a flag which only applies to this command, don't show subcommands
-    if __seqkit_contains_word "${flagname}" "${local_nonpersistent_flags[@]}"; then
-      commands=()
-    fi
-
-    # keep flag value with flagname as flaghash
-    # flaghash variable is an associative array which is only supported in bash > 3.
-    if [[ -z "${BASH_VERSION}" || "${BASH_VERSINFO[0]}" -gt 3 ]]; then
-        if [ -n "${flagvalue}" ] ; then
-            flaghash[${flagname}]=${flagvalue}
-        elif [ -n "${words[ $((c+1)) ]}" ] ; then
-            flaghash[${flagname}]=${words[ $((c+1)) ]}
-        else
-            flaghash[${flagname}]="true" # pad "true" for bool flag
-        fi
-    fi
-
-    # skip the argument to a two word flag
-    if [[ ${words[c]} != *"="* ]] && __seqkit_contains_word "${words[c]}" "${two_word_flags[@]}"; then
-			  __seqkit_debug "${FUNCNAME[0]}: found a flag ${words[c]}, skip the next argument"
-        c=$((c+1))
-        # if we are looking for a flags value, don't show commands
-        if [[ $c -eq $cword ]]; then
-            commands=()
-        fi
-    fi
-
-    c=$((c+1))
-
+    local cur word_list
+    word_list=" -n --by-name --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads -s --by-seq -h --help -i --ignore-case" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-__seqkit_handle_noun()
+_seqkit_concat ()
 {
-    __seqkit_debug "${FUNCNAME[0]}: c is $c words[c] is ${words[c]}"
-
-    if __seqkit_contains_word "${words[c]}" "${must_have_one_noun[@]}"; then
-        must_have_one_noun=()
-    elif __seqkit_contains_word "${words[c]}" "${noun_aliases[@]}"; then
-        must_have_one_noun=()
-    fi
-
-    nouns+=("${words[c]}")
-    c=$((c+1))
+    local cur word_list
+    word_list=" --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-__seqkit_handle_command()
+_seqkit_convert ()
 {
-    __seqkit_debug "${FUNCNAME[0]}: c is $c words[c] is ${words[c]}"
-
-    local next_command
-    if [[ -n ${last_command} ]]; then
-        next_command="_${last_command}_${words[c]//:/__}"
-    else
-        if [[ $c -eq 0 ]]; then
-            next_command="_seqkit_root_command"
-        else
-            next_command="_${words[c]//:/__}"
-        fi
-    fi
-    c=$((c+1))
-    __seqkit_debug "${FUNCNAME[0]}: looking for ${next_command}"
-    declare -F "$next_command" >/dev/null && $next_command
+    local cur word_list
+    word_list=" -d --dry-run -f --force --from -h --help -n --nrecords -N --thresh-B-in-n-most-common -F --thresh-illumina1.5-frac --to --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-__seqkit_handle_word()
+_seqkit_duplicate ()
 {
-    if [[ $c -ge $cword ]]; then
-        __seqkit_handle_reply
-        return
-    fi
-    __seqkit_debug "${FUNCNAME[0]}: c is $c words[c] is ${words[c]}"
-    if [[ "${words[c]}" == -* ]]; then
-        __seqkit_handle_flag
-    elif __seqkit_contains_word "${words[c]}" "${commands[@]}"; then
-        __seqkit_handle_command
-    elif [[ $c -eq 0 ]]; then
-        __seqkit_handle_command
-    elif __seqkit_contains_word "${words[c]}" "${command_aliases[@]}"; then
-        # aliashash variable is an associative array which is only supported in bash > 3.
-        if [[ -z "${BASH_VERSION}" || "${BASH_VERSINFO[0]}" -gt 3 ]]; then
-            words[c]=${aliashash[${words[c]}]}
-            __seqkit_handle_command
-        else
-            __seqkit_handle_noun
-        fi
-    else
-        __seqkit_handle_noun
-    fi
-    __seqkit_handle_word
+    local cur word_list
+    word_list=" -h --help --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_seqkit_()
+_seqkit_faidx ()
 {
-    last_command="seqkit_"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--alphabet-guess-seq-length=")
-    two_word_flags+=("--alphabet-guess-seq-length")
-    flags+=("--id-ncbi")
-    flags+=("--id-regexp=")
-    two_word_flags+=("--id-regexp")
-    flags+=("--infile-list=")
-    two_word_flags+=("--infile-list")
-    flags+=("--line-width=")
-    two_word_flags+=("--line-width")
-    two_word_flags+=("-w")
-    flags+=("--out-file=")
-    two_word_flags+=("--out-file")
-    two_word_flags+=("-o")
-    flags+=("--quiet")
-    flags+=("--seq-type=")
-    two_word_flags+=("--seq-type")
-    two_word_flags+=("-t")
-    flags+=("--threads=")
-    two_word_flags+=("--threads")
-    two_word_flags+=("-j")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
+    local cur word_list
+    word_list=" -f --full-head -h --help --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_seqkit_amplicon()
+_seqkit_fish ()
 {
-    last_command="seqkit_amplicon"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--bed")
-    local_nonpersistent_flags+=("--bed")
-    flags+=("--flanking-region")
-    flags+=("-f")
-    local_nonpersistent_flags+=("--flanking-region")
-    local_nonpersistent_flags+=("-f")
-    flags+=("--forward=")
-    two_word_flags+=("--forward")
-    two_word_flags+=("-F")
-    local_nonpersistent_flags+=("--forward")
-    local_nonpersistent_flags+=("--forward=")
-    local_nonpersistent_flags+=("-F")
-    flags+=("--immediate-output")
-    flags+=("-I")
-    local_nonpersistent_flags+=("--immediate-output")
-    local_nonpersistent_flags+=("-I")
-    flags+=("--max-mismatch=")
-    two_word_flags+=("--max-mismatch")
-    two_word_flags+=("-m")
-    local_nonpersistent_flags+=("--max-mismatch")
-    local_nonpersistent_flags+=("--max-mismatch=")
-    local_nonpersistent_flags+=("-m")
-    flags+=("--only-positive-strand")
-    flags+=("-P")
-    local_nonpersistent_flags+=("--only-positive-strand")
-    local_nonpersistent_flags+=("-P")
-    flags+=("--primer-file=")
-    two_word_flags+=("--primer-file")
-    two_word_flags+=("-p")
-    local_nonpersistent_flags+=("--primer-file")
-    local_nonpersistent_flags+=("--primer-file=")
-    local_nonpersistent_flags+=("-p")
-    flags+=("--region=")
-    two_word_flags+=("--region")
-    two_word_flags+=("-r")
-    local_nonpersistent_flags+=("--region")
-    local_nonpersistent_flags+=("--region=")
-    local_nonpersistent_flags+=("-r")
-    flags+=("--reverse=")
-    two_word_flags+=("--reverse")
-    two_word_flags+=("-R")
-    local_nonpersistent_flags+=("--reverse")
-    local_nonpersistent_flags+=("--reverse=")
-    local_nonpersistent_flags+=("-R")
-    flags+=("--save-unmatched")
-    flags+=("-u")
-    local_nonpersistent_flags+=("--save-unmatched")
-    local_nonpersistent_flags+=("-u")
-    flags+=("--strict-mode")
-    flags+=("-s")
-    local_nonpersistent_flags+=("--strict-mode")
-    local_nonpersistent_flags+=("-s")
-    flags+=("--alphabet-guess-seq-length=")
-    two_word_flags+=("--alphabet-guess-seq-length")
-    flags+=("--id-ncbi")
-    flags+=("--id-regexp=")
-    two_word_flags+=("--id-regexp")
-    flags+=("--infile-list=")
-    two_word_flags+=("--infile-list")
-    flags+=("--line-width=")
-    two_word_flags+=("--line-width")
-    two_word_flags+=("-w")
-    flags+=("--out-file=")
-    two_word_flags+=("--out-file")
-    two_word_flags+=("-o")
-    flags+=("--quiet")
-    flags+=("--seq-type=")
-    two_word_flags+=("--seq-type")
-    two_word_flags+=("-t")
-    flags+=("--threads=")
-    two_word_flags+=("--threads")
-    two_word_flags+=("-j")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
+    local cur word_list
+    word_list=" -a --all -p --aln-params -h --help -i --invert -q --min-qual -b --out-bam -x --pass -g --print-aln -D --print-desc -f --query-fastx -F --query-sequences -r --ranges -s --stranded -v --validate-seq -V --validate-seq-length --alphabet-guess-seq-length" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_seqkit_bam()
+_seqkit_fq2fa ()
 {
-    last_command="seqkit_bam"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--bins=")
-    two_word_flags+=("--bins")
-    two_word_flags+=("-B")
-    local_nonpersistent_flags+=("--bins")
-    local_nonpersistent_flags+=("--bins=")
-    local_nonpersistent_flags+=("-B")
-    flags+=("--bundle=")
-    two_word_flags+=("--bundle")
-    two_word_flags+=("-N")
-    local_nonpersistent_flags+=("--bundle")
-    local_nonpersistent_flags+=("--bundle=")
-    local_nonpersistent_flags+=("-N")
-    flags+=("--count=")
-    two_word_flags+=("--count")
-    two_word_flags+=("-c")
-    local_nonpersistent_flags+=("--count")
-    local_nonpersistent_flags+=("--count=")
-    local_nonpersistent_flags+=("-c")
-    flags+=("--delay=")
-    two_word_flags+=("--delay")
-    two_word_flags+=("-W")
-    local_nonpersistent_flags+=("--delay")
-    local_nonpersistent_flags+=("--delay=")
-    local_nonpersistent_flags+=("-W")
-    flags+=("--dump")
-    flags+=("-y")
-    local_nonpersistent_flags+=("--dump")
-    local_nonpersistent_flags+=("-y")
-    flags+=("--exclude-ids=")
-    two_word_flags+=("--exclude-ids")
-    two_word_flags+=("-G")
-    local_nonpersistent_flags+=("--exclude-ids")
-    local_nonpersistent_flags+=("--exclude-ids=")
-    local_nonpersistent_flags+=("-G")
-    flags+=("--exec-after=")
-    two_word_flags+=("--exec-after")
-    two_word_flags+=("-e")
-    local_nonpersistent_flags+=("--exec-after")
-    local_nonpersistent_flags+=("--exec-after=")
-    local_nonpersistent_flags+=("-e")
-    flags+=("--exec-before=")
-    two_word_flags+=("--exec-before")
-    two_word_flags+=("-E")
-    local_nonpersistent_flags+=("--exec-before")
-    local_nonpersistent_flags+=("--exec-before=")
-    local_nonpersistent_flags+=("-E")
-    flags+=("--field=")
-    two_word_flags+=("--field")
-    two_word_flags+=("-f")
-    local_nonpersistent_flags+=("--field")
-    local_nonpersistent_flags+=("--field=")
-    local_nonpersistent_flags+=("-f")
-    flags+=("--grep-ids=")
-    two_word_flags+=("--grep-ids")
-    two_word_flags+=("-g")
-    local_nonpersistent_flags+=("--grep-ids")
-    local_nonpersistent_flags+=("--grep-ids=")
-    local_nonpersistent_flags+=("-g")
-    flags+=("--idx-count")
-    flags+=("-C")
-    local_nonpersistent_flags+=("--idx-count")
-    local_nonpersistent_flags+=("-C")
-    flags+=("--idx-stat")
-    flags+=("-i")
-    local_nonpersistent_flags+=("--idx-stat")
-    local_nonpersistent_flags+=("-i")
-    flags+=("--img=")
-    two_word_flags+=("--img")
-    two_word_flags+=("-O")
-    local_nonpersistent_flags+=("--img")
-    local_nonpersistent_flags+=("--img=")
-    local_nonpersistent_flags+=("-O")
-    flags+=("--list-fields")
-    flags+=("-H")
-    local_nonpersistent_flags+=("--list-fields")
-    local_nonpersistent_flags+=("-H")
-    flags+=("--log")
-    flags+=("-L")
-    local_nonpersistent_flags+=("--log")
-    local_nonpersistent_flags+=("-L")
-    flags+=("--map-qual=")
-    two_word_flags+=("--map-qual")
-    two_word_flags+=("-q")
-    local_nonpersistent_flags+=("--map-qual")
-    local_nonpersistent_flags+=("--map-qual=")
-    local_nonpersistent_flags+=("-q")
-    flags+=("--pass")
-    flags+=("-x")
-    local_nonpersistent_flags+=("--pass")
-    local_nonpersistent_flags+=("-x")
-    flags+=("--pretty")
-    flags+=("-k")
-    local_nonpersistent_flags+=("--pretty")
-    local_nonpersistent_flags+=("-k")
-    flags+=("--prim-only")
-    flags+=("-F")
-    local_nonpersistent_flags+=("--prim-only")
-    local_nonpersistent_flags+=("-F")
-    flags+=("--print-freq=")
-    two_word_flags+=("--print-freq")
-    two_word_flags+=("-p")
-    local_nonpersistent_flags+=("--print-freq")
-    local_nonpersistent_flags+=("--print-freq=")
-    local_nonpersistent_flags+=("-p")
-    flags+=("--quiet-mode")
-    flags+=("-Q")
-    local_nonpersistent_flags+=("--quiet-mode")
-    local_nonpersistent_flags+=("-Q")
-    flags+=("--range-max=")
-    two_word_flags+=("--range-max")
-    two_word_flags+=("-M")
-    local_nonpersistent_flags+=("--range-max")
-    local_nonpersistent_flags+=("--range-max=")
-    local_nonpersistent_flags+=("-M")
-    flags+=("--range-min=")
-    two_word_flags+=("--range-min")
-    two_word_flags+=("-m")
-    local_nonpersistent_flags+=("--range-min")
-    local_nonpersistent_flags+=("--range-min=")
-    local_nonpersistent_flags+=("-m")
-    flags+=("--reset")
-    flags+=("-R")
-    local_nonpersistent_flags+=("--reset")
-    local_nonpersistent_flags+=("-R")
-    flags+=("--silent-mode")
-    flags+=("-Z")
-    local_nonpersistent_flags+=("--silent-mode")
-    local_nonpersistent_flags+=("-Z")
-    flags+=("--stat")
-    flags+=("-s")
-    local_nonpersistent_flags+=("--stat")
-    local_nonpersistent_flags+=("-s")
-    flags+=("--tool=")
-    two_word_flags+=("--tool")
-    two_word_flags+=("-T")
-    local_nonpersistent_flags+=("--tool")
-    local_nonpersistent_flags+=("--tool=")
-    local_nonpersistent_flags+=("-T")
-    flags+=("--top-bam=")
-    two_word_flags+=("--top-bam")
-    two_word_flags+=("-@")
-    local_nonpersistent_flags+=("--top-bam")
-    local_nonpersistent_flags+=("--top-bam=")
-    local_nonpersistent_flags+=("-@")
-    flags+=("--top-size=")
-    two_word_flags+=("--top-size")
-    two_word_flags+=("-?")
-    local_nonpersistent_flags+=("--top-size")
-    local_nonpersistent_flags+=("--top-size=")
-    local_nonpersistent_flags+=("-?")
-    flags+=("--alphabet-guess-seq-length=")
-    two_word_flags+=("--alphabet-guess-seq-length")
-    flags+=("--id-ncbi")
-    flags+=("--id-regexp=")
-    two_word_flags+=("--id-regexp")
-    flags+=("--infile-list=")
-    two_word_flags+=("--infile-list")
-    flags+=("--line-width=")
-    two_word_flags+=("--line-width")
-    two_word_flags+=("-w")
-    flags+=("--out-file=")
-    two_word_flags+=("--out-file")
-    two_word_flags+=("-o")
-    flags+=("--quiet")
-    flags+=("--seq-type=")
-    two_word_flags+=("--seq-type")
-    two_word_flags+=("-t")
-    flags+=("--threads=")
-    two_word_flags+=("--threads")
-    two_word_flags+=("-j")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
+    local cur word_list
+    word_list=" --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_seqkit_common()
+_seqkit_fx2tab ()
 {
-    last_command="seqkit_common"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--by-name")
-    flags+=("-n")
-    local_nonpersistent_flags+=("--by-name")
-    local_nonpersistent_flags+=("-n")
-    flags+=("--by-seq")
-    flags+=("-s")
-    local_nonpersistent_flags+=("--by-seq")
-    local_nonpersistent_flags+=("-s")
-    flags+=("--ignore-case")
-    flags+=("-i")
-    local_nonpersistent_flags+=("--ignore-case")
-    local_nonpersistent_flags+=("-i")
-    flags+=("--only-positive-strand")
-    flags+=("-P")
-    local_nonpersistent_flags+=("--only-positive-strand")
-    local_nonpersistent_flags+=("-P")
-    flags+=("--alphabet-guess-seq-length=")
-    two_word_flags+=("--alphabet-guess-seq-length")
-    flags+=("--id-ncbi")
-    flags+=("--id-regexp=")
-    two_word_flags+=("--id-regexp")
-    flags+=("--infile-list=")
-    two_word_flags+=("--infile-list")
-    flags+=("--line-width=")
-    two_word_flags+=("--line-width")
-    two_word_flags+=("-w")
-    flags+=("--out-file=")
-    two_word_flags+=("--out-file")
-    two_word_flags+=("-o")
-    flags+=("--quiet")
-    flags+=("--seq-type=")
-    two_word_flags+=("--seq-type")
-    two_word_flags+=("-t")
-    flags+=("--threads=")
-    two_word_flags+=("--threads")
-    two_word_flags+=("-j")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
+    local cur word_list
+    word_list=" -a --alphabet -q --avg-qual -B --base-content -C --base-count -I --case-sensitive -g --gc -G --gc-skew -H --header-line -h --help -l --length -n --name -i --only-id -b --qual-ascii-base -s --seq-hash" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_seqkit_concat()
+_seqkit_genautocomplete ()
 {
-    last_command="seqkit_concat"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--alphabet-guess-seq-length=")
-    two_word_flags+=("--alphabet-guess-seq-length")
-    flags+=("--id-ncbi")
-    flags+=("--id-regexp=")
-    two_word_flags+=("--id-regexp")
-    flags+=("--infile-list=")
-    two_word_flags+=("--infile-list")
-    flags+=("--line-width=")
-    two_word_flags+=("--line-width")
-    two_word_flags+=("-w")
-    flags+=("--out-file=")
-    two_word_flags+=("--out-file")
-    two_word_flags+=("-o")
-    flags+=("--quiet")
-    flags+=("--seq-type=")
-    two_word_flags+=("--seq-type")
-    two_word_flags+=("-t")
-    flags+=("--threads=")
-    two_word_flags+=("--threads")
-    two_word_flags+=("-j")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
+    local cur word_list
+    word_list=" --file -h --help --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_seqkit_convert()
+_seqkit_grep ()
 {
-    last_command="seqkit_convert"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--dry-run")
-    flags+=("-d")
-    local_nonpersistent_flags+=("--dry-run")
-    local_nonpersistent_flags+=("-d")
-    flags+=("--force")
-    flags+=("-f")
-    local_nonpersistent_flags+=("--force")
-    local_nonpersistent_flags+=("-f")
-    flags+=("--from=")
-    two_word_flags+=("--from")
-    local_nonpersistent_flags+=("--from")
-    local_nonpersistent_flags+=("--from=")
-    flags+=("--nrecords=")
-    two_word_flags+=("--nrecords")
-    two_word_flags+=("-n")
-    local_nonpersistent_flags+=("--nrecords")
-    local_nonpersistent_flags+=("--nrecords=")
-    local_nonpersistent_flags+=("-n")
-    flags+=("--thresh-B-in-n-most-common=")
-    two_word_flags+=("--thresh-B-in-n-most-common")
-    two_word_flags+=("-N")
-    local_nonpersistent_flags+=("--thresh-B-in-n-most-common")
-    local_nonpersistent_flags+=("--thresh-B-in-n-most-common=")
-    local_nonpersistent_flags+=("-N")
-    flags+=("--thresh-illumina1.5-frac=")
-    two_word_flags+=("--thresh-illumina1.5-frac")
-    two_word_flags+=("-F")
-    local_nonpersistent_flags+=("--thresh-illumina1.5-frac")
-    local_nonpersistent_flags+=("--thresh-illumina1.5-frac=")
-    local_nonpersistent_flags+=("-F")
-    flags+=("--to=")
-    two_word_flags+=("--to")
-    local_nonpersistent_flags+=("--to")
-    local_nonpersistent_flags+=("--to=")
-    flags+=("--alphabet-guess-seq-length=")
-    two_word_flags+=("--alphabet-guess-seq-length")
-    flags+=("--id-ncbi")
-    flags+=("--id-regexp=")
-    two_word_flags+=("--id-regexp")
-    flags+=("--infile-list=")
-    two_word_flags+=("--infile-list")
-    flags+=("--line-width=")
-    two_word_flags+=("--line-width")
-    two_word_flags+=("-w")
-    flags+=("--out-file=")
-    two_word_flags+=("--out-file")
-    two_word_flags+=("-o")
-    flags+=("--quiet")
-    flags+=("--seq-type=")
-    two_word_flags+=("--seq-type")
-    two_word_flags+=("-t")
-    flags+=("--threads=")
-    two_word_flags+=("--threads")
-    two_word_flags+=("-j")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
+    local cur word_list
+    word_list=" -n --by-name -s --by-seq -c --circular -d --degenerate --delete-matched -h --help -i --ignore-case -I --immediate-output -v --invert-match -m --max-mismatch -P --only-positive-strand -p --pattern -f --pattern-file -R --region -r --use-regexp" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_seqkit_duplicate()
+_seqkit_head ()
 {
-    last_command="seqkit_duplicate"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--times=")
-    two_word_flags+=("--times")
-    two_word_flags+=("-n")
-    local_nonpersistent_flags+=("--times")
-    local_nonpersistent_flags+=("--times=")
-    local_nonpersistent_flags+=("-n")
-    flags+=("--alphabet-guess-seq-length=")
-    two_word_flags+=("--alphabet-guess-seq-length")
-    flags+=("--id-ncbi")
-    flags+=("--id-regexp=")
-    two_word_flags+=("--id-regexp")
-    flags+=("--infile-list=")
-    two_word_flags+=("--infile-list")
-    flags+=("--line-width=")
-    two_word_flags+=("--line-width")
-    two_word_flags+=("-w")
-    flags+=("--out-file=")
-    two_word_flags+=("--out-file")
-    two_word_flags+=("-o")
-    flags+=("--quiet")
-    flags+=("--seq-type=")
-    two_word_flags+=("--seq-type")
-    two_word_flags+=("-t")
-    flags+=("--threads=")
-    two_word_flags+=("--threads")
-    two_word_flags+=("-j")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
+    local cur word_list
+    word_list=" --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads -h --help -n --number" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_seqkit_faidx()
+_seqkit_help ()
 {
-    last_command="seqkit_faidx"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--full-head")
-    flags+=("-f")
-    local_nonpersistent_flags+=("--full-head")
-    local_nonpersistent_flags+=("-f")
-    flags+=("--ignore-case")
-    flags+=("-i")
-    local_nonpersistent_flags+=("--ignore-case")
-    local_nonpersistent_flags+=("-i")
-    flags+=("--immediate-output")
-    flags+=("-I")
-    local_nonpersistent_flags+=("--immediate-output")
-    local_nonpersistent_flags+=("-I")
-    flags+=("--region-file=")
-    two_word_flags+=("--region-file")
-    two_word_flags+=("-l")
-    local_nonpersistent_flags+=("--region-file")
-    local_nonpersistent_flags+=("--region-file=")
-    local_nonpersistent_flags+=("-l")
-    flags+=("--use-regexp")
-    flags+=("-r")
-    local_nonpersistent_flags+=("--use-regexp")
-    local_nonpersistent_flags+=("-r")
-    flags+=("--alphabet-guess-seq-length=")
-    two_word_flags+=("--alphabet-guess-seq-length")
-    flags+=("--id-ncbi")
-    flags+=("--id-regexp=")
-    two_word_flags+=("--id-regexp")
-    flags+=("--infile-list=")
-    two_word_flags+=("--infile-list")
-    flags+=("--line-width=")
-    two_word_flags+=("--line-width")
-    two_word_flags+=("-w")
-    flags+=("--out-file=")
-    two_word_flags+=("--out-file")
-    two_word_flags+=("-o")
-    flags+=("--quiet")
-    flags+=("--seq-type=")
-    two_word_flags+=("--seq-type")
-    two_word_flags+=("-t")
-    flags+=("--threads=")
-    two_word_flags+=("--threads")
-    two_word_flags+=("-j")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
+    local cur word_list
+    word_list=" --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_seqkit_fish()
+_seqkit_locate ()
 {
-    last_command="seqkit_fish"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--all")
-    flags+=("-a")
-    local_nonpersistent_flags+=("--all")
-    local_nonpersistent_flags+=("-a")
-    flags+=("--aln-params=")
-    two_word_flags+=("--aln-params")
-    two_word_flags+=("-p")
-    local_nonpersistent_flags+=("--aln-params")
-    local_nonpersistent_flags+=("--aln-params=")
-    local_nonpersistent_flags+=("-p")
-    flags+=("--invert")
-    flags+=("-i")
-    local_nonpersistent_flags+=("--invert")
-    local_nonpersistent_flags+=("-i")
-    flags+=("--min-qual=")
-    two_word_flags+=("--min-qual")
-    two_word_flags+=("-q")
-    local_nonpersistent_flags+=("--min-qual")
-    local_nonpersistent_flags+=("--min-qual=")
-    local_nonpersistent_flags+=("-q")
-    flags+=("--out-bam=")
-    two_word_flags+=("--out-bam")
-    two_word_flags+=("-b")
-    local_nonpersistent_flags+=("--out-bam")
-    local_nonpersistent_flags+=("--out-bam=")
-    local_nonpersistent_flags+=("-b")
-    flags+=("--pass")
-    flags+=("-x")
-    local_nonpersistent_flags+=("--pass")
-    local_nonpersistent_flags+=("-x")
-    flags+=("--print-aln")
-    flags+=("-g")
-    local_nonpersistent_flags+=("--print-aln")
-    local_nonpersistent_flags+=("-g")
-    flags+=("--print-desc")
-    flags+=("-D")
-    local_nonpersistent_flags+=("--print-desc")
-    local_nonpersistent_flags+=("-D")
-    flags+=("--query-fastx=")
-    two_word_flags+=("--query-fastx")
-    two_word_flags+=("-f")
-    local_nonpersistent_flags+=("--query-fastx")
-    local_nonpersistent_flags+=("--query-fastx=")
-    local_nonpersistent_flags+=("-f")
-    flags+=("--query-sequences=")
-    two_word_flags+=("--query-sequences")
-    two_word_flags+=("-F")
-    local_nonpersistent_flags+=("--query-sequences")
-    local_nonpersistent_flags+=("--query-sequences=")
-    local_nonpersistent_flags+=("-F")
-    flags+=("--ranges=")
-    two_word_flags+=("--ranges")
-    two_word_flags+=("-r")
-    local_nonpersistent_flags+=("--ranges")
-    local_nonpersistent_flags+=("--ranges=")
-    local_nonpersistent_flags+=("-r")
-    flags+=("--stranded")
-    flags+=("-s")
-    local_nonpersistent_flags+=("--stranded")
-    local_nonpersistent_flags+=("-s")
-    flags+=("--validate-seq")
-    flags+=("-v")
-    local_nonpersistent_flags+=("--validate-seq")
-    local_nonpersistent_flags+=("-v")
-    flags+=("--validate-seq-length=")
-    two_word_flags+=("--validate-seq-length")
-    two_word_flags+=("-V")
-    local_nonpersistent_flags+=("--validate-seq-length")
-    local_nonpersistent_flags+=("--validate-seq-length=")
-    local_nonpersistent_flags+=("-V")
-    flags+=("--alphabet-guess-seq-length=")
-    two_word_flags+=("--alphabet-guess-seq-length")
-    flags+=("--id-ncbi")
-    flags+=("--id-regexp=")
-    two_word_flags+=("--id-regexp")
-    flags+=("--infile-list=")
-    two_word_flags+=("--infile-list")
-    flags+=("--line-width=")
-    two_word_flags+=("--line-width")
-    two_word_flags+=("-w")
-    flags+=("--out-file=")
-    two_word_flags+=("--out-file")
-    two_word_flags+=("-o")
-    flags+=("--quiet")
-    flags+=("--seq-type=")
-    two_word_flags+=("--seq-type")
-    two_word_flags+=("-t")
-    flags+=("--threads=")
-    two_word_flags+=("--threads")
-    two_word_flags+=("-j")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
+    local cur word_list
+    word_list=" --bed -c --circular -d --degenerate --gtf -h --help -M --hide-matched -i --ignore-case -I --immediate-output -m --max-mismatch -G --non-greedy -P --only-positive-strand -p --pattern -f --pattern-file -F --use-fmi -r --use-regexp -V --validate-seq-length --alphabet-guess-seq-length" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_seqkit_fq2fa()
+_seqkit_mutate ()
 {
-    last_command="seqkit_fq2fa"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--alphabet-guess-seq-length=")
-    two_word_flags+=("--alphabet-guess-seq-length")
-    flags+=("--id-ncbi")
-    flags+=("--id-regexp=")
-    two_word_flags+=("--id-regexp")
-    flags+=("--infile-list=")
-    two_word_flags+=("--infile-list")
-    flags+=("--line-width=")
-    two_word_flags+=("--line-width")
-    two_word_flags+=("-w")
-    flags+=("--out-file=")
-    two_word_flags+=("--out-file")
-    two_word_flags+=("-o")
-    flags+=("--quiet")
-    flags+=("--seq-type=")
-    two_word_flags+=("--seq-type")
-    two_word_flags+=("-t")
-    flags+=("--threads=")
-    two_word_flags+=("--threads")
-    two_word_flags+=("-j")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
+    local cur word_list
+    word_list=" -n --by-name -d --deletion -h --help -I --ignore-case -i --insertion -v --invert-match -s --pattern -f --pattern-file -p --point -r --use-regexp" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_seqkit_fx2tab()
+_seqkit_pair ()
 {
-    last_command="seqkit_fx2tab"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--alphabet")
-    flags+=("-a")
-    local_nonpersistent_flags+=("--alphabet")
-    local_nonpersistent_flags+=("-a")
-    flags+=("--avg-qual")
-    flags+=("-q")
-    local_nonpersistent_flags+=("--avg-qual")
-    local_nonpersistent_flags+=("-q")
-    flags+=("--base-content=")
-    two_word_flags+=("--base-content")
-    two_word_flags+=("-B")
-    local_nonpersistent_flags+=("--base-content")
-    local_nonpersistent_flags+=("--base-content=")
-    local_nonpersistent_flags+=("-B")
-    flags+=("--base-count=")
-    two_word_flags+=("--base-count")
-    two_word_flags+=("-C")
-    local_nonpersistent_flags+=("--base-count")
-    local_nonpersistent_flags+=("--base-count=")
-    local_nonpersistent_flags+=("-C")
-    flags+=("--case-sensitive")
-    flags+=("-I")
-    local_nonpersistent_flags+=("--case-sensitive")
-    local_nonpersistent_flags+=("-I")
-    flags+=("--gc")
-    flags+=("-g")
-    local_nonpersistent_flags+=("--gc")
-    local_nonpersistent_flags+=("-g")
-    flags+=("--gc-skew")
-    flags+=("-G")
-    local_nonpersistent_flags+=("--gc-skew")
-    local_nonpersistent_flags+=("-G")
-    flags+=("--header-line")
-    flags+=("-H")
-    local_nonpersistent_flags+=("--header-line")
-    local_nonpersistent_flags+=("-H")
-    flags+=("--length")
-    flags+=("-l")
-    local_nonpersistent_flags+=("--length")
-    local_nonpersistent_flags+=("-l")
-    flags+=("--name")
-    flags+=("-n")
-    local_nonpersistent_flags+=("--name")
-    local_nonpersistent_flags+=("-n")
-    flags+=("--no-qual")
-    flags+=("-Q")
-    local_nonpersistent_flags+=("--no-qual")
-    local_nonpersistent_flags+=("-Q")
-    flags+=("--only-id")
-    flags+=("-i")
-    local_nonpersistent_flags+=("--only-id")
-    local_nonpersistent_flags+=("-i")
-    flags+=("--qual-ascii-base=")
-    two_word_flags+=("--qual-ascii-base")
-    two_word_flags+=("-b")
-    local_nonpersistent_flags+=("--qual-ascii-base")
-    local_nonpersistent_flags+=("--qual-ascii-base=")
-    local_nonpersistent_flags+=("-b")
-    flags+=("--seq-hash")
-    flags+=("-s")
-    local_nonpersistent_flags+=("--seq-hash")
-    local_nonpersistent_flags+=("-s")
-    flags+=("--alphabet-guess-seq-length=")
-    two_word_flags+=("--alphabet-guess-seq-length")
-    flags+=("--id-ncbi")
-    flags+=("--id-regexp=")
-    two_word_flags+=("--id-regexp")
-    flags+=("--infile-list=")
-    two_word_flags+=("--infile-list")
-    flags+=("--line-width=")
-    two_word_flags+=("--line-width")
-    two_word_flags+=("-w")
-    flags+=("--out-file=")
-    two_word_flags+=("--out-file")
-    two_word_flags+=("-o")
-    flags+=("--quiet")
-    flags+=("--seq-type=")
-    two_word_flags+=("--seq-type")
-    two_word_flags+=("-t")
-    flags+=("--threads=")
-    two_word_flags+=("--threads")
-    two_word_flags+=("-j")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
+    local cur word_list
+    word_list=" -f --force -h --help -2 --read2 -u --save-unpaired --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_seqkit_genautocomplete()
+_seqkit_range ()
 {
-    last_command="seqkit_genautocomplete"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--file=")
-    two_word_flags+=("--file")
-    local_nonpersistent_flags+=("--file")
-    local_nonpersistent_flags+=("--file=")
-    flags+=("--help")
-    flags+=("-h")
-    local_nonpersistent_flags+=("--help")
-    local_nonpersistent_flags+=("-h")
-    flags+=("--shell=")
-    two_word_flags+=("--shell")
-    local_nonpersistent_flags+=("--shell")
-    local_nonpersistent_flags+=("--shell=")
-    flags+=("--alphabet-guess-seq-length=")
-    two_word_flags+=("--alphabet-guess-seq-length")
-    flags+=("--id-ncbi")
-    flags+=("--id-regexp=")
-    two_word_flags+=("--id-regexp")
-    flags+=("--infile-list=")
-    two_word_flags+=("--infile-list")
-    flags+=("--line-width=")
-    two_word_flags+=("--line-width")
-    two_word_flags+=("-w")
-    flags+=("--out-file=")
-    two_word_flags+=("--out-file")
-    two_word_flags+=("-o")
-    flags+=("--quiet")
-    flags+=("--seq-type=")
-    two_word_flags+=("--seq-type")
-    two_word_flags+=("-t")
-    flags+=("--threads=")
-    two_word_flags+=("--threads")
-    two_word_flags+=("-j")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
+    local cur word_list
+    word_list=" -h --help --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_seqkit_grep()
+_seqkit_rename ()
 {
-    last_command="seqkit_grep"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--by-name")
-    flags+=("-n")
-    local_nonpersistent_flags+=("--by-name")
-    local_nonpersistent_flags+=("-n")
-    flags+=("--by-seq")
-    flags+=("-s")
-    local_nonpersistent_flags+=("--by-seq")
-    local_nonpersistent_flags+=("-s")
-    flags+=("--circular")
-    flags+=("-c")
-    local_nonpersistent_flags+=("--circular")
-    local_nonpersistent_flags+=("-c")
-    flags+=("--degenerate")
-    flags+=("-d")
-    local_nonpersistent_flags+=("--degenerate")
-    local_nonpersistent_flags+=("-d")
-    flags+=("--delete-matched")
-    local_nonpersistent_flags+=("--delete-matched")
-    flags+=("--ignore-case")
-    flags+=("-i")
-    local_nonpersistent_flags+=("--ignore-case")
-    local_nonpersistent_flags+=("-i")
-    flags+=("--immediate-output")
-    flags+=("-I")
-    local_nonpersistent_flags+=("--immediate-output")
-    local_nonpersistent_flags+=("-I")
-    flags+=("--invert-match")
-    flags+=("-v")
-    local_nonpersistent_flags+=("--invert-match")
-    local_nonpersistent_flags+=("-v")
-    flags+=("--max-mismatch=")
-    two_word_flags+=("--max-mismatch")
-    two_word_flags+=("-m")
-    local_nonpersistent_flags+=("--max-mismatch")
-    local_nonpersistent_flags+=("--max-mismatch=")
-    local_nonpersistent_flags+=("-m")
-    flags+=("--only-positive-strand")
-    flags+=("-P")
-    local_nonpersistent_flags+=("--only-positive-strand")
-    local_nonpersistent_flags+=("-P")
-    flags+=("--pattern=")
-    two_word_flags+=("--pattern")
-    two_word_flags+=("-p")
-    local_nonpersistent_flags+=("--pattern")
-    local_nonpersistent_flags+=("--pattern=")
-    local_nonpersistent_flags+=("-p")
-    flags+=("--pattern-file=")
-    two_word_flags+=("--pattern-file")
-    two_word_flags+=("-f")
-    local_nonpersistent_flags+=("--pattern-file")
-    local_nonpersistent_flags+=("--pattern-file=")
-    local_nonpersistent_flags+=("-f")
-    flags+=("--region=")
-    two_word_flags+=("--region")
-    two_word_flags+=("-R")
-    local_nonpersistent_flags+=("--region")
-    local_nonpersistent_flags+=("--region=")
-    local_nonpersistent_flags+=("-R")
-    flags+=("--use-regexp")
-    flags+=("-r")
-    local_nonpersistent_flags+=("--use-regexp")
-    local_nonpersistent_flags+=("-r")
-    flags+=("--alphabet-guess-seq-length=")
-    two_word_flags+=("--alphabet-guess-seq-length")
-    flags+=("--id-ncbi")
-    flags+=("--id-regexp=")
-    two_word_flags+=("--id-regexp")
-    flags+=("--infile-list=")
-    two_word_flags+=("--infile-list")
-    flags+=("--line-width=")
-    two_word_flags+=("--line-width")
-    two_word_flags+=("-w")
-    flags+=("--out-file=")
-    two_word_flags+=("--out-file")
-    two_word_flags+=("-o")
-    flags+=("--quiet")
-    flags+=("--seq-type=")
-    two_word_flags+=("--seq-type")
-    two_word_flags+=("-t")
-    flags+=("--threads=")
-    two_word_flags+=("--threads")
-    two_word_flags+=("-j")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
+    local cur word_list
+    word_list=" -n --by-name -h --help --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads -O --out-dir" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_seqkit_head()
+_seqkit_replace ()
 {
-    last_command="seqkit_head"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--number=")
-    two_word_flags+=("--number")
-    two_word_flags+=("-n")
-    local_nonpersistent_flags+=("--number")
-    local_nonpersistent_flags+=("--number=")
-    local_nonpersistent_flags+=("-n")
-    flags+=("--alphabet-guess-seq-length=")
-    two_word_flags+=("--alphabet-guess-seq-length")
-    flags+=("--id-ncbi")
-    flags+=("--id-regexp=")
-    two_word_flags+=("--id-regexp")
-    flags+=("--infile-list=")
-    two_word_flags+=("--infile-list")
-    flags+=("--line-width=")
-    two_word_flags+=("--line-width")
-    two_word_flags+=("-w")
-    flags+=("--out-file=")
-    two_word_flags+=("--out-file")
-    two_word_flags+=("-o")
-    flags+=("--quiet")
-    flags+=("--seq-type=")
-    two_word_flags+=("--seq-type")
-    two_word_flags+=("-t")
-    flags+=("--threads=")
-    two_word_flags+=("--threads")
-    two_word_flags+=("-j")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
+    local cur word_list
+    word_list=" -s --by-seq -h --help -i --ignore-case -K --keep-key -U --keep-untouch -I --key-capt-idx -m --key-miss-repl -k --kv-file --nr-width -p --pattern -r --replacement" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_seqkit_head-genome()
+_seqkit_restart ()
 {
-    last_command="seqkit_head-genome"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--mini-common-words=")
-    two_word_flags+=("--mini-common-words")
-    two_word_flags+=("-m")
-    local_nonpersistent_flags+=("--mini-common-words")
-    local_nonpersistent_flags+=("--mini-common-words=")
-    local_nonpersistent_flags+=("-m")
-    flags+=("--alphabet-guess-seq-length=")
-    two_word_flags+=("--alphabet-guess-seq-length")
-    flags+=("--id-ncbi")
-    flags+=("--id-regexp=")
-    two_word_flags+=("--id-regexp")
-    flags+=("--infile-list=")
-    two_word_flags+=("--infile-list")
-    flags+=("--line-width=")
-    two_word_flags+=("--line-width")
-    two_word_flags+=("-w")
-    flags+=("--out-file=")
-    two_word_flags+=("--out-file")
-    two_word_flags+=("-o")
-    flags+=("--quiet")
-    flags+=("--seq-type=")
-    two_word_flags+=("--seq-type")
-    two_word_flags+=("-t")
-    flags+=("--threads=")
-    two_word_flags+=("--threads")
-    two_word_flags+=("-j")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
+    local cur word_list
+    word_list=" --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads -h --help -i --new-start" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_seqkit_locate()
+_seqkit_rmdup ()
 {
-    last_command="seqkit_locate"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--bed")
-    local_nonpersistent_flags+=("--bed")
-    flags+=("--circular")
-    flags+=("-c")
-    local_nonpersistent_flags+=("--circular")
-    local_nonpersistent_flags+=("-c")
-    flags+=("--degenerate")
-    flags+=("-d")
-    local_nonpersistent_flags+=("--degenerate")
-    local_nonpersistent_flags+=("-d")
-    flags+=("--gtf")
-    local_nonpersistent_flags+=("--gtf")
-    flags+=("--hide-matched")
-    flags+=("-M")
-    local_nonpersistent_flags+=("--hide-matched")
-    local_nonpersistent_flags+=("-M")
-    flags+=("--ignore-case")
-    flags+=("-i")
-    local_nonpersistent_flags+=("--ignore-case")
-    local_nonpersistent_flags+=("-i")
-    flags+=("--immediate-output")
-    flags+=("-I")
-    local_nonpersistent_flags+=("--immediate-output")
-    local_nonpersistent_flags+=("-I")
-    flags+=("--max-mismatch=")
-    two_word_flags+=("--max-mismatch")
-    two_word_flags+=("-m")
-    local_nonpersistent_flags+=("--max-mismatch")
-    local_nonpersistent_flags+=("--max-mismatch=")
-    local_nonpersistent_flags+=("-m")
-    flags+=("--non-greedy")
-    flags+=("-G")
-    local_nonpersistent_flags+=("--non-greedy")
-    local_nonpersistent_flags+=("-G")
-    flags+=("--only-positive-strand")
-    flags+=("-P")
-    local_nonpersistent_flags+=("--only-positive-strand")
-    local_nonpersistent_flags+=("-P")
-    flags+=("--pattern=")
-    two_word_flags+=("--pattern")
-    two_word_flags+=("-p")
-    local_nonpersistent_flags+=("--pattern")
-    local_nonpersistent_flags+=("--pattern=")
-    local_nonpersistent_flags+=("-p")
-    flags+=("--pattern-file=")
-    two_word_flags+=("--pattern-file")
-    two_word_flags+=("-f")
-    local_nonpersistent_flags+=("--pattern-file")
-    local_nonpersistent_flags+=("--pattern-file=")
-    local_nonpersistent_flags+=("-f")
-    flags+=("--use-fmi")
-    flags+=("-F")
-    local_nonpersistent_flags+=("--use-fmi")
-    local_nonpersistent_flags+=("-F")
-    flags+=("--use-regexp")
-    flags+=("-r")
-    local_nonpersistent_flags+=("--use-regexp")
-    local_nonpersistent_flags+=("-r")
-    flags+=("--validate-seq-length=")
-    two_word_flags+=("--validate-seq-length")
-    two_word_flags+=("-V")
-    local_nonpersistent_flags+=("--validate-seq-length")
-    local_nonpersistent_flags+=("--validate-seq-length=")
-    local_nonpersistent_flags+=("-V")
-    flags+=("--alphabet-guess-seq-length=")
-    two_word_flags+=("--alphabet-guess-seq-length")
-    flags+=("--id-ncbi")
-    flags+=("--id-regexp=")
-    two_word_flags+=("--id-regexp")
-    flags+=("--infile-list=")
-    two_word_flags+=("--infile-list")
-    flags+=("--line-width=")
-    two_word_flags+=("--line-width")
-    two_word_flags+=("-w")
-    flags+=("--out-file=")
-    two_word_flags+=("--out-file")
-    two_word_flags+=("-o")
-    flags+=("--quiet")
-    flags+=("--seq-type=")
-    two_word_flags+=("--seq-type")
-    two_word_flags+=("-t")
-    flags+=("--threads=")
-    two_word_flags+=("--threads")
-    two_word_flags+=("-j")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
+    local cur word_list
+    word_list=" -n --by-name -s --by-seq -d --dup-seqs-file -h --help -i --ignore-case --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_seqkit_mutate()
+_seqkit_sample ()
 {
-    last_command="seqkit_mutate"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--by-name")
-    flags+=("-n")
-    local_nonpersistent_flags+=("--by-name")
-    local_nonpersistent_flags+=("-n")
-    flags+=("--deletion=")
-    two_word_flags+=("--deletion")
-    two_word_flags+=("-d")
-    local_nonpersistent_flags+=("--deletion")
-    local_nonpersistent_flags+=("--deletion=")
-    local_nonpersistent_flags+=("-d")
-    flags+=("--ignore-case")
-    flags+=("-I")
-    local_nonpersistent_flags+=("--ignore-case")
-    local_nonpersistent_flags+=("-I")
-    flags+=("--insertion=")
-    two_word_flags+=("--insertion")
-    two_word_flags+=("-i")
-    local_nonpersistent_flags+=("--insertion")
-    local_nonpersistent_flags+=("--insertion=")
-    local_nonpersistent_flags+=("-i")
-    flags+=("--invert-match")
-    flags+=("-v")
-    local_nonpersistent_flags+=("--invert-match")
-    local_nonpersistent_flags+=("-v")
-    flags+=("--pattern=")
-    two_word_flags+=("--pattern")
-    two_word_flags+=("-s")
-    local_nonpersistent_flags+=("--pattern")
-    local_nonpersistent_flags+=("--pattern=")
-    local_nonpersistent_flags+=("-s")
-    flags+=("--pattern-file=")
-    two_word_flags+=("--pattern-file")
-    two_word_flags+=("-f")
-    local_nonpersistent_flags+=("--pattern-file")
-    local_nonpersistent_flags+=("--pattern-file=")
-    local_nonpersistent_flags+=("-f")
-    flags+=("--point=")
-    two_word_flags+=("--point")
-    two_word_flags+=("-p")
-    local_nonpersistent_flags+=("--point")
-    local_nonpersistent_flags+=("--point=")
-    local_nonpersistent_flags+=("-p")
-    flags+=("--use-regexp")
-    flags+=("-r")
-    local_nonpersistent_flags+=("--use-regexp")
-    local_nonpersistent_flags+=("-r")
-    flags+=("--alphabet-guess-seq-length=")
-    two_word_flags+=("--alphabet-guess-seq-length")
-    flags+=("--id-ncbi")
-    flags+=("--id-regexp=")
-    two_word_flags+=("--id-regexp")
-    flags+=("--infile-list=")
-    two_word_flags+=("--infile-list")
-    flags+=("--line-width=")
-    two_word_flags+=("--line-width")
-    two_word_flags+=("-w")
-    flags+=("--out-file=")
-    two_word_flags+=("--out-file")
-    two_word_flags+=("-o")
-    flags+=("--quiet")
-    flags+=("--seq-type=")
-    two_word_flags+=("--seq-type")
-    two_word_flags+=("-t")
-    flags+=("--threads=")
-    two_word_flags+=("--threads")
-    two_word_flags+=("-j")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
+    local cur word_list
+    word_list=" -h --help --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_seqkit_pair()
+_seqkit_sana ()
 {
-    last_command="seqkit_pair"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--force")
-    flags+=("-f")
-    local_nonpersistent_flags+=("--force")
-    local_nonpersistent_flags+=("-f")
-    flags+=("--out-dir=")
-    two_word_flags+=("--out-dir")
-    two_word_flags+=("-O")
-    local_nonpersistent_flags+=("--out-dir")
-    local_nonpersistent_flags+=("--out-dir=")
-    local_nonpersistent_flags+=("-O")
-    flags+=("--read1=")
-    two_word_flags+=("--read1")
-    two_word_flags+=("-1")
-    local_nonpersistent_flags+=("--read1")
-    local_nonpersistent_flags+=("--read1=")
-    local_nonpersistent_flags+=("-1")
-    flags+=("--read2=")
-    two_word_flags+=("--read2")
-    two_word_flags+=("-2")
-    local_nonpersistent_flags+=("--read2")
-    local_nonpersistent_flags+=("--read2=")
-    local_nonpersistent_flags+=("-2")
-    flags+=("--save-unpaired")
-    flags+=("-u")
-    local_nonpersistent_flags+=("--save-unpaired")
-    local_nonpersistent_flags+=("-u")
-    flags+=("--alphabet-guess-seq-length=")
-    two_word_flags+=("--alphabet-guess-seq-length")
-    flags+=("--id-ncbi")
-    flags+=("--id-regexp=")
-    two_word_flags+=("--id-regexp")
-    flags+=("--infile-list=")
-    two_word_flags+=("--infile-list")
-    flags+=("--line-width=")
-    two_word_flags+=("--line-width")
-    two_word_flags+=("-w")
-    flags+=("--out-file=")
-    two_word_flags+=("--out-file")
-    two_word_flags+=("-o")
-    flags+=("--quiet")
-    flags+=("--seq-type=")
-    two_word_flags+=("--seq-type")
-    two_word_flags+=("-t")
-    flags+=("--threads=")
-    two_word_flags+=("--threads")
-    two_word_flags+=("-j")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
+    local cur word_list
+    word_list=" -A --allow-gaps -i --format -h --help -I --in-format --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_seqkit_range()
+_seqkit_scat ()
 {
-    last_command="seqkit_range"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--range=")
-    two_word_flags+=("--range")
-    two_word_flags+=("-r")
-    local_nonpersistent_flags+=("--range")
-    local_nonpersistent_flags+=("--range=")
-    local_nonpersistent_flags+=("-r")
-    flags+=("--alphabet-guess-seq-length=")
-    two_word_flags+=("--alphabet-guess-seq-length")
-    flags+=("--id-ncbi")
-    flags+=("--id-regexp=")
-    two_word_flags+=("--id-regexp")
-    flags+=("--infile-list=")
-    two_word_flags+=("--infile-list")
-    flags+=("--line-width=")
-    two_word_flags+=("--line-width")
-    two_word_flags+=("-w")
-    flags+=("--out-file=")
-    two_word_flags+=("--out-file")
-    two_word_flags+=("-o")
-    flags+=("--quiet")
-    flags+=("--seq-type=")
-    two_word_flags+=("--seq-type")
-    two_word_flags+=("-t")
-    flags+=("--threads=")
-    two_word_flags+=("--threads")
-    two_word_flags+=("-j")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
+    local cur word_list
+    word_list=" -A --allow-gaps -d --delta -D --drop-time -f --find-only -i --format -g --gz-only -h --help -I --in-format -O --out-format -b --qual-ascii-base -r --regexp -T --time-limit -p --wait-pid" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_seqkit_rename()
+_seqkit_seq ()
 {
-    last_command="seqkit_rename"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--by-name")
-    flags+=("-n")
-    local_nonpersistent_flags+=("--by-name")
-    local_nonpersistent_flags+=("-n")
-    flags+=("--force")
-    flags+=("-f")
-    local_nonpersistent_flags+=("--force")
-    local_nonpersistent_flags+=("-f")
-    flags+=("--multiple-outfiles")
-    flags+=("-m")
-    local_nonpersistent_flags+=("--multiple-outfiles")
-    local_nonpersistent_flags+=("-m")
-    flags+=("--out-dir=")
-    two_word_flags+=("--out-dir")
-    two_word_flags+=("-O")
-    local_nonpersistent_flags+=("--out-dir")
-    local_nonpersistent_flags+=("--out-dir=")
-    local_nonpersistent_flags+=("-O")
-    flags+=("--alphabet-guess-seq-length=")
-    two_word_flags+=("--alphabet-guess-seq-length")
-    flags+=("--id-ncbi")
-    flags+=("--id-regexp=")
-    two_word_flags+=("--id-regexp")
-    flags+=("--infile-list=")
-    two_word_flags+=("--infile-list")
-    flags+=("--line-width=")
-    two_word_flags+=("--line-width")
-    two_word_flags+=("-w")
-    flags+=("--out-file=")
-    two_word_flags+=("--out-file")
-    two_word_flags+=("-o")
-    flags+=("--quiet")
-    flags+=("--seq-type=")
-    two_word_flags+=("--seq-type")
-    two_word_flags+=("-t")
-    flags+=("--threads=")
-    two_word_flags+=("--threads")
-    two_word_flags+=("-j")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
+    local cur word_list
+    word_list=" -k --color -p --complement --dna2rna -G --gap-letters -h --help -l --lower-case -M --max-len -R --max-qual -m --min-len -Q --min-qual -n --name -i --only-id -q --qual -b --qual-ascii-base -g --remove-gaps -r --reverse --rna2dna -s --seq -u --upper-case -v --validate-seq -V --validate-seq-length --alphabet-guess-seq-length" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_seqkit_replace()
+_seqkit_shuffle ()
 {
-    last_command="seqkit_replace"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--by-seq")
-    flags+=("-s")
-    local_nonpersistent_flags+=("--by-seq")
-    local_nonpersistent_flags+=("-s")
-    flags+=("--ignore-case")
-    flags+=("-i")
-    local_nonpersistent_flags+=("--ignore-case")
-    local_nonpersistent_flags+=("-i")
-    flags+=("--keep-key")
-    flags+=("-K")
-    local_nonpersistent_flags+=("--keep-key")
-    local_nonpersistent_flags+=("-K")
-    flags+=("--keep-untouch")
-    flags+=("-U")
-    local_nonpersistent_flags+=("--keep-untouch")
-    local_nonpersistent_flags+=("-U")
-    flags+=("--key-capt-idx=")
-    two_word_flags+=("--key-capt-idx")
-    two_word_flags+=("-I")
-    local_nonpersistent_flags+=("--key-capt-idx")
-    local_nonpersistent_flags+=("--key-capt-idx=")
-    local_nonpersistent_flags+=("-I")
-    flags+=("--key-miss-repl=")
-    two_word_flags+=("--key-miss-repl")
-    two_word_flags+=("-m")
-    local_nonpersistent_flags+=("--key-miss-repl")
-    local_nonpersistent_flags+=("--key-miss-repl=")
-    local_nonpersistent_flags+=("-m")
-    flags+=("--kv-file=")
-    two_word_flags+=("--kv-file")
-    two_word_flags+=("-k")
-    local_nonpersistent_flags+=("--kv-file")
-    local_nonpersistent_flags+=("--kv-file=")
-    local_nonpersistent_flags+=("-k")
-    flags+=("--nr-width=")
-    two_word_flags+=("--nr-width")
-    local_nonpersistent_flags+=("--nr-width")
-    local_nonpersistent_flags+=("--nr-width=")
-    flags+=("--pattern=")
-    two_word_flags+=("--pattern")
-    two_word_flags+=("-p")
-    local_nonpersistent_flags+=("--pattern")
-    local_nonpersistent_flags+=("--pattern=")
-    local_nonpersistent_flags+=("-p")
-    flags+=("--replacement=")
-    two_word_flags+=("--replacement")
-    two_word_flags+=("-r")
-    local_nonpersistent_flags+=("--replacement")
-    local_nonpersistent_flags+=("--replacement=")
-    local_nonpersistent_flags+=("-r")
-    flags+=("--alphabet-guess-seq-length=")
-    two_word_flags+=("--alphabet-guess-seq-length")
-    flags+=("--id-ncbi")
-    flags+=("--id-regexp=")
-    two_word_flags+=("--id-regexp")
-    flags+=("--infile-list=")
-    two_word_flags+=("--infile-list")
-    flags+=("--line-width=")
-    two_word_flags+=("--line-width")
-    two_word_flags+=("-w")
-    flags+=("--out-file=")
-    two_word_flags+=("--out-file")
-    two_word_flags+=("-o")
-    flags+=("--quiet")
-    flags+=("--seq-type=")
-    two_word_flags+=("--seq-type")
-    two_word_flags+=("-t")
-    flags+=("--threads=")
-    two_word_flags+=("--threads")
-    two_word_flags+=("-j")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
+    local cur word_list
+    word_list=" -h --help -2 --two-pass --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_seqkit_restart()
+_seqkit_sliding ()
 {
-    last_command="seqkit_restart"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--new-start=")
-    two_word_flags+=("--new-start")
-    two_word_flags+=("-i")
-    local_nonpersistent_flags+=("--new-start")
-    local_nonpersistent_flags+=("--new-start=")
-    local_nonpersistent_flags+=("-i")
-    flags+=("--alphabet-guess-seq-length=")
-    two_word_flags+=("--alphabet-guess-seq-length")
-    flags+=("--id-ncbi")
-    flags+=("--id-regexp=")
-    two_word_flags+=("--id-regexp")
-    flags+=("--infile-list=")
-    two_word_flags+=("--infile-list")
-    flags+=("--line-width=")
-    two_word_flags+=("--line-width")
-    two_word_flags+=("-w")
-    flags+=("--out-file=")
-    two_word_flags+=("--out-file")
-    two_word_flags+=("-o")
-    flags+=("--quiet")
-    flags+=("--seq-type=")
-    two_word_flags+=("--seq-type")
-    two_word_flags+=("-t")
-    flags+=("--threads=")
-    two_word_flags+=("--threads")
-    two_word_flags+=("-j")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
+    local cur word_list
+    word_list=" -c --circular -C --circular-genome -g --greedy --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads -h --help -s --step -W --window" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_seqkit_rmdup()
+_seqkit_sort ()
 {
-    last_command="seqkit_rmdup"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--by-name")
-    flags+=("-n")
-    local_nonpersistent_flags+=("--by-name")
-    local_nonpersistent_flags+=("-n")
-    flags+=("--by-seq")
-    flags+=("-s")
-    local_nonpersistent_flags+=("--by-seq")
-    local_nonpersistent_flags+=("-s")
-    flags+=("--dup-num-file=")
-    two_word_flags+=("--dup-num-file")
-    two_word_flags+=("-D")
-    local_nonpersistent_flags+=("--dup-num-file")
-    local_nonpersistent_flags+=("--dup-num-file=")
-    local_nonpersistent_flags+=("-D")
-    flags+=("--dup-seqs-file=")
-    two_word_flags+=("--dup-seqs-file")
-    two_word_flags+=("-d")
-    local_nonpersistent_flags+=("--dup-seqs-file")
-    local_nonpersistent_flags+=("--dup-seqs-file=")
-    local_nonpersistent_flags+=("-d")
-    flags+=("--ignore-case")
-    flags+=("-i")
-    local_nonpersistent_flags+=("--ignore-case")
-    local_nonpersistent_flags+=("-i")
-    flags+=("--only-positive-strand")
-    flags+=("-P")
-    local_nonpersistent_flags+=("--only-positive-strand")
-    local_nonpersistent_flags+=("-P")
-    flags+=("--alphabet-guess-seq-length=")
-    two_word_flags+=("--alphabet-guess-seq-length")
-    flags+=("--id-ncbi")
-    flags+=("--id-regexp=")
-    two_word_flags+=("--id-regexp")
-    flags+=("--infile-list=")
-    two_word_flags+=("--infile-list")
-    flags+=("--line-width=")
-    two_word_flags+=("--line-width")
-    two_word_flags+=("-w")
-    flags+=("--out-file=")
-    two_word_flags+=("--out-file")
-    two_word_flags+=("-o")
-    flags+=("--quiet")
-    flags+=("--seq-type=")
-    two_word_flags+=("--seq-type")
-    two_word_flags+=("-t")
-    flags+=("--threads=")
-    two_word_flags+=("--threads")
-    two_word_flags+=("-j")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
+    local cur word_list
+    word_list=" -l --by-length -n --by-name -s --by-seq -h --help -i --ignore-case -k --keep-temp -N --natural-order -r --reverse -L --seq-prefix-length -2 --two-pass --alphabet-guess-seq-lengt" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_seqkit_sample()
+_seqkit_split ()
 {
-    last_command="seqkit_sample"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--number=")
-    two_word_flags+=("--number")
-    two_word_flags+=("-n")
-    local_nonpersistent_flags+=("--number")
-    local_nonpersistent_flags+=("--number=")
-    local_nonpersistent_flags+=("-n")
-    flags+=("--proportion=")
-    two_word_flags+=("--proportion")
-    two_word_flags+=("-p")
-    local_nonpersistent_flags+=("--proportion")
-    local_nonpersistent_flags+=("--proportion=")
-    local_nonpersistent_flags+=("-p")
-    flags+=("--rand-seed=")
-    two_word_flags+=("--rand-seed")
-    two_word_flags+=("-s")
-    local_nonpersistent_flags+=("--rand-seed")
-    local_nonpersistent_flags+=("--rand-seed=")
-    local_nonpersistent_flags+=("-s")
-    flags+=("--two-pass")
-    flags+=("-2")
-    local_nonpersistent_flags+=("--two-pass")
-    local_nonpersistent_flags+=("-2")
-    flags+=("--alphabet-guess-seq-length=")
-    two_word_flags+=("--alphabet-guess-seq-length")
-    flags+=("--id-ncbi")
-    flags+=("--id-regexp=")
-    two_word_flags+=("--id-regexp")
-    flags+=("--infile-list=")
-    two_word_flags+=("--infile-list")
-    flags+=("--line-width=")
-    two_word_flags+=("--line-width")
-    two_word_flags+=("-w")
-    flags+=("--out-file=")
-    two_word_flags+=("--out-file")
-    two_word_flags+=("-o")
-    flags+=("--quiet")
-    flags+=("--seq-type=")
-    two_word_flags+=("--seq-type")
-    two_word_flags+=("-t")
-    flags+=("--threads=")
-    two_word_flags+=("--threads")
-    two_word_flags+=("-j")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
+    local cur word_list
+    word_list=" -i --by-id -p --by-part -r --by-region -s --by-size -d --dry-run -f --force -h --help -k --keep-temp -O --out-dir -2 --two-pass" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_seqkit_sana()
+_seqkit_split2 ()
 {
-    last_command="seqkit_sana"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--allow-gaps")
-    flags+=("-A")
-    local_nonpersistent_flags+=("--allow-gaps")
-    local_nonpersistent_flags+=("-A")
-    flags+=("--format=")
-    two_word_flags+=("--format")
-    two_word_flags+=("-i")
-    local_nonpersistent_flags+=("--format")
-    local_nonpersistent_flags+=("--format=")
-    local_nonpersistent_flags+=("-i")
-    flags+=("--in-format=")
-    two_word_flags+=("--in-format")
-    two_word_flags+=("-I")
-    local_nonpersistent_flags+=("--in-format")
-    local_nonpersistent_flags+=("--in-format=")
-    local_nonpersistent_flags+=("-I")
-    flags+=("--out-format=")
-    two_word_flags+=("--out-format")
-    two_word_flags+=("-O")
-    local_nonpersistent_flags+=("--out-format")
-    local_nonpersistent_flags+=("--out-format=")
-    local_nonpersistent_flags+=("-O")
-    flags+=("--qual-ascii-base=")
-    two_word_flags+=("--qual-ascii-base")
-    two_word_flags+=("-b")
-    local_nonpersistent_flags+=("--qual-ascii-base")
-    local_nonpersistent_flags+=("--qual-ascii-base=")
-    local_nonpersistent_flags+=("-b")
-    flags+=("--alphabet-guess-seq-length=")
-    two_word_flags+=("--alphabet-guess-seq-length")
-    flags+=("--id-ncbi")
-    flags+=("--id-regexp=")
-    two_word_flags+=("--id-regexp")
-    flags+=("--infile-list=")
-    two_word_flags+=("--infile-list")
-    flags+=("--line-width=")
-    two_word_flags+=("--line-width")
-    two_word_flags+=("-w")
-    flags+=("--out-file=")
-    two_word_flags+=("--out-file")
-    two_word_flags+=("-o")
-    flags+=("--quiet")
-    flags+=("--seq-type=")
-    two_word_flags+=("--seq-type")
-    two_word_flags+=("-t")
-    flags+=("--threads=")
-    two_word_flags+=("--threads")
-    two_word_flags+=("-j")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
+    local cur word_list
+    word_list=" --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads -l --by-length -p --by-part -s --by-size -f --force -h --help -O --out-dir -1 --read1 -2 --read2" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_seqkit_scat()
+_seqkit_stats ()
 {
-    last_command="seqkit_scat"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--allow-gaps")
-    flags+=("-A")
-    local_nonpersistent_flags+=("--allow-gaps")
-    local_nonpersistent_flags+=("-A")
-    flags+=("--delta=")
-    two_word_flags+=("--delta")
-    two_word_flags+=("-d")
-    local_nonpersistent_flags+=("--delta")
-    local_nonpersistent_flags+=("--delta=")
-    local_nonpersistent_flags+=("-d")
-    flags+=("--drop-time=")
-    two_word_flags+=("--drop-time")
-    two_word_flags+=("-D")
-    local_nonpersistent_flags+=("--drop-time")
-    local_nonpersistent_flags+=("--drop-time=")
-    local_nonpersistent_flags+=("-D")
-    flags+=("--find-only")
-    flags+=("-f")
-    local_nonpersistent_flags+=("--find-only")
-    local_nonpersistent_flags+=("-f")
-    flags+=("--format=")
-    two_word_flags+=("--format")
-    two_word_flags+=("-i")
-    local_nonpersistent_flags+=("--format")
-    local_nonpersistent_flags+=("--format=")
-    local_nonpersistent_flags+=("-i")
-    flags+=("--gz-only")
-    flags+=("-g")
-    local_nonpersistent_flags+=("--gz-only")
-    local_nonpersistent_flags+=("-g")
-    flags+=("--in-format=")
-    two_word_flags+=("--in-format")
-    two_word_flags+=("-I")
-    local_nonpersistent_flags+=("--in-format")
-    local_nonpersistent_flags+=("--in-format=")
-    local_nonpersistent_flags+=("-I")
-    flags+=("--out-format=")
-    two_word_flags+=("--out-format")
-    two_word_flags+=("-O")
-    local_nonpersistent_flags+=("--out-format")
-    local_nonpersistent_flags+=("--out-format=")
-    local_nonpersistent_flags+=("-O")
-    flags+=("--qual-ascii-base=")
-    two_word_flags+=("--qual-ascii-base")
-    two_word_flags+=("-b")
-    local_nonpersistent_flags+=("--qual-ascii-base")
-    local_nonpersistent_flags+=("--qual-ascii-base=")
-    local_nonpersistent_flags+=("-b")
-    flags+=("--regexp=")
-    two_word_flags+=("--regexp")
-    two_word_flags+=("-r")
-    local_nonpersistent_flags+=("--regexp")
-    local_nonpersistent_flags+=("--regexp=")
-    local_nonpersistent_flags+=("-r")
-    flags+=("--time-limit=")
-    two_word_flags+=("--time-limit")
-    two_word_flags+=("-T")
-    local_nonpersistent_flags+=("--time-limit")
-    local_nonpersistent_flags+=("--time-limit=")
-    local_nonpersistent_flags+=("-T")
-    flags+=("--wait-pid=")
-    two_word_flags+=("--wait-pid")
-    two_word_flags+=("-p")
-    local_nonpersistent_flags+=("--wait-pid")
-    local_nonpersistent_flags+=("--wait-pid=")
-    local_nonpersistent_flags+=("-p")
-    flags+=("--alphabet-guess-seq-length=")
-    two_word_flags+=("--alphabet-guess-seq-length")
-    flags+=("--id-ncbi")
-    flags+=("--id-regexp=")
-    two_word_flags+=("--id-regexp")
-    flags+=("--infile-list=")
-    two_word_flags+=("--infile-list")
-    flags+=("--line-width=")
-    two_word_flags+=("--line-width")
-    two_word_flags+=("-w")
-    flags+=("--out-file=")
-    two_word_flags+=("--out-file")
-    two_word_flags+=("-o")
-    flags+=("--quiet")
-    flags+=("--seq-type=")
-    two_word_flags+=("--seq-type")
-    two_word_flags+=("-t")
-    flags+=("--threads=")
-    two_word_flags+=("--threads")
-    two_word_flags+=("-j")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
+    local cur word_list
+    word_list=" -a --all -E --fq-encoding -h --help -e --skip-err -i --stdin-label -T --tabular --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_seqkit_seq()
+_seqkit_subseq ()
 {
-    last_command="seqkit_seq"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--color")
-    flags+=("-k")
-    local_nonpersistent_flags+=("--color")
-    local_nonpersistent_flags+=("-k")
-    flags+=("--complement")
-    flags+=("-p")
-    local_nonpersistent_flags+=("--complement")
-    local_nonpersistent_flags+=("-p")
-    flags+=("--dna2rna")
-    local_nonpersistent_flags+=("--dna2rna")
-    flags+=("--gap-letters=")
-    two_word_flags+=("--gap-letters")
-    two_word_flags+=("-G")
-    local_nonpersistent_flags+=("--gap-letters")
-    local_nonpersistent_flags+=("--gap-letters=")
-    local_nonpersistent_flags+=("-G")
-    flags+=("--lower-case")
-    flags+=("-l")
-    local_nonpersistent_flags+=("--lower-case")
-    local_nonpersistent_flags+=("-l")
-    flags+=("--max-len=")
-    two_word_flags+=("--max-len")
-    two_word_flags+=("-M")
-    local_nonpersistent_flags+=("--max-len")
-    local_nonpersistent_flags+=("--max-len=")
-    local_nonpersistent_flags+=("-M")
-    flags+=("--max-qual=")
-    two_word_flags+=("--max-qual")
-    two_word_flags+=("-R")
-    local_nonpersistent_flags+=("--max-qual")
-    local_nonpersistent_flags+=("--max-qual=")
-    local_nonpersistent_flags+=("-R")
-    flags+=("--min-len=")
-    two_word_flags+=("--min-len")
-    two_word_flags+=("-m")
-    local_nonpersistent_flags+=("--min-len")
-    local_nonpersistent_flags+=("--min-len=")
-    local_nonpersistent_flags+=("-m")
-    flags+=("--min-qual=")
-    two_word_flags+=("--min-qual")
-    two_word_flags+=("-Q")
-    local_nonpersistent_flags+=("--min-qual")
-    local_nonpersistent_flags+=("--min-qual=")
-    local_nonpersistent_flags+=("-Q")
-    flags+=("--name")
-    flags+=("-n")
-    local_nonpersistent_flags+=("--name")
-    local_nonpersistent_flags+=("-n")
-    flags+=("--only-id")
-    flags+=("-i")
-    local_nonpersistent_flags+=("--only-id")
-    local_nonpersistent_flags+=("-i")
-    flags+=("--qual")
-    flags+=("-q")
-    local_nonpersistent_flags+=("--qual")
-    local_nonpersistent_flags+=("-q")
-    flags+=("--qual-ascii-base=")
-    two_word_flags+=("--qual-ascii-base")
-    two_word_flags+=("-b")
-    local_nonpersistent_flags+=("--qual-ascii-base")
-    local_nonpersistent_flags+=("--qual-ascii-base=")
-    local_nonpersistent_flags+=("-b")
-    flags+=("--remove-gaps")
-    flags+=("-g")
-    local_nonpersistent_flags+=("--remove-gaps")
-    local_nonpersistent_flags+=("-g")
-    flags+=("--reverse")
-    flags+=("-r")
-    local_nonpersistent_flags+=("--reverse")
-    local_nonpersistent_flags+=("-r")
-    flags+=("--rna2dna")
-    local_nonpersistent_flags+=("--rna2dna")
-    flags+=("--seq")
-    flags+=("-s")
-    local_nonpersistent_flags+=("--seq")
-    local_nonpersistent_flags+=("-s")
-    flags+=("--upper-case")
-    flags+=("-u")
-    local_nonpersistent_flags+=("--upper-case")
-    local_nonpersistent_flags+=("-u")
-    flags+=("--validate-seq")
-    flags+=("-v")
-    local_nonpersistent_flags+=("--validate-seq")
-    local_nonpersistent_flags+=("-v")
-    flags+=("--validate-seq-length=")
-    two_word_flags+=("--validate-seq-length")
-    two_word_flags+=("-V")
-    local_nonpersistent_flags+=("--validate-seq-length")
-    local_nonpersistent_flags+=("--validate-seq-length=")
-    local_nonpersistent_flags+=("-V")
-    flags+=("--alphabet-guess-seq-length=")
-    two_word_flags+=("--alphabet-guess-seq-length")
-    flags+=("--id-ncbi")
-    flags+=("--id-regexp=")
-    two_word_flags+=("--id-regexp")
-    flags+=("--infile-list=")
-    two_word_flags+=("--infile-list")
-    flags+=("--line-width=")
-    two_word_flags+=("--line-width")
-    two_word_flags+=("-w")
-    flags+=("--out-file=")
-    two_word_flags+=("--out-file")
-    two_word_flags+=("-o")
-    flags+=("--quiet")
-    flags+=("--seq-type=")
-    two_word_flags+=("--seq-type")
-    two_word_flags+=("-t")
-    flags+=("--threads=")
-    two_word_flags+=("--threads")
-    two_word_flags+=("-j")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
+    local cur word_list
+    word_list=" --bed --chr -d --down-stream --feature --gtf --gtf-tag -h --help -f --only-flank -r --region -u --up-stream" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_seqkit_shuffle()
+_seqkit_tab2fx ()
 {
-    last_command="seqkit_shuffle"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--keep-temp")
-    flags+=("-k")
-    local_nonpersistent_flags+=("--keep-temp")
-    local_nonpersistent_flags+=("-k")
-    flags+=("--rand-seed=")
-    two_word_flags+=("--rand-seed")
-    two_word_flags+=("-s")
-    local_nonpersistent_flags+=("--rand-seed")
-    local_nonpersistent_flags+=("--rand-seed=")
-    local_nonpersistent_flags+=("-s")
-    flags+=("--two-pass")
-    flags+=("-2")
-    local_nonpersistent_flags+=("--two-pass")
-    local_nonpersistent_flags+=("-2")
-    flags+=("--alphabet-guess-seq-length=")
-    two_word_flags+=("--alphabet-guess-seq-length")
-    flags+=("--id-ncbi")
-    flags+=("--id-regexp=")
-    two_word_flags+=("--id-regexp")
-    flags+=("--infile-list=")
-    two_word_flags+=("--infile-list")
-    flags+=("--line-width=")
-    two_word_flags+=("--line-width")
-    two_word_flags+=("-w")
-    flags+=("--out-file=")
-    two_word_flags+=("--out-file")
-    two_word_flags+=("-o")
-    flags+=("--quiet")
-    flags+=("--seq-type=")
-    two_word_flags+=("--seq-type")
-    two_word_flags+=("-t")
-    flags+=("--threads=")
-    two_word_flags+=("--threads")
-    two_word_flags+=("-j")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
+    local cur word_list
+    word_list=" -p --comment-line-prefix -h --help --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_seqkit_sliding()
+_seqkit_translate ()
 {
-    last_command="seqkit_sliding"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--circular")
-    flags+=("-c")
-    local_nonpersistent_flags+=("--circular")
-    local_nonpersistent_flags+=("-c")
-    flags+=("--circular-genome")
-    flags+=("-C")
-    local_nonpersistent_flags+=("--circular-genome")
-    local_nonpersistent_flags+=("-C")
-    flags+=("--greedy")
-    flags+=("-g")
-    local_nonpersistent_flags+=("--greedy")
-    local_nonpersistent_flags+=("-g")
-    flags+=("--step=")
-    two_word_flags+=("--step")
-    two_word_flags+=("-s")
-    local_nonpersistent_flags+=("--step")
-    local_nonpersistent_flags+=("--step=")
-    local_nonpersistent_flags+=("-s")
-    flags+=("--window=")
-    two_word_flags+=("--window")
-    two_word_flags+=("-W")
-    local_nonpersistent_flags+=("--window")
-    local_nonpersistent_flags+=("--window=")
-    local_nonpersistent_flags+=("-W")
-    flags+=("--alphabet-guess-seq-length=")
-    two_word_flags+=("--alphabet-guess-seq-length")
-    flags+=("--id-ncbi")
-    flags+=("--id-regexp=")
-    two_word_flags+=("--id-regexp")
-    flags+=("--infile-list=")
-    two_word_flags+=("--infile-list")
-    flags+=("--line-width=")
-    two_word_flags+=("--line-width")
-    two_word_flags+=("-w")
-    flags+=("--out-file=")
-    two_word_flags+=("--out-file")
-    two_word_flags+=("-o")
-    flags+=("--quiet")
-    flags+=("--seq-type=")
-    two_word_flags+=("--seq-type")
-    two_word_flags+=("-t")
-    flags+=("--threads=")
-    two_word_flags+=("--threads")
-    two_word_flags+=("-j")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
+    local cur word_list
+    word_list=" -x --allow-unknown-codon -F --append-frame --clean -f --frame -h --help -M --init-codon-as-M -l --list-transl-table -L --list-transl-table-with-amb-codons -T --transl-table --trim --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width --quiet -t --seq-type -j --threads" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_seqkit_sort()
+_seqkit_version ()
 {
-    last_command="seqkit_sort"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--by-bases")
-    flags+=("-b")
-    local_nonpersistent_flags+=("--by-bases")
-    local_nonpersistent_flags+=("-b")
-    flags+=("--by-length")
-    flags+=("-l")
-    local_nonpersistent_flags+=("--by-length")
-    local_nonpersistent_flags+=("-l")
-    flags+=("--by-name")
-    flags+=("-n")
-    local_nonpersistent_flags+=("--by-name")
-    local_nonpersistent_flags+=("-n")
-    flags+=("--by-seq")
-    flags+=("-s")
-    local_nonpersistent_flags+=("--by-seq")
-    local_nonpersistent_flags+=("-s")
-    flags+=("--gap-letters=")
-    two_word_flags+=("--gap-letters")
-    two_word_flags+=("-G")
-    local_nonpersistent_flags+=("--gap-letters")
-    local_nonpersistent_flags+=("--gap-letters=")
-    local_nonpersistent_flags+=("-G")
-    flags+=("--ignore-case")
-    flags+=("-i")
-    local_nonpersistent_flags+=("--ignore-case")
-    local_nonpersistent_flags+=("-i")
-    flags+=("--keep-temp")
-    flags+=("-k")
-    local_nonpersistent_flags+=("--keep-temp")
-    local_nonpersistent_flags+=("-k")
-    flags+=("--natural-order")
-    flags+=("-N")
-    local_nonpersistent_flags+=("--natural-order")
-    local_nonpersistent_flags+=("-N")
-    flags+=("--reverse")
-    flags+=("-r")
-    local_nonpersistent_flags+=("--reverse")
-    local_nonpersistent_flags+=("-r")
-    flags+=("--seq-prefix-length=")
-    two_word_flags+=("--seq-prefix-length")
-    two_word_flags+=("-L")
-    local_nonpersistent_flags+=("--seq-prefix-length")
-    local_nonpersistent_flags+=("--seq-prefix-length=")
-    local_nonpersistent_flags+=("-L")
-    flags+=("--two-pass")
-    flags+=("-2")
-    local_nonpersistent_flags+=("--two-pass")
-    local_nonpersistent_flags+=("-2")
-    flags+=("--alphabet-guess-seq-length=")
-    two_word_flags+=("--alphabet-guess-seq-length")
-    flags+=("--id-ncbi")
-    flags+=("--id-regexp=")
-    two_word_flags+=("--id-regexp")
-    flags+=("--infile-list=")
-    two_word_flags+=("--infile-list")
-    flags+=("--line-width=")
-    two_word_flags+=("--line-width")
-    two_word_flags+=("-w")
-    flags+=("--out-file=")
-    two_word_flags+=("--out-file")
-    two_word_flags+=("-o")
-    flags+=("--quiet")
-    flags+=("--seq-type=")
-    two_word_flags+=("--seq-type")
-    two_word_flags+=("-t")
-    flags+=("--threads=")
-    two_word_flags+=("--threads")
-    two_word_flags+=("-j")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
+    local cur word_list
+    word_list=" --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads -u --check-update -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_seqkit_split()
+_seqkit_watch ()
 {
-    last_command="seqkit_split"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--by-id")
-    flags+=("-i")
-    local_nonpersistent_flags+=("--by-id")
-    local_nonpersistent_flags+=("-i")
-    flags+=("--by-part=")
-    two_word_flags+=("--by-part")
-    two_word_flags+=("-p")
-    local_nonpersistent_flags+=("--by-part")
-    local_nonpersistent_flags+=("--by-part=")
-    local_nonpersistent_flags+=("-p")
-    flags+=("--by-region=")
-    two_word_flags+=("--by-region")
-    two_word_flags+=("-r")
-    local_nonpersistent_flags+=("--by-region")
-    local_nonpersistent_flags+=("--by-region=")
-    local_nonpersistent_flags+=("-r")
-    flags+=("--by-size=")
-    two_word_flags+=("--by-size")
-    two_word_flags+=("-s")
-    local_nonpersistent_flags+=("--by-size")
-    local_nonpersistent_flags+=("--by-size=")
-    local_nonpersistent_flags+=("-s")
-    flags+=("--dry-run")
-    flags+=("-d")
-    local_nonpersistent_flags+=("--dry-run")
-    local_nonpersistent_flags+=("-d")
-    flags+=("--force")
-    flags+=("-f")
-    local_nonpersistent_flags+=("--force")
-    local_nonpersistent_flags+=("-f")
-    flags+=("--keep-temp")
-    flags+=("-k")
-    local_nonpersistent_flags+=("--keep-temp")
-    local_nonpersistent_flags+=("-k")
-    flags+=("--out-dir=")
-    two_word_flags+=("--out-dir")
-    two_word_flags+=("-O")
-    local_nonpersistent_flags+=("--out-dir")
-    local_nonpersistent_flags+=("--out-dir=")
-    local_nonpersistent_flags+=("-O")
-    flags+=("--two-pass")
-    flags+=("-2")
-    local_nonpersistent_flags+=("--two-pass")
-    local_nonpersistent_flags+=("-2")
-    flags+=("--alphabet-guess-seq-length=")
-    two_word_flags+=("--alphabet-guess-seq-length")
-    flags+=("--id-ncbi")
-    flags+=("--id-regexp=")
-    two_word_flags+=("--id-regexp")
-    flags+=("--infile-list=")
-    two_word_flags+=("--infile-list")
-    flags+=("--line-width=")
-    two_word_flags+=("--line-width")
-    two_word_flags+=("-w")
-    flags+=("--out-file=")
-    two_word_flags+=("--out-file")
-    two_word_flags+=("-o")
-    flags+=("--quiet")
-    flags+=("--seq-type=")
-    two_word_flags+=("--seq-type")
-    two_word_flags+=("-t")
-    flags+=("--threads=")
-    two_word_flags+=("--threads")
-    two_word_flags+=("-j")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
+    local cur word_list
+    word_list=" -B --bins -W --delay -y --dump -f --fields -h --help -O --img -H --list-fields -L --log -x --pass -p --print-freq -b --qual-ascii-base -Q --quiet-mode -R --reset -v --validate-seq -V --validate-seq-length --alphabet-guess-seq-length" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_seqkit_split2()
-{
-    last_command="seqkit_split2"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--by-length=")
-    two_word_flags+=("--by-length")
-    two_word_flags+=("-l")
-    local_nonpersistent_flags+=("--by-length")
-    local_nonpersistent_flags+=("--by-length=")
-    local_nonpersistent_flags+=("-l")
-    flags+=("--by-part=")
-    two_word_flags+=("--by-part")
-    two_word_flags+=("-p")
-    local_nonpersistent_flags+=("--by-part")
-    local_nonpersistent_flags+=("--by-part=")
-    local_nonpersistent_flags+=("-p")
-    flags+=("--by-size=")
-    two_word_flags+=("--by-size")
-    two_word_flags+=("-s")
-    local_nonpersistent_flags+=("--by-size")
-    local_nonpersistent_flags+=("--by-size=")
-    local_nonpersistent_flags+=("-s")
-    flags+=("--force")
-    flags+=("-f")
-    local_nonpersistent_flags+=("--force")
-    local_nonpersistent_flags+=("-f")
-    flags+=("--out-dir=")
-    two_word_flags+=("--out-dir")
-    two_word_flags+=("-O")
-    local_nonpersistent_flags+=("--out-dir")
-    local_nonpersistent_flags+=("--out-dir=")
-    local_nonpersistent_flags+=("-O")
-    flags+=("--read1=")
-    two_word_flags+=("--read1")
-    two_word_flags+=("-1")
-    local_nonpersistent_flags+=("--read1")
-    local_nonpersistent_flags+=("--read1=")
-    local_nonpersistent_flags+=("-1")
-    flags+=("--read2=")
-    two_word_flags+=("--read2")
-    two_word_flags+=("-2")
-    local_nonpersistent_flags+=("--read2")
-    local_nonpersistent_flags+=("--read2=")
-    local_nonpersistent_flags+=("-2")
-    flags+=("--alphabet-guess-seq-length=")
-    two_word_flags+=("--alphabet-guess-seq-length")
-    flags+=("--id-ncbi")
-    flags+=("--id-regexp=")
-    two_word_flags+=("--id-regexp")
-    flags+=("--infile-list=")
-    two_word_flags+=("--infile-list")
-    flags+=("--line-width=")
-    two_word_flags+=("--line-width")
-    two_word_flags+=("-w")
-    flags+=("--out-file=")
-    two_word_flags+=("--out-file")
-    two_word_flags+=("-o")
-    flags+=("--quiet")
-    flags+=("--seq-type=")
-    two_word_flags+=("--seq-type")
-    two_word_flags+=("-t")
-    flags+=("--threads=")
-    two_word_flags+=("--threads")
-    two_word_flags+=("-j")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
-}
-
-_seqkit_stats()
-{
-    last_command="seqkit_stats"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--all")
-    flags+=("-a")
-    local_nonpersistent_flags+=("--all")
-    local_nonpersistent_flags+=("-a")
-    flags+=("--basename")
-    flags+=("-b")
-    local_nonpersistent_flags+=("--basename")
-    local_nonpersistent_flags+=("-b")
-    flags+=("--fq-encoding=")
-    two_word_flags+=("--fq-encoding")
-    two_word_flags+=("-E")
-    local_nonpersistent_flags+=("--fq-encoding")
-    local_nonpersistent_flags+=("--fq-encoding=")
-    local_nonpersistent_flags+=("-E")
-    flags+=("--gap-letters=")
-    two_word_flags+=("--gap-letters")
-    two_word_flags+=("-G")
-    local_nonpersistent_flags+=("--gap-letters")
-    local_nonpersistent_flags+=("--gap-letters=")
-    local_nonpersistent_flags+=("-G")
-    flags+=("--skip-err")
-    flags+=("-e")
-    local_nonpersistent_flags+=("--skip-err")
-    local_nonpersistent_flags+=("-e")
-    flags+=("--stdin-label=")
-    two_word_flags+=("--stdin-label")
-    two_word_flags+=("-i")
-    local_nonpersistent_flags+=("--stdin-label")
-    local_nonpersistent_flags+=("--stdin-label=")
-    local_nonpersistent_flags+=("-i")
-    flags+=("--tabular")
-    flags+=("-T")
-    local_nonpersistent_flags+=("--tabular")
-    local_nonpersistent_flags+=("-T")
-    flags+=("--alphabet-guess-seq-length=")
-    two_word_flags+=("--alphabet-guess-seq-length")
-    flags+=("--id-ncbi")
-    flags+=("--id-regexp=")
-    two_word_flags+=("--id-regexp")
-    flags+=("--infile-list=")
-    two_word_flags+=("--infile-list")
-    flags+=("--line-width=")
-    two_word_flags+=("--line-width")
-    two_word_flags+=("-w")
-    flags+=("--out-file=")
-    two_word_flags+=("--out-file")
-    two_word_flags+=("-o")
-    flags+=("--quiet")
-    flags+=("--seq-type=")
-    two_word_flags+=("--seq-type")
-    two_word_flags+=("-t")
-    flags+=("--threads=")
-    two_word_flags+=("--threads")
-    two_word_flags+=("-j")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
-}
-
-_seqkit_subseq()
-{
-    last_command="seqkit_subseq"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--bed=")
-    two_word_flags+=("--bed")
-    local_nonpersistent_flags+=("--bed")
-    local_nonpersistent_flags+=("--bed=")
-    flags+=("--chr=")
-    two_word_flags+=("--chr")
-    local_nonpersistent_flags+=("--chr")
-    local_nonpersistent_flags+=("--chr=")
-    flags+=("--down-stream=")
-    two_word_flags+=("--down-stream")
-    two_word_flags+=("-d")
-    local_nonpersistent_flags+=("--down-stream")
-    local_nonpersistent_flags+=("--down-stream=")
-    local_nonpersistent_flags+=("-d")
-    flags+=("--feature=")
-    two_word_flags+=("--feature")
-    local_nonpersistent_flags+=("--feature")
-    local_nonpersistent_flags+=("--feature=")
-    flags+=("--gtf=")
-    two_word_flags+=("--gtf")
-    local_nonpersistent_flags+=("--gtf")
-    local_nonpersistent_flags+=("--gtf=")
-    flags+=("--gtf-tag=")
-    two_word_flags+=("--gtf-tag")
-    local_nonpersistent_flags+=("--gtf-tag")
-    local_nonpersistent_flags+=("--gtf-tag=")
-    flags+=("--only-flank")
-    flags+=("-f")
-    local_nonpersistent_flags+=("--only-flank")
-    local_nonpersistent_flags+=("-f")
-    flags+=("--region=")
-    two_word_flags+=("--region")
-    two_word_flags+=("-r")
-    local_nonpersistent_flags+=("--region")
-    local_nonpersistent_flags+=("--region=")
-    local_nonpersistent_flags+=("-r")
-    flags+=("--up-stream=")
-    two_word_flags+=("--up-stream")
-    two_word_flags+=("-u")
-    local_nonpersistent_flags+=("--up-stream")
-    local_nonpersistent_flags+=("--up-stream=")
-    local_nonpersistent_flags+=("-u")
-    flags+=("--alphabet-guess-seq-length=")
-    two_word_flags+=("--alphabet-guess-seq-length")
-    flags+=("--id-ncbi")
-    flags+=("--id-regexp=")
-    two_word_flags+=("--id-regexp")
-    flags+=("--infile-list=")
-    two_word_flags+=("--infile-list")
-    flags+=("--line-width=")
-    two_word_flags+=("--line-width")
-    two_word_flags+=("-w")
-    flags+=("--out-file=")
-    two_word_flags+=("--out-file")
-    two_word_flags+=("-o")
-    flags+=("--quiet")
-    flags+=("--seq-type=")
-    two_word_flags+=("--seq-type")
-    two_word_flags+=("-t")
-    flags+=("--threads=")
-    two_word_flags+=("--threads")
-    two_word_flags+=("-j")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
-}
-
-_seqkit_tab2fx()
-{
-    last_command="seqkit_tab2fx"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--buffer-size=")
-    two_word_flags+=("--buffer-size")
-    two_word_flags+=("-b")
-    local_nonpersistent_flags+=("--buffer-size")
-    local_nonpersistent_flags+=("--buffer-size=")
-    local_nonpersistent_flags+=("-b")
-    flags+=("--comment-line-prefix=")
-    two_word_flags+=("--comment-line-prefix")
-    two_word_flags+=("-p")
-    local_nonpersistent_flags+=("--comment-line-prefix")
-    local_nonpersistent_flags+=("--comment-line-prefix=")
-    local_nonpersistent_flags+=("-p")
-    flags+=("--alphabet-guess-seq-length=")
-    two_word_flags+=("--alphabet-guess-seq-length")
-    flags+=("--id-ncbi")
-    flags+=("--id-regexp=")
-    two_word_flags+=("--id-regexp")
-    flags+=("--infile-list=")
-    two_word_flags+=("--infile-list")
-    flags+=("--line-width=")
-    two_word_flags+=("--line-width")
-    two_word_flags+=("-w")
-    flags+=("--out-file=")
-    two_word_flags+=("--out-file")
-    two_word_flags+=("-o")
-    flags+=("--quiet")
-    flags+=("--seq-type=")
-    two_word_flags+=("--seq-type")
-    two_word_flags+=("-t")
-    flags+=("--threads=")
-    two_word_flags+=("--threads")
-    two_word_flags+=("-j")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
-}
-
-_seqkit_translate()
-{
-    last_command="seqkit_translate"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--allow-unknown-codon")
-    flags+=("-x")
-    local_nonpersistent_flags+=("--allow-unknown-codon")
-    local_nonpersistent_flags+=("-x")
-    flags+=("--append-frame")
-    flags+=("-F")
-    local_nonpersistent_flags+=("--append-frame")
-    local_nonpersistent_flags+=("-F")
-    flags+=("--clean")
-    local_nonpersistent_flags+=("--clean")
-    flags+=("--frame=")
-    two_word_flags+=("--frame")
-    two_word_flags+=("-f")
-    local_nonpersistent_flags+=("--frame")
-    local_nonpersistent_flags+=("--frame=")
-    local_nonpersistent_flags+=("-f")
-    flags+=("--init-codon-as-M")
-    flags+=("-M")
-    local_nonpersistent_flags+=("--init-codon-as-M")
-    local_nonpersistent_flags+=("-M")
-    flags+=("--list-transl-table=")
-    two_word_flags+=("--list-transl-table")
-    two_word_flags+=("-l")
-    local_nonpersistent_flags+=("--list-transl-table")
-    local_nonpersistent_flags+=("--list-transl-table=")
-    local_nonpersistent_flags+=("-l")
-    flags+=("--list-transl-table-with-amb-codons=")
-    two_word_flags+=("--list-transl-table-with-amb-codons")
-    two_word_flags+=("-L")
-    local_nonpersistent_flags+=("--list-transl-table-with-amb-codons")
-    local_nonpersistent_flags+=("--list-transl-table-with-amb-codons=")
-    local_nonpersistent_flags+=("-L")
-    flags+=("--transl-table=")
-    two_word_flags+=("--transl-table")
-    two_word_flags+=("-T")
-    local_nonpersistent_flags+=("--transl-table")
-    local_nonpersistent_flags+=("--transl-table=")
-    local_nonpersistent_flags+=("-T")
-    flags+=("--trim")
-    local_nonpersistent_flags+=("--trim")
-    flags+=("--alphabet-guess-seq-length=")
-    two_word_flags+=("--alphabet-guess-seq-length")
-    flags+=("--id-ncbi")
-    flags+=("--id-regexp=")
-    two_word_flags+=("--id-regexp")
-    flags+=("--infile-list=")
-    two_word_flags+=("--infile-list")
-    flags+=("--line-width=")
-    two_word_flags+=("--line-width")
-    two_word_flags+=("-w")
-    flags+=("--out-file=")
-    two_word_flags+=("--out-file")
-    two_word_flags+=("-o")
-    flags+=("--quiet")
-    flags+=("--seq-type=")
-    two_word_flags+=("--seq-type")
-    two_word_flags+=("-t")
-    flags+=("--threads=")
-    two_word_flags+=("--threads")
-    two_word_flags+=("-j")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
-}
-
-_seqkit_version()
-{
-    last_command="seqkit_version"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--check-update")
-    flags+=("-u")
-    local_nonpersistent_flags+=("--check-update")
-    local_nonpersistent_flags+=("-u")
-    flags+=("--alphabet-guess-seq-length=")
-    two_word_flags+=("--alphabet-guess-seq-length")
-    flags+=("--id-ncbi")
-    flags+=("--id-regexp=")
-    two_word_flags+=("--id-regexp")
-    flags+=("--infile-list=")
-    two_word_flags+=("--infile-list")
-    flags+=("--line-width=")
-    two_word_flags+=("--line-width")
-    two_word_flags+=("-w")
-    flags+=("--out-file=")
-    two_word_flags+=("--out-file")
-    two_word_flags+=("-o")
-    flags+=("--quiet")
-    flags+=("--seq-type=")
-    two_word_flags+=("--seq-type")
-    two_word_flags+=("-t")
-    flags+=("--threads=")
-    two_word_flags+=("--threads")
-    two_word_flags+=("-j")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
-}
-
-_seqkit_watch()
-{
-    last_command="seqkit_watch"
-
-    command_aliases=()
-
-    commands=()
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--bins=")
-    two_word_flags+=("--bins")
-    two_word_flags+=("-B")
-    local_nonpersistent_flags+=("--bins")
-    local_nonpersistent_flags+=("--bins=")
-    local_nonpersistent_flags+=("-B")
-    flags+=("--delay=")
-    two_word_flags+=("--delay")
-    two_word_flags+=("-W")
-    local_nonpersistent_flags+=("--delay")
-    local_nonpersistent_flags+=("--delay=")
-    local_nonpersistent_flags+=("-W")
-    flags+=("--dump")
-    flags+=("-y")
-    local_nonpersistent_flags+=("--dump")
-    local_nonpersistent_flags+=("-y")
-    flags+=("--fields=")
-    two_word_flags+=("--fields")
-    two_word_flags+=("-f")
-    local_nonpersistent_flags+=("--fields")
-    local_nonpersistent_flags+=("--fields=")
-    local_nonpersistent_flags+=("-f")
-    flags+=("--img=")
-    two_word_flags+=("--img")
-    two_word_flags+=("-O")
-    local_nonpersistent_flags+=("--img")
-    local_nonpersistent_flags+=("--img=")
-    local_nonpersistent_flags+=("-O")
-    flags+=("--list-fields")
-    flags+=("-H")
-    local_nonpersistent_flags+=("--list-fields")
-    local_nonpersistent_flags+=("-H")
-    flags+=("--log")
-    flags+=("-L")
-    local_nonpersistent_flags+=("--log")
-    local_nonpersistent_flags+=("-L")
-    flags+=("--pass")
-    flags+=("-x")
-    local_nonpersistent_flags+=("--pass")
-    local_nonpersistent_flags+=("-x")
-    flags+=("--print-freq=")
-    two_word_flags+=("--print-freq")
-    two_word_flags+=("-p")
-    local_nonpersistent_flags+=("--print-freq")
-    local_nonpersistent_flags+=("--print-freq=")
-    local_nonpersistent_flags+=("-p")
-    flags+=("--qual-ascii-base=")
-    two_word_flags+=("--qual-ascii-base")
-    two_word_flags+=("-b")
-    local_nonpersistent_flags+=("--qual-ascii-base")
-    local_nonpersistent_flags+=("--qual-ascii-base=")
-    local_nonpersistent_flags+=("-b")
-    flags+=("--quiet-mode")
-    flags+=("-Q")
-    local_nonpersistent_flags+=("--quiet-mode")
-    local_nonpersistent_flags+=("-Q")
-    flags+=("--reset")
-    flags+=("-R")
-    local_nonpersistent_flags+=("--reset")
-    local_nonpersistent_flags+=("-R")
-    flags+=("--validate-seq")
-    flags+=("-v")
-    local_nonpersistent_flags+=("--validate-seq")
-    local_nonpersistent_flags+=("-v")
-    flags+=("--validate-seq-length=")
-    two_word_flags+=("--validate-seq-length")
-    two_word_flags+=("-V")
-    local_nonpersistent_flags+=("--validate-seq-length")
-    local_nonpersistent_flags+=("--validate-seq-length=")
-    local_nonpersistent_flags+=("-V")
-    flags+=("--alphabet-guess-seq-length=")
-    two_word_flags+=("--alphabet-guess-seq-length")
-    flags+=("--id-ncbi")
-    flags+=("--id-regexp=")
-    two_word_flags+=("--id-regexp")
-    flags+=("--infile-list=")
-    two_word_flags+=("--infile-list")
-    flags+=("--line-width=")
-    two_word_flags+=("--line-width")
-    two_word_flags+=("-w")
-    flags+=("--out-file=")
-    two_word_flags+=("--out-file")
-    two_word_flags+=("-o")
-    flags+=("--quiet")
-    flags+=("--seq-type=")
-    two_word_flags+=("--seq-type")
-    two_word_flags+=("-t")
-    flags+=("--threads=")
-    two_word_flags+=("--threads")
-    two_word_flags+=("-j")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
-}
-
-_seqkit_root_command()
-{
-    last_command="seqkit"
-
-    command_aliases=()
-
-    commands=()
-    commands+=("")
-    commands+=("amplicon")
-    commands+=("bam")
-    commands+=("common")
-    commands+=("concat")
-    if [[ -z "${BASH_VERSION}" || "${BASH_VERSINFO[0]}" -gt 3 ]]; then
-        command_aliases+=("concate")
-        aliashash["concate"]="concat"
-    fi
-    commands+=("convert")
-    commands+=("duplicate")
-    if [[ -z "${BASH_VERSION}" || "${BASH_VERSINFO[0]}" -gt 3 ]]; then
-        command_aliases+=("dup")
-        aliashash["dup"]="duplicate"
-    fi
-    commands+=("faidx")
-    commands+=("fish")
-    commands+=("fq2fa")
-    commands+=("fx2tab")
-    commands+=("genautocomplete")
-    commands+=("grep")
-    commands+=("head")
-    commands+=("head-genome")
-    commands+=("locate")
-    commands+=("mutate")
-    commands+=("pair")
-    commands+=("range")
-    commands+=("rename")
-    commands+=("replace")
-    commands+=("restart")
-    commands+=("rmdup")
-    commands+=("sample")
-    commands+=("sana")
-    commands+=("scat")
-    commands+=("seq")
-    commands+=("shuffle")
-    commands+=("sliding")
-    commands+=("sort")
-    commands+=("split")
-    commands+=("split2")
-    commands+=("stats")
-    if [[ -z "${BASH_VERSION}" || "${BASH_VERSINFO[0]}" -gt 3 ]]; then
-        command_aliases+=("stat")
-        aliashash["stat"]="stats"
-    fi
-    commands+=("subseq")
-    commands+=("tab2fx")
-    commands+=("translate")
-    commands+=("version")
-    commands+=("watch")
-
-    flags=()
-    two_word_flags=()
-    local_nonpersistent_flags=()
-    flags_with_completion=()
-    flags_completion=()
-
-    flags+=("--alphabet-guess-seq-length=")
-    two_word_flags+=("--alphabet-guess-seq-length")
-    flags+=("--id-ncbi")
-    flags+=("--id-regexp=")
-    two_word_flags+=("--id-regexp")
-    flags+=("--infile-list=")
-    two_word_flags+=("--infile-list")
-    flags+=("--line-width=")
-    two_word_flags+=("--line-width")
-    two_word_flags+=("-w")
-    flags+=("--out-file=")
-    two_word_flags+=("--out-file")
-    two_word_flags+=("-o")
-    flags+=("--quiet")
-    flags+=("--seq-type=")
-    two_word_flags+=("--seq-type")
-    two_word_flags+=("-t")
-    flags+=("--threads=")
-    two_word_flags+=("--threads")
-    two_word_flags+=("-j")
-
-    must_have_one_flag=()
-    must_have_one_noun=()
-    noun_aliases=()
-}
-
-__start_seqkit()
-{
-    local cur prev words cword split
-    declare -A flaghash 2>/dev/null || :
-    declare -A aliashash 2>/dev/null || :
-    if declare -F _init_completion >/dev/null 2>&1; then
-        _init_completion -s || return
-    else
-        __seqkit_init_completion -n "=" || return
-    fi
-
-    local c=0
-    local flags=()
-    local two_word_flags=()
-    local local_nonpersistent_flags=()
-    local flags_with_completion=()
-    local flags_completion=()
-    local commands=("seqkit")
-    local command_aliases=()
-    local must_have_one_flag=()
-    local must_have_one_noun=()
-    local has_completion_function
-    local last_command
-    local nouns=()
-    local noun_aliases=()
-
-    __seqkit_handle_word
-}
-
-if [[ $(type -t compopt) = "builtin" ]]; then
-    complete -o default -F __start_seqkit seqkit
-else
-    complete -o default -o nospace -F __start_seqkit seqkit
-fi
-
-# ex: ts=4 sw=4 et filetype=sh
+## -o bashdefault and -o default are fallback
+complete -o bashdefault -o default -F _seqkit seqkit
