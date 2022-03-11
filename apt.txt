@@ -1,3 +1,4 @@
 man
 coreutils
 bash-completion
+jq
