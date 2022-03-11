@@ -2,10 +2,9 @@
 
 # jupyterlab-lsp fails to find bash-language-server if installed with '-g'.
 # Related? https://github.com/jupyter-lsp/jupyterlab-lsp/issues/181
-npm install bash-language-server
-wget https://raw.githubusercontent.com/yamaton/bash-language-server/fix-get-options/server/src/get-options.sh
-chmod +x get-options.sh
-mv -f get-options.sh node_modules/bash-language-server/src/
+
+# install patched bash-language-server
+npm install https://github.com/yamaton/bash-language-server/releases/download/server-2.0.0/bash-language-server-2.0.0.tgz
 
 TOOLS=( "$(cat ./_tools.txt)" )
 for _tool in ${TOOLS[*]}; do
