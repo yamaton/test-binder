@@ -10,7 +10,11 @@ mv -f get-options.sh node_modules/bash-language-server/src/
 TOOLS=( "$(cat ./_tools.txt)" )
 for _tool in ${TOOLS[*]}; do
     echo "Installing ${_tool}"
-    condax install -c conda-forge -c bioconda "$_tool"
+    # retry if nonzero exit status occurs
+    if [[ ! ($(condax install -c conda-forge -c bioconda "$_tool")) ]]; then
+        condax remove "$_tool"
+        condax install -c conda-forge -c bioconda "$_tool"
+    fi
 done
 
 conda clean --all --yes --force-pkgs-dirs
