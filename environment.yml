@@ -21,3 +21,6 @@ dependencies:
   - r-languageserver
   - biopython
   - pysam
+  - pip
+  - pip:
+    - nbgitpuller
