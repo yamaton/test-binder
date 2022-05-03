@@ -1,11 +1,10 @@
 #!/bin/bash
 
-# jupyterlab-lsp fails to find bash-language-server if installed with '-g'.
-# Related? https://github.com/jupyter-lsp/jupyterlab-lsp/issues/181
+# install triton-lsp
+npm install yamaton/triton-lsp
+ln -s ./node_modules/triton-lsp/scripts/jupyter_server_config.py .
 
-# install patched bash-language-server
-npm install https://github.com/yamaton/bash-language-server/releases/download/server-2.0.0/bash-language-server-2.0.0.tgz
-
+# install programs in each conda environment
 TOOLS=( "$(cat ./_tools.txt)" )
 for _tool in ${TOOLS[*]}; do
     echo "Installing ${_tool}"
