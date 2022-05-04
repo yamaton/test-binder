@@ -9,7 +9,6 @@ set -ex
 
 # install triton-lsp
 npm install yamaton/triton-lsp
-ln -s ./node_modules/triton-lsp/scripts/jupyter_server_config.py .
 
 # install programs in each conda environment
 TOOLS=( "$(cat ./_tools.txt)" )
