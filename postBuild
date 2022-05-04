@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# https://repo2docker.readthedocs.io/en/latest/config_files.html#postbuild-run-code-after-installing-the-environment
+# > Note that by default the build will not be stopped
+# > if an error occurs inside a shell script. You should
+# > include set -e or the equivalent at the start of the
+# >  script to avoid errors being silently ignored.
+set -ex
+
 # install triton-lsp
 npm install yamaton/triton-lsp
 ln -s ./node_modules/triton-lsp/scripts/jupyter_server_config.py .
