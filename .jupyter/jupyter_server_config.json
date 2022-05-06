@@ -5,7 +5,7 @@
         "version": 2,
         "argv": [
           "/srv/conda/envs/notebook/bin/node",
-          "/home/vierbein/node_modules/.bin/triton-lsp",
+          "/srv/conda/envs/notebook/etc/jupyter/node_modules/.bin/triton-lsp",
           "--stdio"
         ],
         "languages": [
