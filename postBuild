@@ -11,8 +11,8 @@ set -ex
 npm install yamaton/triton-lsp
 
 # set jupyter_server_config
-mkdir -p ~/.jupyter
-ln -s jupyter_server_config.json ~/.jupyter/jupyter_server_config.json
+# mkdir -p /etc/jupyter
+# ln -s ~/jupyter_server_config.json /etc/jupyter/jupyter_server_config.json
 
 # install programs in each conda environment
 TOOLS=( "$(cat ./_tools.txt)" )
