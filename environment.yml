@@ -14,6 +14,7 @@ dependencies:
   - matplotlib
   - bokeh
   - plotly
+  - pipx
   - condax
   - r-base=4.0  # temporary https://github.com/jupyterhub/repo2docker/pull/1141
   - r-tidyverse
