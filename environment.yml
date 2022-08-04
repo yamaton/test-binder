@@ -14,9 +14,9 @@ dependencies:
   - matplotlib
   - bokeh
   - plotly
-  - pipx
-  - condax
-  - r-base=4.0  # temporary https://github.com/jupyterhub/repo2docker/pull/1141
+  # "SemVer" error issue: https://github.com/jupyterhub/repo2docker/issues/1140
+  # Keep the version until repo2docker is upgraded from 2022.02.0.
+  - r-base=4.0
   - r-tidyverse
   - rpy2
   - jupyterlab-lsp
@@ -24,6 +24,7 @@ dependencies:
   - r-languageserver
   - biopython
   - pysam
+  - pipx
   - pip
   - pip:
     - nbgitpuller

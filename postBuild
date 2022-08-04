@@ -14,24 +14,26 @@ mkdir -p /srv/conda/envs/notebook/etc/jupyter
 npm install --prefix /srv/conda/envs/notebook/etc/jupyter yamaton/triton-lsp
 
 # pipx: install programs in each virtual environment
-TOOLS=( "$(cat ./_pip_tools.txt)" )
+TOOLS=( "$(cat ./_tools_pipx.txt)" )
 for _tool in ${TOOLS[*]}; do
     echo "Installing ${_tool}"
     # retry if nonzero exit status occurs
     if [[ ! ($(pipx install "$_tool")) ]]; then
+        echo "pipx retrying... $_tool"
         pipx uninstall "$_tool"
         pipx install "$_tool"
     fi
 done
 
 # condax: install programs in each conda environment
-TOOLS=( "$(cat ./_tools.txt)" )
+TOOLS=( "$(cat ./_tools_condax.txt)" )
 for _tool in ${TOOLS[*]}; do
     echo "Installing ${_tool}"
     # retry if nonzero exit status occurs
     if [[ ! ($(condax install -c conda-forge -c bioconda "$_tool")) ]]; then
+        echo "condax retrying... $_tool"
         condax remove "$_tool"
-        condax install -c conda-forge -c bioconda "$_tool"
+        condax install -c conda-forge -c bioconda --force "$_tool"
     fi
 done
 
