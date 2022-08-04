@@ -1,5 +1,6 @@
 agat
 bakta
+bamtools
 bandage
 bcftools
 bedtools
@@ -9,6 +10,8 @@ bwa
 bwa-mem2
 canu
 checkm-genome
+csvkit
+csvtk
 cufflinks
 entrez-direct
 fastp
@@ -23,7 +26,12 @@ hifiasm
 hisat2
 htseq
 htslib
+hypo
 kallisto
+kraken
+kraken2
+mafft
+megahit
 miniasm
 minigraph
 minimap2
