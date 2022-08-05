@@ -25,6 +25,8 @@ dependencies:
   - biopython
   - pysam
   - pipx
+  # Keep this until repo2docker's default micromamba is bumped.
+  - micromamba>=0.25
   - pip
   - pip:
     - nbgitpuller
