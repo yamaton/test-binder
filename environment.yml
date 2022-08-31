@@ -27,6 +27,7 @@ dependencies:
   - pipx
   # Keep this until repo2docker's default micromamba is bumped.
   - micromamba>=0.25
+  - mamba
   - pip
   - pip:
     - nbgitpuller
