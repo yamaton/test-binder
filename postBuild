@@ -47,7 +47,7 @@ for _tool in ${TOOLS[*]}; do
     fi
 done
 
-conda clean --all --yes --force-pkgs-dirs
+mamba clean --all --yes --force-pkgs-dirs
 
 ## Fix 404 Error with nbgitpuller link
 ## https://jupyterhub.github.io/nbgitpuller/install.html#nbgitpuller-link-shows-404-not-found
