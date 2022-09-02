@@ -14,9 +14,7 @@ dependencies:
   - matplotlib
   - bokeh
   - plotly
-  # "SemVer" error issue: https://github.com/jupyterhub/repo2docker/issues/1140
-  # Keep the version until repo2docker is upgraded from 2022.02.0.
-  - r-base=4.0
+  - r-base
   - r-tidyverse
   - rpy2
   - jupyterlab-lsp
@@ -25,8 +23,6 @@ dependencies:
   - biopython
   - pysam
   - pipx
-  # Keep this until repo2docker's default micromamba is bumped.
-  - micromamba>=0.25
   - mamba
   - pip
   - pip:
