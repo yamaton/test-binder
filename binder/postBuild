@@ -21,6 +21,8 @@ npm install --prefix /srv/conda/envs/notebook/etc/jupyter yamaton/triton-lsp
 
 
 # pipx: install programs in each virtual environment
+export PIPX_HOME=/srv/conda/pipx
+mkdir -p "$PIPX_HOME"
 TOOLS=( "$(cat ~/binder/_tools_pipx.txt)" )
 for _tool in ${TOOLS[*]}; do
     echo "Installing ${_tool}"
