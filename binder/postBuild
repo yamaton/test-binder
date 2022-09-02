@@ -38,6 +38,9 @@ export CONDAX_HIDE_EXITCODE=1
 
 
 # condax: install programs in each conda environment
+mkdir -p /srv/conda/condax/envs
+mkdir -p ~/.config/condax
+echo "prefix_dir: /srv/conda/condax/envs" > ~/.config/condax/config.yaml
 
 TOOLS=( "$(cat ~/binder/_tools_condax.txt)" )
 for _tool in ${TOOLS[*]}; do
