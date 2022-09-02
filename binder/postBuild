@@ -19,8 +19,9 @@ jupyter labextension install @jupyterlab/hub-extension
 mkdir -p /srv/conda/envs/notebook/etc/jupyter
 npm install --prefix /srv/conda/envs/notebook/etc/jupyter yamaton/triton-lsp
 
+
 # pipx: install programs in each virtual environment
-TOOLS=( "$(cat ./_tools_pipx.txt)" )
+TOOLS=( "$(cat ~/binder/_tools_pipx.txt)" )
 for _tool in ${TOOLS[*]}; do
     echo "Installing ${_tool}"
     # retry if nonzero exit status occurs
@@ -35,8 +36,10 @@ done
 # Tweak exit code of the condax runner scripts
 export CONDAX_HIDE_EXITCODE=1
 
+
 # condax: install programs in each conda environment
-TOOLS=( "$(cat ./_tools_condax.txt)" )
+
+TOOLS=( "$(cat ~/binder/_tools_condax.txt)" )
 for _tool in ${TOOLS[*]}; do
     echo "Installing ${_tool}"
     # retry if nonzero exit status occurs
