@@ -16,6 +16,11 @@ dependencies:
   - plotly
   - r-base
   - r-tidyverse
+  - r-markdown
+  - r-httr
+  - r-shinydashboard
+  - r-biocmanager
+  - r-leaflet
   - rpy2
   - jupyterlab-lsp
   - python-lsp-server
