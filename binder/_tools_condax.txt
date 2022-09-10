@@ -80,3 +80,7 @@ vcflib
 vcftools
 wtdbg
 yak
+
+bat
+fd-find
+ripgrep
