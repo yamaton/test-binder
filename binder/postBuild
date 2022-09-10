@@ -8,11 +8,6 @@
 set -ex
 
 
-# Install JupyterLab extension
-#   hub-extension adds UIs like "Hub" buttons for JupyterHub
-jupyter labextension install @jupyterlab/hub-extension
-
-
 # install triton-lsp
 # This path must be consistent with what's written in
 # .jupyter/jupyter_server_config.json
