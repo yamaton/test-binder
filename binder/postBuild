@@ -12,7 +12,7 @@ set -ex
 # This path must be consistent with what's written in
 # .jupyter/jupyter_server_config.json
 mkdir -p /srv/conda/envs/notebook/etc/jupyter
-npm install --prefix /srv/conda/envs/notebook/etc/jupyter yamaton/triton-lsp
+npm install --prefix /srv/conda/envs/notebook/etc/jupyter yamaton/triton-lsp#dev
 
 
 # pipx: install programs in each virtual environment
