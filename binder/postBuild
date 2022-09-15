@@ -55,3 +55,12 @@ mamba clean --all --yes --force-pkgs-dirs
 ## Fix 404 Error with nbgitpuller link
 ## https://jupyterhub.github.io/nbgitpuller/install.html#nbgitpuller-link-shows-404-not-found
 jupyter serverextension enable nbgitpuller --sys-prefix
+
+# List extensions
+jupyter serverextension list
+jupyter server extension list
+jupyter labextension list
+
+## Change default settings for JupyterLab Extensions
+mkdir -p "$NB_PYTHON_PREFIX"/share/jupyter/lab/settings/
+cp binder/overrides.json "$NB_PYTHON_PREFIX"/share/jupyter/lab/settings/

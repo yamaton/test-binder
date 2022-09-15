@@ -1,0 +1,17 @@
+{
+    "@jupyterlab/apputils-extension:themes": {
+        "theme": "JupyterLab Dark"
+    },
+    "@krassowski/jupyterlab-lsp:completion": {
+        "continuousHinting": true,
+        "disableCompletionsFrom": [
+            "Kernel"
+        ],
+        "theme": "material"
+    },
+    "@krassowski/jupyterlab-lsp:plugin": {
+        "logAllCommunication": true,
+        "loggingLevel": "debug",
+        "setTrace": "verbose"
+    }
+}
