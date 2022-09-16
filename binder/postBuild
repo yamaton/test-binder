@@ -15,6 +15,11 @@ mkdir -p /srv/conda/envs/notebook/etc/jupyter
 npm install --prefix /srv/conda/envs/notebook/etc/jupyter yamaton/triton-lsp#dev
 
 
+# Modify detail width of completion items
+cat "binder/modify-theme.css" >> "/srv/conda/envs/notebook/share/jupyter/lab/themes/@jupyterlab/theme-dark-extension/index.css"
+cat "binder/modify-theme.css" >> "/srv/conda/envs/notebook/share/jupyter/lab/themes/@jupyterlab/theme-light-extension/index.css"
+
+
 # pipx: install programs in each virtual environment
 export PIPX_HOME=/srv/conda/pipx
 mkdir -p "$PIPX_HOME"

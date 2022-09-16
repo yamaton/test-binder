@@ -1,0 +1,16 @@
+
+
+.lsp-completer .jp-Completer-list {
+  --lsp-completer-max-detail-width: 500px !important;
+}
+
+.lsp-completer .jp-Completer-typeExtended {
+  font-family: var(--jp-content-font-family) !important;
+  font-size: 12px !important;
+  text-align: left !important;
+  color: var(--jp-ui-font-color1) !important;
+}
+
+.lsp-completer .jp-Completer-docpanel pre {
+  font-family: var(--jp-content-font-family) !important;
+}
