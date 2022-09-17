@@ -5,7 +5,6 @@ htop
 emacs
 vim
 nano
-tldr
 neofetch
 source-highlight
 shellcheck

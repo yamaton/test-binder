@@ -57,6 +57,11 @@ done
 
 mamba clean --all --yes --force-pkgs-dirs
 
+
+## Install tealdeer
+curl https://raw.githubusercontent.com/yamaton/dotfiles/master/_setup-tealdeer.sh | bash -s -- -f
+
+
 ## Fix 404 Error with nbgitpuller link
 ## https://jupyterhub.github.io/nbgitpuller/install.html#nbgitpuller-link-shows-404-not-found
 jupyter serverextension enable nbgitpuller --sys-prefix
