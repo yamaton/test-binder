@@ -58,6 +58,15 @@ done
 mamba clean --all --yes --force-pkgs-dirs
 
 
+## zsh setup
+zshdir=~/.config/zsh
+mkdir -p "$zshdir" && cd "$zshdir"
+git clone https://github.com/zsh-users/zsh-syntax-highlighting
+git clone https://github.com/zsh-users/zsh-autosuggestions
+git clone https://github.com/zsh-git-prompt/zsh-git-prompt
+cd
+
+
 ## Install tealdeer
 curl https://raw.githubusercontent.com/yamaton/dotfiles/master/_setup-tealdeer.sh | bash -s -- -f
 
@@ -66,10 +75,12 @@ curl https://raw.githubusercontent.com/yamaton/dotfiles/master/_setup-tealdeer.s
 ## https://jupyterhub.github.io/nbgitpuller/install.html#nbgitpuller-link-shows-404-not-found
 jupyter serverextension enable nbgitpuller --sys-prefix
 
+
 # List extensions
 jupyter serverextension list
 jupyter server extension list
 jupyter labextension list
+
 
 ## Change default settings for JupyterLab Extensions
 mkdir -p "$NB_PYTHON_PREFIX"/share/jupyter/lab/settings/

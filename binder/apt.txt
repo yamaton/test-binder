@@ -8,3 +8,4 @@ nano
 neofetch
 source-highlight
 shellcheck
+zsh
