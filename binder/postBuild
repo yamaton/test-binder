@@ -67,6 +67,10 @@ git clone https://github.com/zsh-git-prompt/zsh-git-prompt
 cd
 
 
+## remove .git in home directory
+rm -rf .git
+
+
 ## Install tealdeer
 curl https://raw.githubusercontent.com/yamaton/dotfiles/master/_setup-tealdeer.sh | bash -s -- -f
 
