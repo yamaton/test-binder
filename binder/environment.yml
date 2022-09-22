@@ -2,6 +2,8 @@ name: base-environment
 channels:
   - conda-forge
   - bioconda
+  - nodefaults
+
 dependencies:
   - python=3.9
   - nodejs=16
@@ -22,13 +24,18 @@ dependencies:
   - r-biocmanager
   - r-leaflet
   - rpy2
-  - jupyterlab-lsp
+  - jupyterlab >=3.3.0,<4.0.0a0
+  - jupyter_server >=1.1.2
+  - retrolab >=0.3.0,<0.4
+  - flake8 >=3.5
+  - pylint
+  - pylsp-mypy
   - python-lsp-server
+  - ruamel_yaml
   - r-languageserver
   - biopython
   - pysam
   - pipx
-  - mamba
   - pip
   - pip:
     - nbgitpuller
