@@ -115,3 +115,13 @@ jupyter labextension list
 ## Change default settings for JupyterLab Extensions
 mkdir -p "$NB_PYTHON_PREFIX"/share/jupyter/lab/settings/
 cp binder/overrides.json "$NB_PYTHON_PREFIX"/share/jupyter/lab/settings/
+
+
+## Remove cache
+##
+## otherwise the size $HOME gets too large that
+## docker volume initialization triggers a timeout
+## at the very first startup of an environment
+rm -rf ~/.cache
+rm -rf ~/.npm
+rm -rf ~/.yarn
