@@ -10,10 +10,10 @@ set -ex
 
 # install custom jupyterlab-lsp
 pushd /srv/conda/envs/notebook
-    wget https://github.com/yamaton/jupyterlab-lsp/archive/refs/heads/add-mouseover-hover.zip
-    unzip add-mouseover-hover.zip
-    rm -f add-mouseover-hover.zip
-    pushd jupyterlab-lsp-add-mouseover-hover
+    wget https://github.com/jupyter-lsp/jupyterlab-lsp/archive/refs/heads/master.zip
+    unzip master.zip
+    rm -f master.zip
+    pushd jupyterlab-lsp-master
         # Build labextensions
         jlpm bootstrap
 
