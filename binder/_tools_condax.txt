@@ -64,6 +64,8 @@ seqkit
 seqtk
 shovill
 snippy
+snpeff
+snpsift
 spades
 sra-tools
 star
