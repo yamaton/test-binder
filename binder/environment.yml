@@ -37,5 +37,6 @@ dependencies:
   - pysam
   - pipx
   - pip
+  - bash_kernel
   - pip:
     - nbgitpuller
