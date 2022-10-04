@@ -38,5 +38,7 @@ dependencies:
   - pipx
   - pip
   - bash_kernel
+  - mamba
+  - micromamba
   - pip:
     - nbgitpuller
