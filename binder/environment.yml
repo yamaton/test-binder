@@ -27,6 +27,7 @@ dependencies:
   - jupyterlab >=3.3.0,<4.0.0a0
   - jupyter_server >=1.1.2
   - retrolab >=0.3.0,<0.4
+  - nbgitpuller
   - flake8 >=3.5
   - pylint
   - pylsp-mypy
@@ -41,5 +42,4 @@ dependencies:
   - mamba
   - micromamba
   - pip:
-    - nbgitpuller
     - igv-jupyter
