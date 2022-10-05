@@ -5,6 +5,7 @@ bandage
 bcftools
 bedtools
 bioawk
+blast
 bowtie2
 busco
 bwa
@@ -16,7 +17,9 @@ csvkit
 csvtk
 cufflinks
 cutadapt
+datamash
 elprep
+emboss
 entrez-direct
 fastp
 fastqc
@@ -71,6 +74,7 @@ sra-tools
 star
 strelka
 subread
+treetime
 trim-galore
 trimmomatic
 trinity
