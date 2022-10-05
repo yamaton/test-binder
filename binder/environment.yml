@@ -42,4 +42,4 @@ dependencies:
   - mamba
   - micromamba
   - pip:
-    - igv-jupyter
+    - igv-notebook
