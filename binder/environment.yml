@@ -34,12 +34,14 @@ dependencies:
   - python-lsp-server
   - ruamel_yaml
   - r-languageserver
+  - bash_kernel
   - biopython
   - pysam
   - pipx
   - pip
-  - bash_kernel
   - mamba
   - micromamba
   - pip:
     - igv-notebook
+
+

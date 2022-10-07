@@ -8,12 +8,23 @@
 set -ex
 
 
+# enable forked bash_kernel
+pip install -U --prefix /srv/conda/envs/notebook git+https://github.com/yamaton/bash_kernel@add-bash-completion
+
+
+# install triton-lsp
+# This path must be consistent with what's written in
+# .jupyter/jupyter_server_config.json
+mkdir -p /srv/conda/envs/notebook/etc/jupyter
+npm install --prefix /srv/conda/envs/notebook/etc/jupyter yamaton/triton-lsp#dev
+
+
 # install custom jupyterlab-lsp
 pushd /srv/conda/envs/notebook
-    wget https://github.com/jupyter-lsp/jupyterlab-lsp/archive/refs/heads/master.zip
-    unzip master.zip
-    rm -f master.zip
-    pushd jupyterlab-lsp-master
+    wget https://github.com/yamaton/jupyterlab-lsp/archive/refs/heads/fix-path-completion.zip
+    unzip fix-path-completion.zip
+    rm -f fix-path-completion.zip
+    pushd jupyterlab-lsp-fix-path-completion
         # Build labextensions
         jlpm bootstrap
 
@@ -32,13 +43,6 @@ pushd /srv/conda/envs/notebook
         popd
     popd
 popd
-
-
-# install triton-lsp
-# This path must be consistent with what's written in
-# .jupyter/jupyter_server_config.json
-mkdir -p /srv/conda/envs/notebook/etc/jupyter
-npm install --prefix /srv/conda/envs/notebook/etc/jupyter yamaton/triton-lsp#dev
 
 
 # Modify detail width of completion items
