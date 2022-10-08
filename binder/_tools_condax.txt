@@ -1,8 +1,10 @@
+abyss
 agat
 bakta
 bamtools
 bandage
 bcftools
+beagle
 bedtools
 bioawk
 blast
@@ -40,6 +42,7 @@ ivar
 kallisto
 kraken
 kraken2
+macs2
 mafft
 megahit
 methyldackel
@@ -84,6 +87,7 @@ unicycler
 vcfanno
 vcflib
 vcftools
+velvet
 wtdbg
 yak
 
