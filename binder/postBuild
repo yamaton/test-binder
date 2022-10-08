@@ -4,12 +4,12 @@
 # > Note that by default the build will not be stopped
 # > if an error occurs inside a shell script. You should
 # > include set -e or the equivalent at the start of the
-# >  script to avoid errors being silently ignored.
+# > script to avoid errors being silently ignored.
 set -ex
 
 
 # enable forked bash_kernel
-pip install -U --prefix /srv/conda/envs/notebook git+https://github.com/yamaton/bash_kernel@add-bash-completion
+python -m pip install -U --prefix /srv/conda/envs/notebook git+https://github.com/yamaton/bash_kernel@add-bash-completion
 
 
 # install triton-lsp
@@ -83,6 +83,7 @@ for _tool in ${TOOLS[*]}; do
         condax remove "$_tool"
         condax install -c conda-forge -c bioconda --force "$_tool"
     fi
+    mamba clean --all --yes --force-pkgs-dirs
 done
 
 mamba clean --all --yes --force-pkgs-dirs
