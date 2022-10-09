@@ -3,8 +3,7 @@
         "theme": "JupyterLab Dark"
     },
     "@jupyter-lsp/jupyterlab-lsp:completion": {
-        "continuousHinting": true,
-        "theme": "material"
+        "continuousHinting": true
     },
     "@jupyter-lsp/jupyterlab-lsp:plugin": {
         "logAllCommunication": true,
