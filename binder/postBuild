@@ -21,10 +21,10 @@ npm install --prefix /srv/conda/envs/notebook/etc/jupyter yamaton/triton-lsp#dev
 
 # install custom jupyterlab-lsp
 pushd /srv/conda/envs/notebook
-    wget https://github.com/yamaton/jupyterlab-lsp/archive/refs/heads/fix-path-completion.zip
-    unzip fix-path-completion.zip
-    rm -f fix-path-completion.zip
-    pushd jupyterlab-lsp-fix-path-completion
+    wget https://github.com/yamaton/jupyterlab-lsp/archive/refs/heads/dev.zip
+    unzip dev.zip
+    rm -f dev.zip
+    pushd jupyterlab-lsp-dev
         # Build labextensions
         jlpm bootstrap
 
