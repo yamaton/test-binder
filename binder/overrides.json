@@ -12,5 +12,8 @@
     },
     "@jupyter-lsp/jupyterlab-lsp:hover": {
         "autoActivate": true
+    },
+    "@jupyterlab/logconsole-extension:plugin": {
+        "flash": false
     }
 }
