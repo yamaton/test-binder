@@ -23,7 +23,12 @@ dependencies:
   - r-shinydashboard
   - r-biocmanager
   - r-leaflet
+  - r-gplots
   - rpy2
+  - bioconductor-tximport
+  - bioconductor-biomart
+  - bioconductor-edger
+  - bioconductor-deseq2
   - jupyterlab >=3.3.0,<4.0.0a0
   - jupyter_server >=1.1.2
   - retrolab >=0.3.0,<0.4
