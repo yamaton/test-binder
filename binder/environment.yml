@@ -33,6 +33,7 @@ dependencies:
   - jupyter_server >=1.1.2
   - retrolab >=0.3.0,<0.4
   - nbgitpuller
+  - jupyterlab-link-share
   - flake8 >=3.5
   - pylint
   - pylsp-mypy
