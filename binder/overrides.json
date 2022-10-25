@@ -15,5 +15,8 @@
     },
     "@jupyterlab/logconsole-extension:plugin": {
         "flash": false
+    },
+    "@jupyterlab/fileeditor-extension:plugin": {
+        "autoClosingBrackets": true
     }
 }
