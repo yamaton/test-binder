@@ -24,6 +24,7 @@ dependencies:
   - r-biocmanager
   - r-leaflet
   - r-gplots
+  - r-ggplot2
   - rpy2
   - bioconductor-tximport
   - bioconductor-biomart
@@ -34,6 +35,7 @@ dependencies:
   - retrolab >=0.3.0,<0.4
   - nbgitpuller
   - jupyterlab-link-share
+  - jupyterlab-fasta
   - jupyterlab-copy-relative-path
   - flake8 >=3.5
   - pylint
