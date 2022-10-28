@@ -34,6 +34,7 @@ gatk
 genrich
 gfatools
 gff3toddbj
+gffread
 gffutils
 hifiasm
 hisat2
