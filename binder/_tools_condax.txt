@@ -43,6 +43,7 @@ htslib
 hypo
 iqtree
 ivar
+kalign3
 kallisto
 kraken
 kraken2
