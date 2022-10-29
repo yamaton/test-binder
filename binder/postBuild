@@ -5,7 +5,8 @@
 # > if an error occurs inside a shell script. You should
 # > include set -e or the equivalent at the start of the
 # > script to avoid errors being silently ignored.
-set -ex
+set -o errorexit
+set -o nounset
 
 
 # enable forked bash_kernel
