@@ -51,6 +51,7 @@ kraken
 kraken2
 macs2
 mafft
+masurca
 megahit
 methyldackel
 miniasm
@@ -63,8 +64,10 @@ mummer
 muscle
 nanoplot
 nanopolish
+ncbi-datasets-cli
 parallel
 pilon
+polypolish
 porechop
 primer3
 prokka
