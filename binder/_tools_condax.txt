@@ -1,5 +1,6 @@
 abyss
 agat
+any2fasta
 bakta
 bamtools
 bandage
