@@ -73,6 +73,7 @@ primer3
 prokka
 quast
 racon
+raven-assembler
 rsem
 salmon
 samtools
