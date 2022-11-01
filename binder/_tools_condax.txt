@@ -32,7 +32,7 @@ fasttree
 filtlong
 flye
 freebayes
-gatk
+gatk4
 genrich
 gfatools
 gff3toddbj
