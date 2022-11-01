@@ -8,6 +8,7 @@ beagle
 bedtools
 bioawk
 blast
+blobtools
 bowtie2
 busco
 bwa
@@ -78,6 +79,7 @@ shovill
 snippy
 snpeff
 snpsift
+sortmerna
 spades
 sra-tools
 star
