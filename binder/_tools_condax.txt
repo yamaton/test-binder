@@ -4,6 +4,7 @@ any2fasta
 bakta
 bamtools
 bandage
+barrnap
 bcftools
 beagle
 bedtools
