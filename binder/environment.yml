@@ -25,6 +25,7 @@ dependencies:
   - r-leaflet
   - r-gplots
   - r-ggplot2
+  - r-sleuth
   - rpy2
   - bioconductor-tximport
   - bioconductor-biomart
