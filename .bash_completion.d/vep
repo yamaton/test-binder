@@ -19,7 +19,7 @@ _vep()
 
     case "$cmd" in
       *)
-          word_list="  --help -i --input_file -o --output_file --force_overwrite --species --everything --fork" 
+          word_list="  --help -i --input_file -o --output_file --force_overwrite --species --everything --fork"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

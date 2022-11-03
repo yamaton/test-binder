@@ -107,7 +107,7 @@ _bcftools()
             ;;
 
       *)
-          word_list=" index annotate concat convert isec merge norm plugin query reheader sort view call consensus cnv csq filter gtcheck mpileup polysomy roh stats " 
+          word_list=" index annotate concat convert isec merge norm plugin query reheader sort view call consensus cnv csq filter gtcheck mpileup polysomy roh stats "
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

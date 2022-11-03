@@ -1,6 +1,6 @@
 # Auto-generated with h2o
 
-_rsem-plot-model()
+_rsemplotmodel()
 {
     local i=1 cmd cur word_list
     cur="${COMP_WORDS[COMP_CWORD]}"
@@ -19,7 +19,7 @@ _rsem-plot-model()
 
     case "$cmd" in
       *)
-          word_list="  " 
+          word_list="  "
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
@@ -27,4 +27,4 @@ _rsem-plot-model()
 }
 
 ## -o bashdefault and -o default are fallback
-complete -o bashdefault -o default -F _rsem-plot-model rsem-plot-model
+complete -o bashdefault -o default -F _rsemplotmodel rsem-plot-model

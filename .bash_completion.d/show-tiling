@@ -1,6 +1,6 @@
 # Auto-generated with h2o
 
-_show-tiling()
+_showtiling()
 {
     local i=1 cmd cur word_list
     cur="${COMP_WORDS[COMP_CWORD]}"
@@ -19,7 +19,7 @@ _show-tiling()
 
     case "$cmd" in
       *)
-          word_list="  -a -c -h -g -i -l -p -R -t -u -v -V -x" 
+          word_list="  -a -c -h -g -i -l -p -R -t -u -v -V -x"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
@@ -27,4 +27,4 @@ _show-tiling()
 }
 
 ## -o bashdefault and -o default are fallback
-complete -o bashdefault -o default -F _show-tiling show-tiling
+complete -o bashdefault -o default -F _showtiling show-tiling

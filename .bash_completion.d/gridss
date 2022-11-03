@@ -19,7 +19,7 @@ _gridss()
 
     case "$cmd" in
       *)
-          word_list="  -r --reference -o --output -a --assembly -t --threads -j --jar -w --workingdir -b --blacklist -s --steps -c --configuration -l --labels --externalaligner --internalaligner --jvmheap --otherjvmheap --skipsoftcliprealignment --maxcoverage --picardoptions --useproperpair --concordantreadpairdistribution --keepTempFiles --nojni --jobindex --jobnodes" 
+          word_list="  -r --reference -o --output -a --assembly -t --threads -j --jar -w --workingdir -b --blacklist -s --steps -c --configuration -l --labels --externalaligner --internalaligner --jvmheap --otherjvmheap --skipsoftcliprealignment --maxcoverage --picardoptions --useproperpair --concordantreadpairdistribution --keepTempFiles --nojni --jobindex --jobnodes"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

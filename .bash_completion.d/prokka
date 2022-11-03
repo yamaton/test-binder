@@ -19,7 +19,7 @@ _prokka()
 
     case "$cmd" in
       *)
-          word_list="  --help --version --citation --quiet --debug --dbdir --listdb --setupdb --cleandb --depends --outdir --force --prefix --addgenes --addmrna --locustag --increment --gffver --compliant --centre --accver --genus --species --strain --plasmid --kingdom --gcode --prodigaltf --gram --usegenus --proteins --hmms --metagenome --rawproduct --cdsrnaolap --evalue --coverage --cpus --fast --noanno --mincontiglen --rfam --norrna --notrna --rnammer" 
+          word_list="  --help --version --citation --quiet --debug --dbdir --listdb --setupdb --cleandb --depends --outdir --force --prefix --addgenes --addmrna --locustag --increment --gffver --compliant --centre --accver --genus --species --strain --plasmid --kingdom --gcode --prodigaltf --gram --usegenus --proteins --hmms --metagenome --rawproduct --cdsrnaolap --evalue --coverage --cpus --fast --noanno --mincontiglen --rfam --norrna --notrna --rnammer"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

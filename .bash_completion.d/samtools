@@ -163,7 +163,7 @@ _samtools()
             ;;
 
       *)
-          word_list=" dict faidx fqidx index calmd fixmate reheader targetcut addreplacerg markdup ampliconclip collate cat consensus merge mpileup sort split quickcheck fastq fasta import bedcov coverage depth flagstat idxstats phase stats ampliconstats flags head tview view depad samples " 
+          word_list=" dict faidx fqidx index calmd fixmate reheader targetcut addreplacerg markdup ampliconclip collate cat consensus merge mpileup sort split quickcheck fastq fasta import bedcov coverage depth flagstat idxstats phase stats ampliconstats flags head tview view depad samples "
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

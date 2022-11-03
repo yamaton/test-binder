@@ -19,7 +19,7 @@ _filtlong()
 
     case "$cmd" in
       *)
-          word_list="  -t --target_bases -p --keep_percent --min_length --max_length --min_mean_q --min_window_q -a --assembly -1 --illumina_1 -2 --illumina_2 --length_weight --mean_q_weight --window_q_weight --trim --split --window_size --verbose --version" 
+          word_list="  -t --target_bases -p --keep_percent --min_length --max_length --min_mean_q --min_window_q -a --assembly -1 --illumina_1 -2 --illumina_2 --length_weight --mean_q_weight --window_q_weight --trim --split --window_size --verbose --version"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

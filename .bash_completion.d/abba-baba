@@ -1,6 +1,6 @@
 # Auto-generated with h2o
 
-_abba-baba()
+_abbababa()
 {
     local i=1 cmd cur word_list
     cur="${COMP_WORDS[COMP_CWORD]}"
@@ -19,7 +19,7 @@ _abba-baba()
 
     case "$cmd" in
       *)
-          word_list="  -t --tree -f --file -y --type" 
+          word_list="  -t --tree -f --file -y --type"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
@@ -27,4 +27,4 @@ _abba-baba()
 }
 
 ## -o bashdefault and -o default are fallback
-complete -o bashdefault -o default -F _abba-baba abba-baba
+complete -o bashdefault -o default -F _abbababa abba-baba

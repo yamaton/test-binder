@@ -19,7 +19,7 @@ _pFst()
 
     case "$cmd" in
       *)
-          word_list="  -t --target -b --background -f --file -y --type -d --deltaaf -r --region -c --counts" 
+          word_list="  -t --target -b --background -f --file -y --type -d --deltaaf -r --region -c --counts"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

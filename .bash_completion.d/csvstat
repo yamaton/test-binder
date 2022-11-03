@@ -19,7 +19,7 @@ _csvstat()
 
     case "$cmd" in
       *)
-          word_list="  -h --help -d --delimiter -t --tabs -q --quotechar -u --quoting -b --no-doublequote -p --escapechar -z --maxfieldsize -e --encoding -S --skipinitialspace -H --no-header-row -K --skip-lines -v --verbose -l --linenumbers --zero -V --version --csv -n --names -c --columns --type --nulls --unique --min --max --sum --mean --median --stdev --len --freq --freq-count --count -y --snifflimit" 
+          word_list="  -h --help -d --delimiter -t --tabs -q --quotechar -u --quoting -b --no-doublequote -p --escapechar -z --maxfieldsize -e --encoding -S --skipinitialspace -H --no-header-row -K --skip-lines -v --verbose -l --linenumbers --zero -V --version --csv -n --names -c --columns --type --nulls --unique --min --max --sum --mean --median --stdev --len --freq --freq-count --count -y --snifflimit"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

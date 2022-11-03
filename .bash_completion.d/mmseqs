@@ -18,27 +18,27 @@ _mmseqs()
     done
 
     case "$cmd" in
-          easy-search) _mmseqs_easy-search
+          easy-search) _mmseqs_easysearch
             return
             ;;
 
-          easy-linsearch) _mmseqs_easy-linsearch
+          easy-linsearch) _mmseqs_easylinsearch
             return
             ;;
 
-          easy-cluster) _mmseqs_easy-cluster
+          easy-cluster) _mmseqs_easycluster
             return
             ;;
 
-          easy-linclust) _mmseqs_easy-linclust
+          easy-linclust) _mmseqs_easylinclust
             return
             ;;
 
-          easy-taxonomy) _mmseqs_easy-taxonomy
+          easy-taxonomy) _mmseqs_easytaxonomy
             return
             ;;
 
-          easy-rbh) _mmseqs_easy-rbh
+          easy-rbh) _mmseqs_easyrbh
             return
             ;;
 
@@ -487,14 +487,14 @@ _mmseqs()
             ;;
 
       *)
-          word_list=" easy-search easy-linsearch easy-cluster easy-linclust easy-taxonomy easy-rbh search linsearch map rbh linclust cluster clusterupdate taxonomy databases createdb createindex createlinindex convertmsa tsv2db tar2db msa2profile compress decompress rmdb mvdb cpdb lndb unpackdb touchdb createsubdb concatdbs splitdb mergedbs subtractdbs convertalis createtsv convert2fasta result2flat createseqfiledb taxonomyreport extractorfs extractframes orftocontig reverseseq translatenucs translateaa splitsequence masksequence extractalignedregion swapresults result2rbh result2msa result2dnamsa result2stats filterresult offsetalignment proteinaln2nucl result2repseq sortresult summarizealis summarizeresult createtaxdb createbintaxonomy addtaxonomy filtertaxdb filtertaxseqdb aggregatetax aggregatetaxweights lcaalign lca majoritylca multihitdb multihitsearch besthitperset combinepvalperset mergeresultsbyset prefilter ungappedprefilter kmermatcher kmersearch align alignall transitivealign rescorediagonal alignbykmer clust clusthash mergeclusters result2profile msa2result profile2pssm profile2consensus profile2repseq convertprofiledb enrich result2pp profile2cs convertca3m expandaln expand2profile view apply filterdb swapdb prefixid suffixid renamedbkeys diffseqdbs summarizetabs gff2db maskbygff convertkb summarizeheaders nrtotaxmapping extractdomains countkmer " 
+          word_list=" easy-search easy-linsearch easy-cluster easy-linclust easy-taxonomy easy-rbh search linsearch map rbh linclust cluster clusterupdate taxonomy databases createdb createindex createlinindex convertmsa tsv2db tar2db msa2profile compress decompress rmdb mvdb cpdb lndb unpackdb touchdb createsubdb concatdbs splitdb mergedbs subtractdbs convertalis createtsv convert2fasta result2flat createseqfiledb taxonomyreport extractorfs extractframes orftocontig reverseseq translatenucs translateaa splitsequence masksequence extractalignedregion swapresults result2rbh result2msa result2dnamsa result2stats filterresult offsetalignment proteinaln2nucl result2repseq sortresult summarizealis summarizeresult createtaxdb createbintaxonomy addtaxonomy filtertaxdb filtertaxseqdb aggregatetax aggregatetaxweights lcaalign lca majoritylca multihitdb multihitsearch besthitperset combinepvalperset mergeresultsbyset prefilter ungappedprefilter kmermatcher kmersearch align alignall transitivealign rescorediagonal alignbykmer clust clusthash mergeclusters result2profile msa2result profile2pssm profile2consensus profile2repseq convertprofiledb enrich result2pp profile2cs convertca3m expandaln expand2profile view apply filterdb swapdb prefixid suffixid renamedbkeys diffseqdbs summarizetabs gff2db maskbygff convertkb summarizeheaders nrtotaxmapping extractdomains countkmer "
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
 
 }
 
-_mmseqs_easy-search ()
+_mmseqs_easysearch ()
 {
     local cur word_list
     word_list=" --comp-bias-corr --add-self-matches --seed-sub-mat -s -k --k-score --alph-size --max-seqs --split --split-mode --split-memory-limit --diag-score --exact-kmer-matching --mask --mask-lower-case --min-ungapped-score --spaced-kmer-mode --spaced-kmer-pattern --local-tmp --disk-space-limit -a --alignment-mode --alignment-output-mode --wrapped-scoring -e --min-seq-id --min-aln-len --seq-id-mode --alt-ali -c --cov-mode --max-rejected --max-accept --score-bias --realign --realign-score-bias --realign-max-seqs --gap-open --gap-extend --zdrop --exhaustive-search-filter --pca --pcb --mask-profile --e-profile --wg --filter-msa --max-seq-id --qid --qsc --cov --diff --num-iterations --exhaustive-search --lca-search --rescore-mode --allow-deletion --min-length --max-length --max-gaps --contig-start-mode --contig-end-mode --orf-start-mode --forward-frames --reverse-frames --translation-table --translate --use-all-table-starts --id-offset --add-orf-stop --sequence-overlap --sequence-split-mode --headers-split-mode --search-type --start-sens --sens-steps --format-mode --format-output --overlap --dbtype --shuffle --createdb-mode --greedy-best-hits --sub-mat --max-seq-len --db-load-mode --threads --compressed -v --mpi-runner --force-reuse --remove-tmp-files --filter-hits --sort-results --create-lookup --chain-alignments --merge-query --strand --db-output --write-lookup" 
@@ -502,7 +502,7 @@ _mmseqs_easy-search ()
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_mmseqs_easy-linsearch ()
+_mmseqs_easylinsearch ()
 {
     local cur word_list
     word_list=" --comp-bias-corr --add-self-matches --seed-sub-mat --mask --mask-lower-case --split-memory-limit -a --alignment-mode --alignment-output-mode --wrapped-scoring -e --min-seq-id --min-aln-len --seq-id-mode --alt-ali -c --cov-mode --max-rejected --max-accept --score-bias --realign --realign-score-bias --realign-max-seqs --gap-open --gap-extend --zdrop --kmer-per-seq --kmer-per-seq-scale --pick-n-sim-kmer --result-direction --pca --pcb --min-length --max-length --max-gaps --contig-start-mode --contig-end-mode --orf-start-mode --forward-frames --reverse-frames --translation-table --translate --use-all-table-starts --id-offset --add-orf-stop --search-type --format-mode --format-output --sub-mat --max-seq-len --db-load-mode --threads --compressed -v --mpi-runner --force-reuse --remove-tmp-files --create-lookup --chain-alignments --merge-query --db-output" 
@@ -510,7 +510,7 @@ _mmseqs_easy-linsearch ()
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_mmseqs_easy-cluster ()
+_mmseqs_easycluster ()
 {
     local cur word_list
     word_list=" --seed-sub-mat -s -k --k-score --alph-size --max-seqs --split --split-mode --split-memory-limit --comp-bias-corr --diag-score --exact-kmer-matching --mask --mask-lower-case --min-ungapped-score --add-self-matches --spaced-kmer-mode --spaced-kmer-pattern --local-tmp -c --cov-mode -a --alignment-mode --alignment-output-mode --wrapped-scoring -e --min-seq-id --min-aln-len --seq-id-mode --alt-ali --max-rejected --max-accept --score-bias --realign --realign-score-bias --realign-max-seqs --gap-open --gap-extend --zdrop --cluster-mode --max-iterations --similarity-type --single-step-clustering --cluster-steps --cluster-reassign --kmer-per-seq --kmer-per-seq-scale --adjust-kmer-len --hash-shift --include-only-extendable --ignore-multi-kmer --pca --pcb --rescore-mode --dbtype --shuffle --createdb-mode --id-offset --sub-mat --max-seq-len --db-load-mode --threads --compressed -v --remove-tmp-files --force-reuse --mpi-runner --filter-hits --sort-results --write-lookup" 
@@ -518,7 +518,7 @@ _mmseqs_easy-cluster ()
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_mmseqs_easy-linclust ()
+_mmseqs_easylinclust ()
 {
     local cur word_list
     word_list=" --comp-bias-corr --add-self-matches --alph-size --spaced-kmer-mode --spaced-kmer-pattern --mask --mask-lower-case -k --split-memory-limit -a --alignment-mode --alignment-output-mode --wrapped-scoring -e --min-seq-id --min-aln-len --seq-id-mode --alt-ali -c --cov-mode --max-rejected --max-accept --score-bias --realign --realign-score-bias --realign-max-seqs --gap-open --gap-extend --zdrop --cluster-mode --max-iterations --similarity-type --kmer-per-seq --kmer-per-seq-scale --adjust-kmer-len --hash-shift --include-only-extendable --ignore-multi-kmer --pca --pcb --rescore-mode --dbtype --shuffle --createdb-mode --id-offset --threads --compressed -v --sub-mat --max-seq-len --db-load-mode --remove-tmp-files --force-reuse --mpi-runner --filter-hits --sort-results --write-lookup" 
@@ -526,7 +526,7 @@ _mmseqs_easy-linclust ()
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_mmseqs_easy-taxonomy ()
+_mmseqs_easytaxonomy ()
 {
     local cur word_list
     word_list=" --comp-bias-corr --add-self-matches --seed-sub-mat -s -k --k-score --alph-size --max-seqs --split --split-mode --split-memory-limit --diag-score --exact-kmer-matching --mask --mask-lower-case --min-ungapped-score --spaced-kmer-mode --spaced-kmer-pattern --local-tmp --disk-space-limit -a --alignment-mode --alignment-output-mode --wrapped-scoring -e --min-seq-id --min-aln-len --seq-id-mode --alt-ali -c --cov-mode --max-rejected --max-accept --score-bias --realign --realign-score-bias --realign-max-seqs --gap-open --gap-extend --zdrop --exhaustive-search-filter --pca --pcb --mask-profile --e-profile --wg --filter-msa --max-seq-id --qid --qsc --cov --diff --num-iterations --exhaustive-search --lca-search --orf-filter --orf-filter-e --orf-filter-s --lca-mode --majority --vote-mode --lca-ranks --tax-lineage --blacklist --rescore-mode --allow-deletion --min-length --max-length --max-gaps --contig-start-mode --contig-end-mode --orf-start-mode --forward-frames --reverse-frames --translation-table --translate --use-all-table-starts --id-offset --add-orf-stop --sequence-overlap --sequence-split-mode --headers-split-mode --search-type --start-sens --sens-steps --report-mode --format-mode --format-output --first-seq-as-repr --target-column --full-header --idx-seq-src --dbtype --shuffle --createdb-mode --compressed --threads -v --sub-mat --max-seq-len --db-load-mode --mpi-runner --force-reuse --remove-tmp-files --filter-hits --sort-results --create-lookup --chain-alignments --merge-query --strand --db-output --write-lookup" 
@@ -534,7 +534,7 @@ _mmseqs_easy-taxonomy ()
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_mmseqs_easy-rbh ()
+_mmseqs_easyrbh ()
 {
     local cur word_list
     word_list=" --comp-bias-corr --add-self-matches --seed-sub-mat -s -k --k-score --alph-size --max-seqs --split --split-mode --split-memory-limit --diag-score --exact-kmer-matching --mask --mask-lower-case --min-ungapped-score --spaced-kmer-mode --spaced-kmer-pattern --local-tmp --disk-space-limit -a --alignment-mode --alignment-output-mode --wrapped-scoring -e --min-seq-id --min-aln-len --seq-id-mode --alt-ali -c --cov-mode --max-rejected --max-accept --score-bias --realign --realign-score-bias --realign-max-seqs --gap-open --gap-extend --zdrop --exhaustive-search-filter --pca --pcb --mask-profile --e-profile --wg --filter-msa --max-seq-id --qid --qsc --cov --diff --num-iterations --exhaustive-search --lca-search --rescore-mode --allow-deletion --min-length --max-length --max-gaps --contig-start-mode --contig-end-mode --orf-start-mode --forward-frames --reverse-frames --translation-table --translate --use-all-table-starts --id-offset --add-orf-stop --sequence-overlap --sequence-split-mode --headers-split-mode --search-type --start-sens --sens-steps --format-mode --format-output --overlap --dbtype --shuffle --createdb-mode --greedy-best-hits --sub-mat --max-seq-len --db-load-mode --threads --compressed -v --mpi-runner --force-reuse --remove-tmp-files --filter-hits --sort-results --create-lookup --chain-alignments --merge-query --strand --db-output --write-lookup" 

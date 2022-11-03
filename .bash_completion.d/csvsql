@@ -19,7 +19,7 @@ _csvsql()
 
     case "$cmd" in
       *)
-          word_list="  -h --help -d --delimiter -t --tabs -q --quotechar -u --quoting -b --no-doublequote -p --escapechar -z --maxfieldsize -e --encoding -L --locale -S --skipinitialspace --blanks --date-format --datetime-format -H --no-header-row -K --skip-lines -v --verbose -l --linenumbers --zero -V --version -i --dialect --db --query --insert --prefix --before-insert --after-insert --tables --no-constraints --unique-constraint --no-create --create-if-not-exists --overwrite --db-schema -y --snifflimit -I --no-inference --chunk-size" 
+          word_list="  -h --help -d --delimiter -t --tabs -q --quotechar -u --quoting -b --no-doublequote -p --escapechar -z --maxfieldsize -e --encoding -L --locale -S --skipinitialspace --blanks --date-format --datetime-format -H --no-header-row -K --skip-lines -v --verbose -l --linenumbers --zero -V --version -i --dialect --db --query --insert --prefix --before-insert --after-insert --tables --no-constraints --unique-constraint --no-create --create-if-not-exists --overwrite --db-schema -y --snifflimit -I --no-inference --chunk-size"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

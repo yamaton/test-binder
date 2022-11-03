@@ -1,6 +1,6 @@
 # Auto-generated with h2o
 
-_hisat2_extract_snps_haplotypes_UCSC.py()
+_hisat2extractsnpshaplotypesUCSCpy()
 {
     local i=1 cmd cur word_list
     cur="${COMP_WORDS[COMP_CWORD]}"
@@ -19,7 +19,7 @@ _hisat2_extract_snps_haplotypes_UCSC.py()
 
     case "$cmd" in
       *)
-          word_list="  -h --help --inter-gap --intra-gap -v --verbose --testset" 
+          word_list="  -h --help --inter-gap --intra-gap -v --verbose --testset"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
@@ -27,4 +27,4 @@ _hisat2_extract_snps_haplotypes_UCSC.py()
 }
 
 ## -o bashdefault and -o default are fallback
-complete -o bashdefault -o default -F _hisat2_extract_snps_haplotypes_UCSC.py hisat2_extract_snps_haplotypes_UCSC.py
+complete -o bashdefault -o default -F _hisat2extractsnpshaplotypesUCSCpy hisat2_extract_snps_haplotypes_UCSC.py

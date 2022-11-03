@@ -86,7 +86,7 @@ _singularity()
             return
             ;;
 
-          run-help) _singularity_run-help
+          run-help) _singularity_runhelp
             return
             ;;
 
@@ -119,7 +119,7 @@ _singularity()
             ;;
 
       *)
-          word_list=" build cache capability config delete exec help inspect instance key oci overlay plugin pull push remote run run-help search shell sif sign test verify version -c --config -d --debug -h --help --nocolor -q --quiet -s --silent -v --verbose --version" 
+          word_list=" build cache capability config delete exec help inspect instance key oci overlay plugin pull push remote run run-help search shell sif sign test verify version -c --config -d --debug -h --help --nocolor -q --quiet -s --silent -v --verbose --version"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
@@ -262,7 +262,7 @@ _singularity_run ()
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_singularity_run-help ()
+_singularity_runhelp ()
 {
     local cur word_list
     word_list=" --app -h --help" 

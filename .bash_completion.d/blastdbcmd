@@ -1,0 +1,30 @@
+# Auto-generated with h2o
+
+_blastdbcmd()
+{
+    local i=1 cmd cur word_list
+    cur="${COMP_WORDS[COMP_CWORD]}"
+
+    # take the last word that's NOT starting with -
+    while [[ ( "$i" < "$COMP_CWORD" ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          -*) ;;
+          *)
+            cmd="$s"
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    case "$cmd" in
+      *)
+          word_list="  -h -help -version -db -dbtype -entry -entry_batch -ipg -ipg_batch -taxids -taxidlist -info -tax_info -range -strand -mask_sequence_with -out -outfmt -target_only -get_dups -line_length -ctrl_a -show_blastdb_search_path -list -remove_redundant_dbs -recursive -list_outfmt -exact_length -long_seqids -logfile"
+          COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+          ;;
+    esac
+
+}
+
+## -o bashdefault and -o default are fallback
+complete -o bashdefault -o default -F _blastdbcmd blastdbcmd

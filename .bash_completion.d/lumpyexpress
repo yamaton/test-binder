@@ -19,7 +19,7 @@ _lumpyexpress()
 
     case "$cmd" in
       *)
-          word_list="  -B -S -D -R -d -o -x -P -m -r -r -k -K -v -h" 
+          word_list="  -B -S -D -R -d -o -x -P -m -r -r -k -K -v -h"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

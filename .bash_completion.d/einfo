@@ -19,7 +19,7 @@ _einfo()
 
     case "$cmd" in
       *)
-          word_list="  -db -dbs -fields -links -help" 
+          word_list="  -db -dbs -fields -links -help"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

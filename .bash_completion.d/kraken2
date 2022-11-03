@@ -1,0 +1,30 @@
+# Auto-generated with h2o
+
+_kraken2()
+{
+    local i=1 cmd cur word_list
+    cur="${COMP_WORDS[COMP_CWORD]}"
+
+    # take the last word that's NOT starting with -
+    while [[ ( "$i" < "$COMP_CWORD" ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          -*) ;;
+          *)
+            cmd="$s"
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    case "$cmd" in
+      *)
+          word_list="  --db --threads --quick --unclassified-out --classified-out --output --confidence --minimum-base-quality --report --use-mpa-style --report-zero-counts --report-minimizer-data --memory-mapping --paired --use-names --gzip-compressed --bzip2-compressed --minimum-hit-groups --help --version"
+          COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+          ;;
+    esac
+
+}
+
+## -o bashdefault and -o default are fallback
+complete -o bashdefault -o default -F _kraken2 kraken2

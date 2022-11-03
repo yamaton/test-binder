@@ -1,6 +1,6 @@
 # Auto-generated with h2o
 
-_hisat2-build()
+_hisat2build()
 {
     local i=1 cmd cur word_list
     cur="${COMP_WORDS[COMP_CWORD]}"
@@ -19,7 +19,7 @@ _hisat2-build()
 
     case "$cmd" in
       *)
-          word_list="  -c --large-index -a --noauto -p --bmax --bmaxdivn --dcv --nodc -r --noref -3 --justref -o --offrate -t --ftabchars --localoffrate --localftabchars --snp --haplotype --ss --exon --repeat-ref --repeat-info --repeat-snp --repeat-haplotype --seed -q --quiet -h --help --usage --version" 
+          word_list="  -c --large-index -a --noauto -p --bmax --bmaxdivn --dcv --nodc -r --noref -3 --justref -o --offrate -t --ftabchars --localoffrate --localftabchars --snp --haplotype --ss --exon --repeat-ref --repeat-info --repeat-snp --repeat-haplotype --seed -q --quiet -h --help --usage --version"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
@@ -27,4 +27,4 @@ _hisat2-build()
 }
 
 ## -o bashdefault and -o default are fallback
-complete -o bashdefault -o default -F _hisat2-build hisat2-build
+complete -o bashdefault -o default -F _hisat2build hisat2-build

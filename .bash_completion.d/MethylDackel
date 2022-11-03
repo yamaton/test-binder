@@ -1,0 +1,78 @@
+# Auto-generated with h2o
+
+_MethylDackel()
+{
+    local i=1 cmd cur word_list
+    cur="${COMP_WORDS[COMP_CWORD]}"
+
+    # take the last word that's NOT starting with -
+    while [[ ( "$i" < "$COMP_CWORD" ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          -*) ;;
+          *)
+            cmd="$s"
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    case "$cmd" in
+          mbias) _MethylDackel_mbias
+            return
+            ;;
+
+          extract) _MethylDackel_extract
+            return
+            ;;
+
+          mergeContext) _MethylDackel_mergeContext
+            return
+            ;;
+
+          perRead) _MethylDackel_perRead
+            return
+            ;;
+
+      *)
+          word_list=" mbias extract mergeContext perRead "
+          COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+          ;;
+    esac
+
+}
+
+_MethylDackel_mbias ()
+{
+    local cur word_list
+    word_list=" -q -p -D -r -l --keepStrand -@ --chunkSize --keepDupes --keepSingleton --keepDiscordant -F --ignoreFlags -R --requireFlags --ignoreNH --minConversionEfficiency --txt --noSVG --noCpG --CHG --CHH --nOT --nOB --nCTOT --nCTOT --version" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_MethylDackel_extract ()
+{
+    local cur word_list
+    word_list=" -q -p -D -d -r -l --keepStrand -M --mappability -t --mappabilityThreshold -b --minMappableBases -O --outputBBMFile -N --outputBBMFileName -B --mappabilityBB -@ --chunkSize --mergeContext -o --opref --keepDupes --keepSingleton --keepDiscordant -F --ignoreFlags -R --requireFlags --noCpG --CHG --CHH --fraction --counts --logit --ignoreNH --minOppositeDepth --minConversionEfficiency --maxVariantFrac --methylKit --cytosine_report --OT --OB --CTOT --CTOB --nOT --nOB --nCTOT --nCTOB --version" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_MethylDackel_mergeContext ()
+{
+    local cur word_list
+    word_list=" -o" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_MethylDackel_perRead ()
+{
+    local cur word_list
+    word_list=" -q -p -r -l --keepStrand -o -F --ignoreFlags -R --requireFlags --ignoreNH -@ --chunkSize --version" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+## -o bashdefault and -o default are fallback
+complete -o bashdefault -o default -F _MethylDackel MethylDackel

@@ -19,7 +19,7 @@ _efilter()
 
     case "$cmd" in
       *)
-          word_list="  -q -query -sort -days -datetype -mindate -maxdate -field -pairs -spell -pub -journal -released -country -feature -location -molecule -organism -source -status -type -class -kind -pathway -help -label" 
+          word_list="  -q -query -sort -days -datetype -mindate -maxdate -field -pairs -spell -pub -journal -released -country -feature -location -molecule -organism -source -status -type -class -kind -pathway -help -label"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

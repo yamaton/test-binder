@@ -1,6 +1,6 @@
 # Auto-generated with h2o
 
-_subsample_bam()
+_subsamplebam()
 {
     local i=1 cmd cur word_list
     cur="${COMP_WORDS[COMP_CWORD]}"
@@ -19,7 +19,7 @@ _subsample_bam()
 
     case "$cmd" in
       *)
-          word_list="  -h --help -o --output_prefix -p --profile -O --orientation -t --threads -q --quality -a --accuracy -c --coverage -l --length --any_fail --all_fail -x --patience -s --stride -P --proportional -S --seed" 
+          word_list="  -h --help -o --output_prefix -r --regions -p --profile -O --orientation -t --threads -q --quality -a --accuracy -c --coverage -l --length --any_fail --all_fail -x --patience -s --stride -P --proportional -S --seed"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
@@ -27,4 +27,4 @@ _subsample_bam()
 }
 
 ## -o bashdefault and -o default are fallback
-complete -o bashdefault -o default -F _subsample_bam subsample_bam
+complete -o bashdefault -o default -F _subsamplebam subsample_bam

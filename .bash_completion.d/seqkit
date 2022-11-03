@@ -42,6 +42,10 @@ _seqkit()
             return
             ;;
 
+          fa2fq) _seqkit_fa2fq
+            return
+            ;;
+
           faidx) _seqkit_faidx
             return
             ;;
@@ -70,7 +74,7 @@ _seqkit()
             return
             ;;
 
-          help) _seqkit_help
+          head-genome) _seqkit_headgenome
             return
             ;;
 
@@ -150,6 +154,10 @@ _seqkit()
             return
             ;;
 
+          sum) _seqkit_sum
+            return
+            ;;
+
           tab2fx) _seqkit_tab2fx
             return
             ;;
@@ -167,7 +175,7 @@ _seqkit()
             ;;
 
       *)
-          word_list=" amplicon bam common concat convert duplicate faidx fish fq2fa fx2tab genautocomplete grep head help locate mutate pair range rename replace restart rmdup sample sana scat seq shuffle sliding sort split split2 stats subseq tab2fx translate version watch --alphabet-guess-seq-length -h --help --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
+          word_list=" amplicon bam common concat convert duplicate fa2fq faidx fish fq2fa fx2tab genautocomplete grep head head-genome locate mutate pair range rename replace restart rmdup sample sana scat seq shuffle sliding sort split split2 stats subseq sum tab2fx translate version watch --alphabet-guess-seq-length -h --help --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
@@ -177,7 +185,7 @@ _seqkit()
 _seqkit_amplicon ()
 {
     local cur word_list
-    word_list=" --bed -f --flanking-region -F --forward -h --help -I --immediate-output -m --max-mismatch -P --only-positive-strand -p --primer-file -r --region -R --reverse -s --strict-mode --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
+    word_list=" --bed -f --flanking-region -F --forward -h --help -I --immediate-output -m --max-mismatch -P --only-positive-strand -M --output-mismatches -p --primer-file -r --region -R --reverse -u --save-unmatched -s --strict-mode --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -185,7 +193,7 @@ _seqkit_amplicon ()
 _seqkit_bam ()
 {
     local cur word_list
-    word_list=" -B --bins -N --bundle -c --count -W --delay -y --dump -G --exclude-ids -e --exec-after -E --exec-before -f --field -g --grep-ids -h --help -C --idx-count -i --idx-stat -O --img -H --list-fields -L --log -q --map-qual -x --pass -k --pretty -F --prim-only -p --print-freq -Q --quiet-mode -M --range-max -m --range-min -R --reset -Z --silent-mode -s --stat -T --tool -@ --top-bam -? --top-size" 
+    word_list=" -B --bins -N --bundle -c --count -W --delay -y --dump -G --exclude-ids -e --exec-after -E --exec-before -f --field -g --grep-ids -h --help -C --idx-count -i --idx-stat -O --img -H --list-fields -L --log -q --map-qual -x --pass -k --pretty -F --prim-only -p --print-freq -Q --quiet-mode -M --range-max -m --range-min -R --reset -Z --silent-mode -s --stat -T --tool -@ --top-bam -? --top-size --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -193,7 +201,7 @@ _seqkit_bam ()
 _seqkit_common ()
 {
     local cur word_list
-    word_list=" -n --by-name --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads -s --by-seq -h --help -i --ignore-case" 
+    word_list=" -n --by-name -s --by-seq -h --help -i --ignore-case -P --only-positive-strand --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -201,7 +209,7 @@ _seqkit_common ()
 _seqkit_concat ()
 {
     local cur word_list
-    word_list=" --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads -h --help" 
+    word_list=" -f --full -h --help -s --separator --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -217,7 +225,15 @@ _seqkit_convert ()
 _seqkit_duplicate ()
 {
     local cur word_list
-    word_list=" -h --help --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
+    word_list=" -h --help -n --times --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_seqkit_fa2fq ()
+{
+    local cur word_list
+    word_list=" -f --fasta-file -h --help -P --only-positive-strand --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -225,7 +241,7 @@ _seqkit_duplicate ()
 _seqkit_faidx ()
 {
     local cur word_list
-    word_list=" -f --full-head -h --help --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
+    word_list=" -f --full-head -h --help -i --ignore-case -I --immediate-output -l --region-file -r --use-regexp --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -233,7 +249,7 @@ _seqkit_faidx ()
 _seqkit_fish ()
 {
     local cur word_list
-    word_list=" -a --all -p --aln-params -h --help -i --invert -q --min-qual -b --out-bam -x --pass -g --print-aln -D --print-desc -f --query-fastx -F --query-sequences -r --ranges -s --stranded -v --validate-seq -V --validate-seq-length --alphabet-guess-seq-length" 
+    word_list=" -a --all -p --aln-params -h --help -i --invert -q --min-qual -b --out-bam -x --pass -g --print-aln -D --print-desc -f --query-fastx -F --query-sequences -r --ranges -s --stranded -v --validate-seq -V --validate-seq-length --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -241,7 +257,7 @@ _seqkit_fish ()
 _seqkit_fq2fa ()
 {
     local cur word_list
-    word_list=" --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads -h --help" 
+    word_list=" -h --help --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -249,7 +265,7 @@ _seqkit_fq2fa ()
 _seqkit_fx2tab ()
 {
     local cur word_list
-    word_list=" -a --alphabet -q --avg-qual -B --base-content -C --base-count -I --case-sensitive -g --gc -G --gc-skew -H --header-line -h --help -l --length -n --name -i --only-id -b --qual-ascii-base -s --seq-hash" 
+    word_list=" -a --alphabet -q --avg-qual -B --base-content -C --base-count -I --case-sensitive -g --gc -G --gc-skew -H --header-line -h --help -l --length -n --name -Q --no-qual -i --only-id -b --qual-ascii-base -s --seq-hash --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -257,7 +273,7 @@ _seqkit_fx2tab ()
 _seqkit_genautocomplete ()
 {
     local cur word_list
-    word_list=" --file -h --help --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
+    word_list=" --file -h --help --shell --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -265,7 +281,7 @@ _seqkit_genautocomplete ()
 _seqkit_grep ()
 {
     local cur word_list
-    word_list=" -n --by-name -s --by-seq -c --circular -d --degenerate --delete-matched -h --help -i --ignore-case -I --immediate-output -v --invert-match -m --max-mismatch -P --only-positive-strand -p --pattern -f --pattern-file -R --region -r --use-regexp" 
+    word_list=" -n --by-name -s --by-seq -c --circular -C --count -d --degenerate --delete-matched -h --help -i --ignore-case -I --immediate-output -v --invert-match -m --max-mismatch -P --only-positive-strand -p --pattern -f --pattern-file -R --region -r --use-regexp --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -273,15 +289,15 @@ _seqkit_grep ()
 _seqkit_head ()
 {
     local cur word_list
-    word_list=" --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads -h --help -n --number" 
+    word_list=" -h --help -n --number --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_seqkit_help ()
+_seqkit_headgenome ()
 {
     local cur word_list
-    word_list=" --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads -h --help" 
+    word_list=" -h --help -m --mini-common-words --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -289,7 +305,7 @@ _seqkit_help ()
 _seqkit_locate ()
 {
     local cur word_list
-    word_list=" --bed -c --circular -d --degenerate --gtf -h --help -M --hide-matched -i --ignore-case -I --immediate-output -m --max-mismatch -G --non-greedy -P --only-positive-strand -p --pattern -f --pattern-file -F --use-fmi -r --use-regexp -V --validate-seq-length --alphabet-guess-seq-length" 
+    word_list=" --bed -c --circular -d --degenerate --gtf -h --help -M --hide-matched -i --ignore-case -I --immediate-output -m --max-mismatch -G --non-greedy -P --only-positive-strand -p --pattern -f --pattern-file -F --use-fmi -r --use-regexp -V --validate-seq-length --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -297,7 +313,7 @@ _seqkit_locate ()
 _seqkit_mutate ()
 {
     local cur word_list
-    word_list=" -n --by-name -d --deletion -h --help -I --ignore-case -i --insertion -v --invert-match -s --pattern -f --pattern-file -p --point -r --use-regexp" 
+    word_list=" -n --by-name -d --deletion -h --help -I --ignore-case -i --insertion -v --invert-match -s --pattern -f --pattern-file -p --point -r --use-regexp --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -305,7 +321,7 @@ _seqkit_mutate ()
 _seqkit_pair ()
 {
     local cur word_list
-    word_list=" -f --force -h --help -2 --read2 -u --save-unpaired --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
+    word_list=" -f --force -h --help -O --out-dir -1 --read1 -2 --read2 -u --save-unpaired --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -313,7 +329,7 @@ _seqkit_pair ()
 _seqkit_range ()
 {
     local cur word_list
-    word_list=" -h --help --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
+    word_list=" -h --help -r --range --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -321,7 +337,7 @@ _seqkit_range ()
 _seqkit_rename ()
 {
     local cur word_list
-    word_list=" -n --by-name -h --help --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads -O --out-dir" 
+    word_list=" -n --by-name -f --force -h --help -m --multiple-outfiles -O --out-dir --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -329,7 +345,7 @@ _seqkit_rename ()
 _seqkit_replace ()
 {
     local cur word_list
-    word_list=" -s --by-seq -h --help -i --ignore-case -K --keep-key -U --keep-untouch -I --key-capt-idx -m --key-miss-repl -k --kv-file --nr-width -p --pattern -r --replacement" 
+    word_list=" -s --by-seq -h --help -i --ignore-case -K --keep-key -U --keep-untouch -I --key-capt-idx -m --key-miss-repl -k --kv-file --nr-width -p --pattern -r --replacement --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -337,7 +353,7 @@ _seqkit_replace ()
 _seqkit_restart ()
 {
     local cur word_list
-    word_list=" --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads -h --help -i --new-start" 
+    word_list=" -h --help -i --new-start --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -345,7 +361,7 @@ _seqkit_restart ()
 _seqkit_rmdup ()
 {
     local cur word_list
-    word_list=" -n --by-name -s --by-seq -d --dup-seqs-file -h --help -i --ignore-case --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
+    word_list=" -n --by-name -s --by-seq -D --dup-num-file -d --dup-seqs-file -h --help -i --ignore-case -P --only-positive-strand --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -353,7 +369,7 @@ _seqkit_rmdup ()
 _seqkit_sample ()
 {
     local cur word_list
-    word_list=" -h --help --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
+    word_list=" -h --help -n --number -p --proportion -s --rand-seed -2 --two-pass --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -361,7 +377,7 @@ _seqkit_sample ()
 _seqkit_sana ()
 {
     local cur word_list
-    word_list=" -A --allow-gaps -i --format -h --help -I --in-format --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
+    word_list=" -A --allow-gaps -i --format -h --help -I --in-format -O --out-format -b --qual-ascii-base --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -369,7 +385,7 @@ _seqkit_sana ()
 _seqkit_scat ()
 {
     local cur word_list
-    word_list=" -A --allow-gaps -d --delta -D --drop-time -f --find-only -i --format -g --gz-only -h --help -I --in-format -O --out-format -b --qual-ascii-base -r --regexp -T --time-limit -p --wait-pid" 
+    word_list=" -A --allow-gaps -d --delta -D --drop-time -f --find-only -i --format -g --gz-only -h --help -I --in-format -O --out-format -b --qual-ascii-base -r --regexp -T --time-limit -p --wait-pid --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -377,7 +393,7 @@ _seqkit_scat ()
 _seqkit_seq ()
 {
     local cur word_list
-    word_list=" -k --color -p --complement --dna2rna -G --gap-letters -h --help -l --lower-case -M --max-len -R --max-qual -m --min-len -Q --min-qual -n --name -i --only-id -q --qual -b --qual-ascii-base -g --remove-gaps -r --reverse --rna2dna -s --seq -u --upper-case -v --validate-seq -V --validate-seq-length --alphabet-guess-seq-length" 
+    word_list=" -k --color -p --complement --dna2rna -G --gap-letters -h --help -l --lower-case -M --max-len -R --max-qual -m --min-len -Q --min-qual -n --name -i --only-id -q --qual -b --qual-ascii-base -g --remove-gaps -r --reverse --rna2dna -s --seq -u --upper-case -v --validate-seq -V --validate-seq-length --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -385,7 +401,7 @@ _seqkit_seq ()
 _seqkit_shuffle ()
 {
     local cur word_list
-    word_list=" -h --help -2 --two-pass --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
+    word_list=" -h --help -k --keep-temp -s --rand-seed -2 --two-pass --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -393,7 +409,7 @@ _seqkit_shuffle ()
 _seqkit_sliding ()
 {
     local cur word_list
-    word_list=" -c --circular -C --circular-genome -g --greedy --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads -h --help -s --step -W --window" 
+    word_list=" -c --circular -C --circular-genome -g --greedy -h --help -s --step -W --window --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -401,7 +417,7 @@ _seqkit_sliding ()
 _seqkit_sort ()
 {
     local cur word_list
-    word_list=" -l --by-length -n --by-name -s --by-seq -h --help -i --ignore-case -k --keep-temp -N --natural-order -r --reverse -L --seq-prefix-length -2 --two-pass --alphabet-guess-seq-lengt" 
+    word_list=" -b --by-bases -l --by-length -n --by-name -s --by-seq -G --gap-letters -h --help -i --ignore-case -k --keep-temp -N --natural-order -r --reverse -L --seq-prefix-length -2 --two-pass --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -409,7 +425,7 @@ _seqkit_sort ()
 _seqkit_split ()
 {
     local cur word_list
-    word_list=" -i --by-id -p --by-part -r --by-region -s --by-size -d --dry-run -f --force -h --help -k --keep-temp -O --out-dir -2 --two-pass" 
+    word_list=" -i --by-id -p --by-part -r --by-region -s --by-size -d --dry-run -f --force -h --help -k --keep-temp -O --out-dir -2 --two-pass --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -417,7 +433,7 @@ _seqkit_split ()
 _seqkit_split2 ()
 {
     local cur word_list
-    word_list=" --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads -l --by-length -p --by-part -s --by-size -f --force -h --help -O --out-dir -1 --read1 -2 --read2" 
+    word_list=" -l --by-length -p --by-part -s --by-size -e --extension -f --force -h --help -O --out-dir -1 --read1 -2 --read2 --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -425,7 +441,7 @@ _seqkit_split2 ()
 _seqkit_stats ()
 {
     local cur word_list
-    word_list=" -a --all -E --fq-encoding -h --help -e --skip-err -i --stdin-label -T --tabular --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
+    word_list=" -a --all -b --basename -E --fq-encoding -G --gap-letters -h --help -e --skip-err -i --stdin-label -T --tabular --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -433,7 +449,15 @@ _seqkit_stats ()
 _seqkit_subseq ()
 {
     local cur word_list
-    word_list=" --bed --chr -d --down-stream --feature --gtf --gtf-tag -h --help -f --only-flank -r --region -u --up-stream" 
+    word_list=" --bed --chr -d --down-stream --feature --gtf --gtf-tag -h --help -f --only-flank -r --region -u --up-stream --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_seqkit_sum ()
+{
+    local cur word_list
+    word_list=" - - -a --all -b --basename -c --circular -G --gap-letters -h --help -k --kmer-size -g --remove-gaps --rna2dna -s --single-strand --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -441,7 +465,7 @@ _seqkit_subseq ()
 _seqkit_tab2fx ()
 {
     local cur word_list
-    word_list=" -p --comment-line-prefix -h --help --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
+    word_list=" -b --buffer-size -p --comment-line-prefix -h --help --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -449,7 +473,7 @@ _seqkit_tab2fx ()
 _seqkit_translate ()
 {
     local cur word_list
-    word_list=" -x --allow-unknown-codon -F --append-frame --clean -f --frame -h --help -M --init-codon-as-M -l --list-transl-table -L --list-transl-table-with-amb-codons -T --transl-table --trim --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width --quiet -t --seq-type -j --threads" 
+    word_list=" -x --allow-unknown-codon -F --append-frame --clean -f --frame -h --help -M --init-codon-as-M -l --list-transl-table -L --list-transl-table-with-amb-codons -T --transl-table --trim --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -457,7 +481,7 @@ _seqkit_translate ()
 _seqkit_version ()
 {
     local cur word_list
-    word_list=" --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads -u --check-update -h --help" 
+    word_list=" -u --check-update -h --help --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -465,7 +489,7 @@ _seqkit_version ()
 _seqkit_watch ()
 {
     local cur word_list
-    word_list=" -B --bins -W --delay -y --dump -f --fields -h --help -O --img -H --list-fields -L --log -x --pass -p --print-freq -b --qual-ascii-base -Q --quiet-mode -R --reset -v --validate-seq -V --validate-seq-length --alphabet-guess-seq-length" 
+    word_list=" -B --bins -W --delay -y --dump -f --fields -h --help -O --img -H --list-fields -L --log -x --pass -p --print-freq -b --qual-ascii-base -Q --quiet-mode -R --reset -v --validate-seq -V --validate-seq-length --alphabet-guess-seq-length --id-ncbi --id-regexp --infile-list -w --line-width -o --out-file --quiet -t --seq-type -j --threads" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }

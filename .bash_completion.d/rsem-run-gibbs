@@ -1,6 +1,6 @@
 # Auto-generated with h2o
 
-_rsem-run-gibbs()
+_rsemrungibbs()
 {
     local i=1 cmd cur word_list
     cur="${COMP_WORDS[COMP_CWORD]}"
@@ -19,7 +19,7 @@ _rsem-run-gibbs()
 
     case "$cmd" in
       *)
-          word_list="  -p --seed --pseudo-count --prior -q" 
+          word_list="  -p --seed --pseudo-count --prior -q"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
@@ -27,4 +27,4 @@ _rsem-run-gibbs()
 }
 
 ## -o bashdefault and -o default are fallback
-complete -o bashdefault -o default -F _rsem-run-gibbs rsem-run-gibbs
+complete -o bashdefault -o default -F _rsemrungibbs rsem-run-gibbs

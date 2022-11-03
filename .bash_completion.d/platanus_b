@@ -1,6 +1,6 @@
 # Auto-generated with h2o
 
-_platanus_b()
+_platanusb()
 {
     local i=1 cmd cur word_list
     cur="${COMP_WORDS[COMP_CWORD]}"
@@ -18,27 +18,27 @@ _platanus_b()
     done
 
     case "$cmd" in
-          assemble) _platanus_b_assemble
+          assemble) _platanusb_assemble
             return
             ;;
 
-          combine) _platanus_b_combine
+          combine) _platanusb_combine
             return
             ;;
 
-          iterate) _platanus_b_iterate
+          iterate) _platanusb_iterate
             return
             ;;
 
       *)
-          word_list=" assemble combine iterate " 
+          word_list=" assemble combine iterate "
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
 
 }
 
-_platanus_b_assemble ()
+_platanusb_assemble ()
 {
     local cur word_list
     word_list=" -o -f -k -K -s -n -c -a -u -d -e -t -m -tmp -kmer_occ_only -repeat" 
@@ -46,7 +46,7 @@ _platanus_b_assemble ()
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_platanus_b_combine ()
+_platanusb_combine ()
 {
     local cur word_list
     word_list=" -o -c -gc -p -ont -t -tmp -sub_bin -no_gap_close -keep_file" 
@@ -54,7 +54,7 @@ _platanus_b_combine ()
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_platanus_b_iterate ()
+_platanusb_iterate ()
 {
     local cur word_list
     word_list=" -o -c -i -l -u -ip -IP -op -OP -ont -p -gc -t -m -tmp -sub_bin -keep_file -trim_overlap" 
@@ -63,4 +63,4 @@ _platanus_b_iterate ()
 }
 
 ## -o bashdefault and -o default are fallback
-complete -o bashdefault -o default -F _platanus_b platanus_b
+complete -o bashdefault -o default -F _platanusb platanus_b

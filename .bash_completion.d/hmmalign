@@ -19,7 +19,7 @@ _hmmalign()
 
     case "$cmd" in
       *)
-          word_list="  -h -o --mapali --trim --amino --dna --rna --informat --outformat" 
+          word_list="  -h -o --mapali --trim --amino --dna --rna --informat --outformat"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

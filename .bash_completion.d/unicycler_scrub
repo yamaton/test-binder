@@ -1,6 +1,6 @@
 # Auto-generated with h2o
 
-_unicycler_scrub()
+_unicyclerscrub()
 {
     local i=1 cmd cur word_list
     cur="${COMP_WORDS[COMP_CWORD]}"
@@ -19,7 +19,7 @@ _unicycler_scrub()
 
     case "$cmd" in
       *)
-          word_list="  -h --help -i --input -o --out -r --reads --trim --split --min_split_size --discard_chimeras -t --threads --keep_paf --parameters --verbosity" 
+          word_list="  -h --help -i --input -o --out -r --reads --trim --split --min_split_size --discard_chimeras -t --threads --keep_paf --parameters --verbosity"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
@@ -27,4 +27,4 @@ _unicycler_scrub()
 }
 
 ## -o bashdefault and -o default are fallback
-complete -o bashdefault -o default -F _unicycler_scrub unicycler_scrub
+complete -o bashdefault -o default -F _unicyclerscrub unicycler_scrub

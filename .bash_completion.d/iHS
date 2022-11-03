@@ -19,7 +19,7 @@ _iHS()
 
     case "$cmd" in
       *)
-          word_list="  -t --target -r --region -f --file -y --type -a --af -x --threads -g --gen" 
+          word_list="  -t --target -r --region -f --file -y --type -a --af -x --threads -g --gen"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

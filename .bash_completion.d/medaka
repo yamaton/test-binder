@@ -18,7 +18,7 @@ _medaka()
     done
 
     case "$cmd" in
-          compress_bam) _medaka_compress_bam
+          compress_bam) _medaka_compressbam
             return
             ;;
 
@@ -38,7 +38,7 @@ _medaka()
             return
             ;;
 
-          consensus_from_features) _medaka_consensus_from_features
+          consensus_from_features) _medaka_consensusfromfeatures
             return
             ;;
 
@@ -63,14 +63,14 @@ _medaka()
             ;;
 
       *)
-          word_list=" compress_bam features train consensus smolecule consensus_from_features fastrle stitch variant snp tools -h --help --version" 
+          word_list=" compress_bam features train consensus smolecule consensus_from_features fastrle stitch variant snp tools -h --help --version"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
 
 }
 
-_medaka_compress_bam ()
+_medaka_compressbam ()
 {
     local cur word_list
     word_list=" -h --help --debug --quiet --regions --threads --use_fast5_info" 
@@ -110,7 +110,7 @@ _medaka_smolecule ()
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_medaka_consensus_from_features ()
+_medaka_consensusfromfeatures ()
 {
     local cur word_list
     word_list=" -h --help --debug --quiet --model" 

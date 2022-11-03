@@ -23,7 +23,7 @@ _racon()
             ;;
 
       *)
-          word_list=" containing -u --include-unpolished -f --fragment-correction -w --window-length -q --quality-threshold -e --error-threshold --no-trimming -m --match -x --mismatch -g --gap -t --threads --version -h --help" 
+          word_list=" containing -u --include-unpolished -f --fragment-correction -w --window-length -q --quality-threshold -e --error-threshold --no-trimming -m --match -x --mismatch -g --gap -t --threads --version -h --help"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

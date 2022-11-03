@@ -19,7 +19,7 @@ _csvstack()
 
     case "$cmd" in
       *)
-          word_list="  -h --help -d --delimiter -t --tabs -q --quotechar -u --quoting -b --no-doublequote -p --escapechar -z --maxfieldsize -e --encoding -S --skipinitialspace -H --no-header-row -K --skip-lines -v --verbose -l --linenumbers --zero -V --version -g --groups -n --group-name --filenames" 
+          word_list="  -h --help -d --delimiter -t --tabs -q --quotechar -u --quoting -b --no-doublequote -p --escapechar -z --maxfieldsize -e --encoding -S --skipinitialspace -H --no-header-row -K --skip-lines -v --verbose -l --linenumbers --zero -V --version -g --groups -n --group-name --filenames"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

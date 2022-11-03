@@ -1,0 +1,30 @@
+# Auto-generated with h2o
+
+_fasterqdump()
+{
+    local i=1 cmd cur word_list
+    cur="${COMP_WORDS[COMP_CWORD]}"
+
+    # take the last word that's NOT starting with -
+    while [[ ( "$i" < "$COMP_CWORD" ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          -*) ;;
+          *)
+            cmd="$s"
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    case "$cmd" in
+      *)
+          word_list="  -o --outfile -O --outdir -b --bufsize -c --curcache -m --mem -t --temp -e --threads -p --progress -x --details -s --split-spot -S --split-files -3 --split-3 --concatenate-reads -Z --stdout -f --force -N --rowid-as-name --skip-technical --include-technical -P --print-read-nr -M --min-read-len --table --strict -B --bases -A --append --ngc --perm --location --cart -V --version -v --verbose -L --log-level --option-file -h --help"
+          COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+          ;;
+    esac
+
+}
+
+## -o bashdefault and -o default are fallback
+complete -o bashdefault -o default -F _fasterqdump fasterq-dump

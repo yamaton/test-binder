@@ -19,7 +19,7 @@ _segmentFst()
 
     case "$cmd" in
       *)
-          word_list="  -f -s" 
+          word_list="  -f -s"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

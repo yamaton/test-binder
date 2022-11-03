@@ -19,7 +19,7 @@ _vcfanno()
 
     case "$cmd" in
       *)
-          word_list="  -base-path -ends -lua -p -permissive-overlap" 
+          word_list="  -base-path -ends -lua -p -permissive-overlap"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

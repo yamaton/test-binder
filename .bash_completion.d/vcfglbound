@@ -19,7 +19,7 @@ _vcfglbound()
 
     case "$cmd" in
       *)
-          word_list="  -b --bound -x --exclude-broken" 
+          word_list="  -b --bound -x --exclude-broken"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

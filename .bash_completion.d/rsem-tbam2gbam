@@ -1,6 +1,6 @@
 # Auto-generated with h2o
 
-_rsem-tbam2gbam()
+_rsemtbam2gbam()
 {
     local i=1 cmd cur word_list
     cur="${COMP_WORDS[COMP_CWORD]}"
@@ -19,7 +19,7 @@ _rsem-tbam2gbam()
 
     case "$cmd" in
       *)
-          word_list="  -p" 
+          word_list="  -p"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
@@ -27,4 +27,4 @@ _rsem-tbam2gbam()
 }
 
 ## -o bashdefault and -o default are fallback
-complete -o bashdefault -o default -F _rsem-tbam2gbam rsem-tbam2gbam
+complete -o bashdefault -o default -F _rsemtbam2gbam rsem-tbam2gbam

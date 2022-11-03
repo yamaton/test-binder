@@ -19,7 +19,7 @@ _mummer()
 
     case "$cmd" in
       *)
-          word_list="  -mum -mumcand -mumreference -maxmatch -n -l -b -r -s -c -F -L -h -help" 
+          word_list="  -mum -mumcand -mumreference -maxmatch -n -l -b -r -s -c -F -L -h -help"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

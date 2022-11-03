@@ -1,0 +1,208 @@
+# Auto-generated with h2o
+
+_nextstrain()
+{
+    local i=1 cmd cur word_list
+    cur="${COMP_WORDS[COMP_CWORD]}"
+
+    # take the last word that's NOT starting with -
+    while [[ ( "$i" < "$COMP_CWORD" ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          -*) ;;
+          *)
+            cmd="$s"
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    case "$cmd" in
+          build) _nextstrain_build
+            return
+            ;;
+
+          view) _nextstrain_view
+            return
+            ;;
+
+          deploy) _nextstrain_deploy
+            return
+            ;;
+
+          remote) _nextstrain_remote
+            return
+            ;;
+
+          shell) _nextstrain_shell
+            return
+            ;;
+
+          update) _nextstrain_update
+            return
+            ;;
+
+          check-setup) _nextstrain_checksetup
+            return
+            ;;
+
+          login) _nextstrain_login
+            return
+            ;;
+
+          logout) _nextstrain_logout
+            return
+            ;;
+
+          whoami) _nextstrain_whoami
+            return
+            ;;
+
+          version) _nextstrain_version
+            return
+            ;;
+
+      *)
+          word_list=" build view deploy remote shell update check-setup login logout whoami version -h --help"
+          COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+          ;;
+    esac
+
+}
+
+_nextstrain_build ()
+{
+    local cur word_list
+    word_list=" --help -h --help-all --detach --attach --cpus --memory --download --no-download --docker --native --aws-batch --image --exec --augur --auspice --fauna --sacra --docker-arg --aws-batch-job --aws-batch-queue --aws-batch-s3-bucket --aws-batch-cpus --aws-batch-memory" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_nextstrain_view ()
+{
+    local cur word_list
+    word_list=" --help -h --help-all --allow-remote-access --host --port --docker --native --image --exec --augur --auspice --fauna --sacra --docker-arg" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_nextstrain_deploy ()
+{
+    local cur word_list
+    word_list=" -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_nextstrain_remote ()
+{
+    local cur word_list
+    local i=1 subcommand_index
+
+    # take the last word that's NOT starting with -
+    while [[ ( $i < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          remote)
+            subcommand_index=$i
+            break
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[subcommand_index}"
+        case "$s" in
+          upload) _nextstrain_upload
+            return
+            ;;
+
+          download) _nextstrain_download
+            return
+            ;;
+
+          *)  ;; 
+        esac
+        (( subcommand_index++ ))
+    done
+
+    word_list=" upload download -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_remote_upload ()
+{
+    local cur word_list
+    word_list=" -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_remote_download ()
+{
+    local cur word_list
+    word_list=" -h --help --recursively -r" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_nextstrain_shell ()
+{
+    local cur word_list
+    word_list=" --help -h --help-all --docker --image --exec --augur --auspice --fauna --sacra --docker-arg" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_nextstrain_update ()
+{
+    local cur word_list
+    word_list=" -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_nextstrain_checksetup ()
+{
+    local cur word_list
+    word_list=" -h --help --set-default" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_nextstrain_login ()
+{
+    local cur word_list
+    word_list=" -h --help --username -u --no-prompt --renew" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_nextstrain_logout ()
+{
+    local cur word_list
+    word_list=" -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_nextstrain_whoami ()
+{
+    local cur word_list
+    word_list=" -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_nextstrain_version ()
+{
+    local cur word_list
+    word_list=" -h --help --verbose" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+## -o bashdefault and -o default are fallback
+complete -o bashdefault -o default -F _nextstrain nextstrain

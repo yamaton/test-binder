@@ -19,7 +19,7 @@ _skesa()
 
     case "$cmd" in
       *)
-          word_list="  -h -v --cores --memory --hash_count --estimated_kmers --skip_bloom_filter --fasta --fastq --gz --sra_run --seeds --contigs_out --kmer --min_count --max_kmer_count --vector_percent --use_paired_ends --insert_size --steps --fraction --max_snp_len --min_contig --allow_snps --all --dbg_out --hist --connected_reads" 
+          word_list="  -h -v --cores --memory --hash_count --estimated_kmers --skip_bloom_filter --fasta --fastq --gz --sra_run --seeds --contigs_out --kmer --min_count --max_kmer_count --vector_percent --use_paired_ends --insert_size --steps --fraction --max_snp_len --min_contig --allow_snps --all --dbg_out --hist --connected_reads"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

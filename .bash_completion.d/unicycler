@@ -19,7 +19,7 @@ _unicycler()
 
     case "$cmd" in
       *)
-          word_list="  -h --help --help_all --version -1 --short1 -2 --short2 -s --unpaired -l --long -o --out --verbosity --min_fasta_length --keep --vcf -t --threads --mode --linear_seqs" 
+          word_list="  -h --help --help_all --version -1 --short1 -2 --short2 -s --unpaired -l --long -o --out --verbosity --min_fasta_length --keep --vcf -t --threads --mode --linear_seqs"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

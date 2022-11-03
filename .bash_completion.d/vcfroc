@@ -19,7 +19,7 @@ _vcfroc()
 
     case "$cmd" in
       *)
-          word_list="  -t --truth-vcf -w --window-size -c --complex -r --reference" 
+          word_list="  -t --truth-vcf -w --window-size -c --complex -r --reference"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

@@ -19,7 +19,7 @@ _eproxy()
 
     case "$cmd" in
       *)
-          word_list="  -help -alias -pipe" 
+          word_list="  -help -alias -pipe"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

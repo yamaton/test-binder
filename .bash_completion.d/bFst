@@ -19,7 +19,7 @@ _bFst()
 
     case "$cmd" in
       *)
-          word_list="  -t --target -b --background -f --file -d --deltaaf" 
+          word_list="  -t --target -b --background -f --file -d --deltaaf"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

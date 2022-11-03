@@ -19,7 +19,7 @@ _dnadiff()
 
     case "$cmd" in
       *)
-          word_list="  -d -h -p -V" 
+          word_list="  -d -h -p -V"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

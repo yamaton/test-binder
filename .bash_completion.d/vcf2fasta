@@ -19,7 +19,7 @@ _vcf2fasta()
 
     case "$cmd" in
       *)
-          word_list="  -f --reference -p --prefix -P --default-ploidy" 
+          word_list="  -f --reference -p --prefix -P --default-ploidy"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

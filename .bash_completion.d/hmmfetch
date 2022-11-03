@@ -19,7 +19,7 @@ _hmmfetch()
 
     case "$cmd" in
       *)
-          word_list="  -h -f -o -O --index" 
+          word_list="  -h -f -o -O --index"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

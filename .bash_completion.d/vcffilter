@@ -19,7 +19,7 @@ _vcffilter()
 
     case "$cmd" in
       *)
-          word_list="  -f --info-filter -g --genotype-filter -k --keep-info -s --filter-sites -t --tag-pass -F --tag-fail -A --append-filter -a --allele-tag -v --invert -o --or -r --region" 
+          word_list="  -f --info-filter -g --genotype-filter -k --keep-info -s --filter-sites -t --tag-pass -F --tag-fail -A --append-filter -a --allele-tag -v --invert -o --or -r --region"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

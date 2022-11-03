@@ -19,7 +19,7 @@ _alimask()
 
     case "$cmd" in
       *)
-          word_list="  -h -o --modelrange --alirange --apendmask --model2ali --ali2model --amino --dna --rna --outformat --fast --hand --symfrac --fragthresh --wpb --wgsc --wblosum --wnone --wgiven --wid --informat --seed" 
+          word_list="  -h -o --modelrange --alirange --apendmask --model2ali --ali2model --amino --dna --rna --outformat --fast --hand --symfrac --fragthresh --wpb --wgsc --wblosum --wnone --wgiven --wid --informat --seed"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

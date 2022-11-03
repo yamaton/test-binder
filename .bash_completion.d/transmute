@@ -19,7 +19,7 @@ _transmute()
 
     case "$cmd" in
       *)
-          word_list="  -j2x -json2xml -x2j -xml2json" 
+          word_list="  -j2x -json2xml -x2j -xml2json"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

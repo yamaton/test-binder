@@ -1,0 +1,30 @@
+# Auto-generated with h2o
+
+_cutadapt()
+{
+    local i=1 cmd cur word_list
+    cur="${COMP_WORDS[COMP_CWORD]}"
+
+    # take the last word that's NOT starting with -
+    while [[ ( "$i" < "$COMP_CWORD" ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          -*) ;;
+          *)
+            cmd="$s"
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    case "$cmd" in
+      *)
+          word_list="  -h --help --version --debug -j --cores -a --adapter -g --front -b --anywhere -e --error-rate --errors --no-indels -n --times -O --overlap --match-read-wildcards -N --no-match-adapter-wildcards --action --rc --revcomp -u --cut --nextseq-trim -q --quality-cutoff --quality-base --length -l --trim-n --length-tag --strip-suffix -x --prefix -y --suffix --rename --zero-cap -z -m --minimum-length -M --maximum-length --max-n --max-expected-errors --max-ee --discard-trimmed --discard --discard-untrimmed --trimmed-only --discard-casava --quiet --report --json -o --output --fasta -Z --info-file -r --rest-file --wildcard-file --too-short-output --too-long-output --untrimmed-output -A -G -B -U -Q -p --paired-output --pair-adapters --pair-filter --interleaved --untrimmed-paired-output --too-short-paired-output --too-long-paired-output"
+          COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+          ;;
+    esac
+
+}
+
+## -o bashdefault and -o default are fallback
+complete -o bashdefault -o default -F _cutadapt cutadapt

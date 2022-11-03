@@ -1,6 +1,6 @@
 # Auto-generated with h2o
 
-_hisat2-inspect()
+_hisat2inspect()
 {
     local i=1 cmd cur word_list
     cur="${COMP_WORDS[COMP_CWORD]}"
@@ -19,7 +19,7 @@ _hisat2-inspect()
 
     case "$cmd" in
       *)
-          word_list="  --large-index -a --across -s --summary -n --names --snp --ss --ss-all --exon -e --ht2-ref -v --verbose -h --help --usage" 
+          word_list="  --large-index -a --across -s --summary -n --names --snp --ss --ss-all --exon -e --ht2-ref -v --verbose -h --help --usage"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
@@ -27,4 +27,4 @@ _hisat2-inspect()
 }
 
 ## -o bashdefault and -o default are fallback
-complete -o bashdefault -o default -F _hisat2-inspect hisat2-inspect
+complete -o bashdefault -o default -F _hisat2inspect hisat2-inspect

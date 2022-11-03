@@ -19,7 +19,7 @@ _vcfprimers()
 
     case "$cmd" in
       *)
-          word_list="  -f --fasta-reference -l --primer-length" 
+          word_list="  -f --fasta-reference -l --primer-length"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

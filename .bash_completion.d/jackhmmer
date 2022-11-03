@@ -19,7 +19,7 @@ _jackhmmer()
 
     case "$cmd" in
       *)
-          word_list="  -h -N -o -A --tblout --domtblout --chkhmm --chkali --acc --noali --notextw --textw --popen --pextend --mx --mxfile -E -T --domE --domT --incE --incT --incdomE --incdomT --max --F1 --F2 --F3 --nobias --fragthresh --wpb --wgsc --wblosum --wnone --wid --eent --eentexp --eclust --enone --eset --ere --esigma --eid --pnone --plaplace --EmL --EmN --EvL --EvN --EfL --EfN --Eft --nonull2 -Z --domZ --seed --qformat --tformat --cpu" 
+          word_list="  -h -N -o -A --tblout --domtblout --chkhmm --chkali --acc --noali --notextw --textw --popen --pextend --mx --mxfile -E -T --domE --domT --incE --incT --incdomE --incdomT --max --F1 --F2 --F3 --nobias --fragthresh --wpb --wgsc --wblosum --wnone --wid --eent --eentexp --eclust --enone --eset --ere --esigma --eid --pnone --plaplace --EmL --EmN --EvL --EvN --EfL --EfN --Eft --nonull2 -Z --domZ --seed --qformat --tformat --cpu"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

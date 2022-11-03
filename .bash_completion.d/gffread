@@ -19,7 +19,7 @@ _gffread()
 
     case "$cmd" in
       *)
-          word_list="  -i -l -r -R -U -C --nc --ignore-locus -A -s --sort-alpha --sort-by -F --keep-exon-attrs -G --keep-genes --keep-comments -O -V -H -B -P --add-hasCDS --adj-stop -N -J --no-pseudo --in-bed --in-tlf --stream -M --merge -d --cluster-only -K -Q -Y --force-exons --gene2exon --t-adopt -D -Z -g -w --w-add -x -y -W -S -L -m -t -o -T --bed --tlf --table -v -E" 
+          word_list="  -i -l -r -R -U -C --nc --ignore-locus -A -s --sort-alpha --sort-by -F --keep-exon-attrs -G --keep-genes --keep-comments -O -V -H -B -P --add-hasCDS --adj-stop -N -J --no-pseudo --in-bed --in-tlf --stream -M --merge -d --cluster-only -K -Q -Y --force-exons --gene2exon --t-adopt -D -Z -g -w --w-add -x -y -W -S -L -m -t -o -T --bed --tlf --table -v -E"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

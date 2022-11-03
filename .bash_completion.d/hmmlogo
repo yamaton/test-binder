@@ -19,7 +19,7 @@ _hmmlogo()
 
     case "$cmd" in
       *)
-          word_list="  -h --height_relent_all --height_relent_abovebg --height_score --no_indel" 
+          word_list="  -h --height_relent_all --height_relent_abovebg --height_score --no_indel"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

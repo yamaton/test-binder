@@ -1,6 +1,6 @@
 # Auto-generated with h2o
 
-_show-aligns()
+_showaligns()
 {
     local i=1 cmd cur word_list
     cur="${COMP_WORDS[COMP_CWORD]}"
@@ -19,7 +19,7 @@ _show-aligns()
 
     case "$cmd" in
       *)
-          word_list="  -h -q -r -w -x" 
+          word_list="  -h -q -r -w -x"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
@@ -27,4 +27,4 @@ _show-aligns()
 }
 
 ## -o bashdefault and -o default are fallback
-complete -o bashdefault -o default -F _show-aligns show-aligns
+complete -o bashdefault -o default -F _showaligns show-aligns

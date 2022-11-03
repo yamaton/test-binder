@@ -19,7 +19,7 @@ _edirect()
 
     case "$cmd" in
       *)
-          word_list="  -help -email -tool -http -https -alias -silent -verbose -debug -base" 
+          word_list="  -help -email -tool -http -https -alias -silent -verbose -debug -base"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

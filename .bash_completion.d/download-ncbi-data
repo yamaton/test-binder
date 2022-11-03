@@ -1,6 +1,6 @@
 # Auto-generated with h2o
 
-_download-ncbi-data()
+_downloadncbidata()
 {
     local i=1 cmd cur word_list
     cur="${COMP_WORDS[COMP_CWORD]}"
@@ -19,7 +19,7 @@ _download-ncbi-data()
 
     case "$cmd" in
       *)
-          word_list="  -pmc-oa -pmc-bioc -bioconcepts -meshtree -carotene pmc-oa pmc-bioc bioconcepts meshtree carotene" 
+          word_list="  -pmc-oa -pmc-bioc -bioconcepts -meshtree -carotene pmc-oa pmc-bioc bioconcepts meshtree carotene"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
@@ -27,4 +27,4 @@ _download-ncbi-data()
 }
 
 ## -o bashdefault and -o default are fallback
-complete -o bashdefault -o default -F _download-ncbi-data download-ncbi-data
+complete -o bashdefault -o default -F _downloadncbidata download-ncbi-data

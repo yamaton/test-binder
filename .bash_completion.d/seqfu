@@ -87,7 +87,7 @@ _seqfu()
             ;;
 
       *)
-          word_list=" count deinterleave derep interleave lanes list metadata rotate sort stats cat grep head rc tab tail view " 
+          word_list=" count deinterleave derep interleave lanes list metadata rotate sort stats cat grep head rc tab tail view "
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
@@ -145,7 +145,15 @@ _seqfu_list ()
 _seqfu_metadata ()
 {
     local cur word_list
-    word_list=" -1 --for-tag -2 --rev-tag -s --split -f --format -P --project --pos --pe -p --add-path -c --counts -t --threads -v --verbose -h --help" 
+    word_list=" -1 --for-tag -2 --rev-tag -s --split --pos -f --format --pe -p --add-path -c --counts -t --threads -P --project --meta-split --meta-part --meta-default -v --verbose -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_seqfu_rotate ()
+{
+    local cur word_list
+    word_list=" -i --start-pos -m --motif -s --skip-unmached -r --revcomp -v --verbose -h --help" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -161,7 +169,7 @@ _seqfu_sort ()
 _seqfu_stats ()
 {
     local cur word_list
-    word_list=" -a --abs-path -b --basename -n --nice --csv --multiqc -v --verbose -h --help" 
+    word_list=" -a --abs-path -b --basename -n --nice -j --json -s --sort-by -r --reverse -t --thousands --csv --gc --multiqc --precision -v --verbose -h --help" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }

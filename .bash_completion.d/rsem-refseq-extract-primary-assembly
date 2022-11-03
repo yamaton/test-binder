@@ -1,6 +1,6 @@
 # Auto-generated with h2o
 
-_rsem-refseq-extract-primary-assembly()
+_rsemrefseqextractprimaryassembly()
 {
     local i=1 cmd cur word_list
     cur="${COMP_WORDS[COMP_CWORD]}"
@@ -19,7 +19,7 @@ _rsem-refseq-extract-primary-assembly()
 
     case "$cmd" in
       *)
-          word_list="  " 
+          word_list="  "
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
@@ -27,4 +27,4 @@ _rsem-refseq-extract-primary-assembly()
 }
 
 ## -o bashdefault and -o default are fallback
-complete -o bashdefault -o default -F _rsem-refseq-extract-primary-assembly rsem-refseq-extract-primary-assembly
+complete -o bashdefault -o default -F _rsemrefseqextractprimaryassembly rsem-refseq-extract-primary-assembly

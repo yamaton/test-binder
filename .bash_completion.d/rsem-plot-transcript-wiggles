@@ -1,6 +1,6 @@
 # Auto-generated with h2o
 
-_rsem-plot-transcript-wiggles()
+_rsemplottranscriptwiggles()
 {
     local i=1 cmd cur word_list
     cur="${COMP_WORDS[COMP_CWORD]}"
@@ -19,7 +19,7 @@ _rsem-plot-transcript-wiggles()
 
     case "$cmd" in
       *)
-          word_list="  --gene-list --transcript-list --show-unique -p --num-threads --memory-per-thread -h --help" 
+          word_list="  --gene-list --transcript-list --show-unique -p --num-threads --memory-per-thread -h --help"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
@@ -27,4 +27,4 @@ _rsem-plot-transcript-wiggles()
 }
 
 ## -o bashdefault and -o default are fallback
-complete -o bashdefault -o default -F _rsem-plot-transcript-wiggles rsem-plot-transcript-wiggles
+complete -o bashdefault -o default -F _rsemplottranscriptwiggles rsem-plot-transcript-wiggles

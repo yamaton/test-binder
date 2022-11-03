@@ -1,0 +1,594 @@
+# Auto-generated with h2o
+
+_csvtk()
+{
+    local i=1 cmd cur word_list
+    cur="${COMP_WORDS[COMP_CWORD]}"
+
+    # take the last word that's NOT starting with -
+    while [[ ( "$i" < "$COMP_CWORD" ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          -*) ;;
+          *)
+            cmd="$s"
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    case "$cmd" in
+          add-header) _csvtk_addheader
+            return
+            ;;
+
+          cat) _csvtk_cat
+            return
+            ;;
+
+          comb) _csvtk_comb
+            return
+            ;;
+
+          concat) _csvtk_concat
+            return
+            ;;
+
+          corr) _csvtk_corr
+            return
+            ;;
+
+          csv2json) _csvtk_csv2json
+            return
+            ;;
+
+          csv2md) _csvtk_csv2md
+            return
+            ;;
+
+          csv2rst) _csvtk_csv2rst
+            return
+            ;;
+
+          csv2tab) _csvtk_csv2tab
+            return
+            ;;
+
+          csv2xlsx) _csvtk_csv2xlsx
+            return
+            ;;
+
+          cut) _csvtk_cut
+            return
+            ;;
+
+          del-header) _csvtk_delheader
+            return
+            ;;
+
+          dim) _csvtk_dim
+            return
+            ;;
+
+          filter) _csvtk_filter
+            return
+            ;;
+
+          filter2) _csvtk_filter2
+            return
+            ;;
+
+          fold) _csvtk_fold
+            return
+            ;;
+
+          freq) _csvtk_freq
+            return
+            ;;
+
+          gather) _csvtk_gather
+            return
+            ;;
+
+          grep) _csvtk_grep
+            return
+            ;;
+
+          head) _csvtk_head
+            return
+            ;;
+
+          headers) _csvtk_headers
+            return
+            ;;
+
+          inter) _csvtk_inter
+            return
+            ;;
+
+          join) _csvtk_join
+            return
+            ;;
+
+          mutate) _csvtk_mutate
+            return
+            ;;
+
+          mutate2) _csvtk_mutate2
+            return
+            ;;
+
+          ncol) _csvtk_ncol
+            return
+            ;;
+
+          nrow) _csvtk_nrow
+            return
+            ;;
+
+          plot) _csvtk_plot
+            return
+            ;;
+
+          pretty) _csvtk_pretty
+            return
+            ;;
+
+          rename) _csvtk_rename
+            return
+            ;;
+
+          rename2) _csvtk_rename2
+            return
+            ;;
+
+          replace) _csvtk_replace
+            return
+            ;;
+
+          round) _csvtk_round
+            return
+            ;;
+
+          sample) _csvtk_sample
+            return
+            ;;
+
+          sep) _csvtk_sep
+            return
+            ;;
+
+          sort) _csvtk_sort
+            return
+            ;;
+
+          space2tab) _csvtk_space2tab
+            return
+            ;;
+
+          split) _csvtk_split
+            return
+            ;;
+
+          splitxlsx) _csvtk_splitxlsx
+            return
+            ;;
+
+          summary) _csvtk_summary
+            return
+            ;;
+
+          tab2csv) _csvtk_tab2csv
+            return
+            ;;
+
+          transpose) _csvtk_transpose
+            return
+            ;;
+
+          unfold) _csvtk_unfold
+            return
+            ;;
+
+          uniq) _csvtk_uniq
+            return
+            ;;
+
+          version) _csvtk_version
+            return
+            ;;
+
+          watch) _csvtk_watch
+            return
+            ;;
+
+          xlsx2csv) _csvtk_xlsx2csv
+            return
+            ;;
+
+      *)
+          word_list=" add-header cat comb concat corr csv2json csv2md csv2rst csv2tab csv2xlsx cut del-header dim filter filter2 fold freq gather grep head headers inter join mutate mutate2 ncol nrow plot pretty rename rename2 replace round sample sep sort space2tab split splitxlsx summary tab2csv transpose unfold uniq version watch xlsx2csv -c --chunk-size -C --comment-char -d --delimiter -h --help -E --ignore-empty-row -I --ignore-illegal-row --infile-list -l --lazy-quotes -H --no-header-row -j --num-cpus -D --out-delimiter -o --out-file -T --out-tabs -t --tabs"
+          COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+          ;;
+    esac
+
+}
+
+_csvtk_addheader ()
+{
+    local cur word_list
+    word_list=" -h --help -n --names -c --chunk-size -C --comment-char -d --delimiter -E --ignore-empty-row -I --ignore-illegal-row --infile-list -l --lazy-quotes -H --no-header-row -j --num-cpus -D --out-delimiter -o --out-file -T --out-tabs -t --tabs" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_csvtk_cat ()
+{
+    local cur word_list
+    word_list=" -b --buffsize -h --help -L --lines -p --print-freq -s --total -c --chunk-size -C --comment-char -d --delimiter -E --ignore-empty-row -I --ignore-illegal-row --infile-list -l --lazy-quotes -H --no-header-row -j --num-cpus -D --out-delimiter -o --out-file -T --out-tabs -t --tabs" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_csvtk_comb ()
+{
+    local cur word_list
+    word_list=" -h --help -i --ignore-case -S --nat-sort -n --number -s --sort -c --chunk-size -C --comment-char -d --delimiter -E --ignore-empty-row -I --ignore-illegal-row --infile-list -l --lazy-quotes -H --no-header-row -j --num-cpus -D --out-delimiter -o --out-file -T --out-tabs -t --tabs" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_csvtk_concat ()
+{
+    local cur word_list
+    word_list=" -h --help -i --ignore-case -k --keep-unmatched -u --unmatched-repl -c --chunk-size -C --comment-char -d --delimiter -E --ignore-empty-row -I --ignore-illegal-row --infile-list -l --lazy-quotes -H --no-header-row -j --num-cpus -D --out-delimiter -o --out-file -T --out-tabs -t --tabs" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_csvtk_corr ()
+{
+    local cur word_list
+    word_list=" -f --fields -h --help -i --ignore_nan -L --log -x --pass -c --chunk-size -C --comment-char -d --delimiter -E --ignore-empty-row -I --ignore-illegal-row --infile-list -l --lazy-quotes -H --no-header-row -j --num-cpus -D --out-delimiter -o --out-file -T --out-tabs -t --tabs" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_csvtk_csv2json ()
+{
+    local cur word_list
+    word_list=" -b --blanks -h --help -i --indent -k --key -n --parse-num -c --chunk-size -C --comment-char -d --delimiter -E --ignore-empty-row -I --ignore-illegal-row --infile-list -l --lazy-quotes -H --no-header-row -j --num-cpus -D --out-delimiter -o --out-file -T --out-tabs -t --tabs" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_csvtk_csv2md ()
+{
+    local cur word_list
+    word_list=" -a --alignments -h --help -w --min-width -c --chunk-size -C --comment-char -d --delimiter -E --ignore-empty-row -I --ignore-illegal-row --infile-list -l --lazy-quotes -H --no-header-row -j --num-cpus -D --out-delimiter -o --out-file -T --out-tabs -t --tabs" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_csvtk_csv2rst ()
+{
+    local cur word_list
+    word_list=" -k --cross -s --header -h --help -b --horizontal-border -p --padding -B --vertical-border -c --chunk-size -C --comment-char -d --delimiter -E --ignore-empty-row -I --ignore-illegal-row --infile-list -l --lazy-quotes -H --no-header-row -j --num-cpus -D --out-delimiter -o --out-file -T --out-tabs -t --tabs" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_csvtk_csv2tab ()
+{
+    local cur word_list
+    word_list=" -h --help -c --chunk-size -C --comment-char -d --delimiter -E --ignore-empty-row -I --ignore-illegal-row --infile-list -l --lazy-quotes -H --no-header-row -j --num-cpus -D --out-delimiter -o --out-file -T --out-tabs -t --tabs" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_csvtk_csv2xlsx ()
+{
+    local cur word_list
+    word_list=" -h --help -c --chunk-size -C --comment-char -d --delimiter -E --ignore-empty-row -I --ignore-illegal-row --infile-list -l --lazy-quotes -H --no-header-row -j --num-cpus -D --out-delimiter -o --out-file -T --out-tabs -t --tabs" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_csvtk_cut ()
+{
+    local cur word_list
+    word_list=" -f --fields -F --fuzzy-fields -h --help -i --ignore-case -u --uniq-column -c --chunk-size -C --comment-char -d --delimiter -E --ignore-empty-row -I --ignore-illegal-row --infile-list -l --lazy-quotes -H --no-header-row -j --num-cpus -D --out-delimiter -o --out-file -T --out-tabs -t --tabs" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_csvtk_delheader ()
+{
+    local cur word_list
+    word_list=" -h --help -c --chunk-size -C --comment-char -d --delimiter -E --ignore-empty-row -I --ignore-illegal-row --infile-list -l --lazy-quotes -H --no-header-row -j --num-cpus -D --out-delimiter -o --out-file -T --out-tabs -t --tabs" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_csvtk_dim ()
+{
+    local cur word_list
+    word_list=" --cols -h --help -n --no-files --rows --tabular -c --chunk-size -C --comment-char -d --delimiter -E --ignore-empty-row -I --ignore-illegal-row --infile-list -l --lazy-quotes -H --no-header-row -j --num-cpus -D --out-delimiter -o --out-file -T --out-tabs -t --tabs" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_csvtk_filter ()
+{
+    local cur word_list
+    word_list=" --any -f --filter -F --fuzzy-fields -h --help -n --line-number -c --chunk-size -C --comment-char -d --delimiter -E --ignore-empty-row -I --ignore-illegal-row --infile-list -l --lazy-quotes -H --no-header-row -j --num-cpus -D --out-delimiter -o --out-file -T --out-tabs -t --tabs" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_csvtk_filter2 ()
+{
+    local cur word_list
+    word_list=" -f --filter -h --help -n --line-number -c --chunk-size -C --comment-char -d --delimiter -E --ignore-empty-row -I --ignore-illegal-row --infile-list -l --lazy-quotes -H --no-header-row -j --num-cpus -D --out-delimiter -o --out-file -T --out-tabs -t --tabs" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_csvtk_fold ()
+{
+    local cur word_list
+    word_list=" -f --fields -F --fuzzy-fields -h --help -i --ignore-case -s --separater -v --vfield -c --chunk-size -C --comment-char -d --delimiter -E --ignore-empty-row -I --ignore-illegal-row --infile-list -l --lazy-quotes -H --no-header-row -j --num-cpus -D --out-delimiter -o --out-file -T --out-tabs -t --tabs" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_csvtk_freq ()
+{
+    local cur word_list
+    word_list=" -f --fields -F --fuzzy-fields -h --help -i --ignore-case -r --reverse -n --sort-by-freq -k --sort-by-key -c --chunk-size -C --comment-char -d --delimiter -E --ignore-empty-row -I --ignore-illegal-row --infile-list -l --lazy-quotes -H --no-header-row -j --num-cpus -D --out-delimiter -o --out-file -T --out-tabs -t --tabs" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_csvtk_gather ()
+{
+    local cur word_list
+    word_list=" -f --fields -F --fuzzy-fields -h --help -k --key -v --value -c --chunk-size -C --comment-char -d --delimiter -E --ignore-empty-row -I --ignore-illegal-row --infile-list -l --lazy-quotes -H --no-header-row -j --num-cpus -D --out-delimiter -o --out-file -T --out-tabs -t --tabs" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_csvtk_grep ()
+{
+    local cur word_list
+    word_list=" --delete-matched -f --fields -F --fuzzy-fields -h --help -i --ignore-case --immediate-output -v --invert -n --line-number -N --no-highlight -p --pattern -P --pattern-file -r --use-regexp --verbose -c --chunk-size -C --comment-char -d --delimiter -E --ignore-empty-row -I --ignore-illegal-row --infile-list -l --lazy-quotes -H --no-header-row -j --num-cpus -D --out-delimiter -o --out-file -T --out-tabs -t --tabs" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_csvtk_head ()
+{
+    local cur word_list
+    word_list=" -h --help -n --number -c --chunk-size -C --comment-char -d --delimiter -E --ignore-empty-row -I --ignore-illegal-row --infile-list -l --lazy-quotes -H --no-header-row -j --num-cpus -D --out-delimiter -o --out-file -T --out-tabs -t --tabs" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_csvtk_headers ()
+{
+    local cur word_list
+    word_list=" -h --help -v --verbose -c --chunk-size -C --comment-char -d --delimiter -E --ignore-empty-row -I --ignore-illegal-row --infile-list -l --lazy-quotes -H --no-header-row -j --num-cpus -D --out-delimiter -o --out-file -T --out-tabs -t --tabs" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_csvtk_inter ()
+{
+    local cur word_list
+    word_list=" -f --fields -F --fuzzy-fields -h --help -i --ignore-case -c --chunk-size -C --comment-char -d --delimiter -E --ignore-empty-row -I --ignore-illegal-row --infile-list -l --lazy-quotes -H --no-header-row -j --num-cpus -D --out-delimiter -o --out-file -T --out-tabs -t --tabs" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_csvtk_join ()
+{
+    local cur word_list
+    word_list=" -f --fields -F --fuzzy-fields -h --help -i --ignore-case -k --keep-unmatched -L --left-join --na -O --outer-join -c --chunk-size -C --comment-char -d --delimiter -E --ignore-empty-row -I --ignore-illegal-row --infile-list -l --lazy-quotes -H --no-header-row -j --num-cpus -D --out-delimiter -o --out-file -T --out-tabs -t --tabs" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_csvtk_mutate ()
+{
+    local cur word_list
+    word_list=" -f --fields -h --help -i --ignore-case --na -n --name -p --pattern -R --remove -c --chunk-size -C --comment-char -d --delimiter -E --ignore-empty-row -I --ignore-illegal-row --infile-list -l --lazy-quotes -H --no-header-row -j --num-cpus -D --out-delimiter -o --out-file -T --out-tabs -t --tabs" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_csvtk_mutate2 ()
+{
+    local cur word_list
+    word_list=" -L --digits -e --expression -h --help -n --name -s --numeric-as-string -c --chunk-size -C --comment-char -d --delimiter -E --ignore-empty-row -I --ignore-illegal-row --infile-list -l --lazy-quotes -H --no-header-row -j --num-cpus -D --out-delimiter -o --out-file -T --out-tabs -t --tabs" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_csvtk_ncol ()
+{
+    local cur word_list
+    word_list=" -n --file-name -h --help -c --chunk-size -C --comment-char -d --delimiter -E --ignore-empty-row -I --ignore-illegal-row --infile-list -l --lazy-quotes -H --no-header-row -j --num-cpus -D --out-delimiter -o --out-file -T --out-tabs -t --tabs" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_csvtk_nrow ()
+{
+    local cur word_list
+    word_list=" -n --file-name -h --help -c --chunk-size -C --comment-char -d --delimiter -E --ignore-empty-row -I --ignore-illegal-row --infile-list -l --lazy-quotes -H --no-header-row -j --num-cpus -D --out-delimiter -o --out-file -T --out-tabs -t --tabs" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_csvtk_plot ()
+{
+    local cur word_list
+    word_list=" --axis-width -f --data-field --format -g --group-field --height -h --help --label-size --tick-width --title --title-size --width --x-max --x-min --xlab --y-max --y-min --ylab -c --chunk-size -C --comment-char -d --delimiter -E --ignore-empty-row -I --ignore-illegal-row --infile-list -l --lazy-quotes -H --no-header-row -j --num-cpus -D --out-delimiter -o --out-file -T --out-tabs -t --tabs" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_csvtk_pretty ()
+{
+    local cur word_list
+    word_list=" -r --align-right -h --help -W --max-width -w --min-width -s --separator -c --chunk-size -C --comment-char -d --delimiter -E --ignore-empty-row -I --ignore-illegal-row --infile-list -l --lazy-quotes -H --no-header-row -j --num-cpus -D --out-delimiter -o --out-file -T --out-tabs -t --tabs" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_csvtk_rename ()
+{
+    local cur word_list
+    word_list=" -f --fields -F --fuzzy-fields -h --help -n --names -c --chunk-size -C --comment-char -d --delimiter -E --ignore-empty-row -I --ignore-illegal-row --infile-list -l --lazy-quotes -H --no-header-row -j --num-cpus -D --out-delimiter -o --out-file -T --out-tabs -t --tabs" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_csvtk_rename2 ()
+{
+    local cur word_list
+    word_list=" -f --fields -F --fuzzy-fields -h --help -i --ignore-case -K --keep-key --key-capt-idx --key-miss-repl -k --kv-file -A --kv-file-all-left-columns-as-value -p --pattern -r --replacement -n --start-num -c --chunk-size -C --comment-char -d --delimiter -E --ignore-empty-row -I --ignore-illegal-row --infile-list -l --lazy-quotes -H --no-header-row -j --num-cpus -D --out-delimiter -o --out-file -T --out-tabs -t --tabs" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_csvtk_replace ()
+{
+    local cur word_list
+    word_list=" -f --fields -F --fuzzy-fields -h --help -i --ignore-case -K --keep-key --key-capt-idx --key-miss-repl -k --kv-file -A --kv-file-all-left-columns-as-value --nr-width -p --pattern -r --replacement -c --chunk-size -C --comment-char -d --delimiter -E --ignore-empty-row -I --ignore-illegal-row --infile-list -l --lazy-quotes -H --no-header-row -j --num-cpus -D --out-delimiter -o --out-file -T --out-tabs -t --tabs" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_csvtk_round ()
+{
+    local cur word_list
+    word_list=" -a --all-fields -n --decimal-width -f --fields -F --fuzzy-fields -h --help -c --chunk-size -C --comment-char -d --delimiter -E --ignore-empty-row -I --ignore-illegal-row --infile-list -l --lazy-quotes -H --no-header-row -j --num-cpus -D --out-delimiter -o --out-file -T --out-tabs -t --tabs" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_csvtk_sample ()
+{
+    local cur word_list
+    word_list=" -h --help -n --line-number -p --proportion -s --rand-seed -c --chunk-size -C --comment-char -d --delimiter -E --ignore-empty-row -I --ignore-illegal-row --infile-list -l --lazy-quotes -H --no-header-row -j --num-cpus -D --out-delimiter -o --out-file -T --out-tabs -t --tabs" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_csvtk_sep ()
+{
+    local cur word_list
+    word_list=" --drop -f --fields -h --help -i --ignore-case --merge --na -n --names -N --num-cols -R --remove -s --sep -r --use-regexp -c --chunk-size -C --comment-char -d --delimiter -E --ignore-empty-row -I --ignore-illegal-row --infile-list -l --lazy-quotes -H --no-header-row -j --num-cpus -D --out-delimiter -o --out-file -T --out-tabs -t --tabs" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_csvtk_sort ()
+{
+    local cur word_list
+    word_list=" -h --help -i --ignore-case -k --keys -L --levels -c --chunk-size -C --comment-char -d --delimiter -E --ignore-empty-row -I --ignore-illegal-row --infile-list -l --lazy-quotes -H --no-header-row -j --num-cpus -D --out-delimiter -o --out-file -T --out-tabs -t --tabs" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_csvtk_space2tab ()
+{
+    local cur word_list
+    word_list=" -h --help -c --chunk-size -C --comment-char -d --delimiter -E --ignore-empty-row -I --ignore-illegal-row --infile-list -l --lazy-quotes -H --no-header-row -j --num-cpus -D --out-delimiter -o --out-file -T --out-tabs -t --tabs" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_csvtk_split ()
+{
+    local cur word_list
+    word_list=" -g --buf-groups -b --buf-rows -f --fields -F --fuzzy-fields -h --help -i --ignore-case -G --out-gzip -c --chunk-size -C --comment-char -d --delimiter -E --ignore-empty-row -I --ignore-illegal-row --infile-list -l --lazy-quotes -H --no-header-row -j --num-cpus -D --out-delimiter -o --out-file -T --out-tabs -t --tabs" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_csvtk_splitxlsx ()
+{
+    local cur word_list
+    word_list=" -f --fields -F --fuzzy-fields -h --help -i --ignore-case -a --list-sheets -N --sheet-index -n --sheet-name -c --chunk-size -C --comment-char -d --delimiter -E --ignore-empty-row -I --ignore-illegal-row --infile-list -l --lazy-quotes -H --no-header-row -j --num-cpus -D --out-delimiter -o --out-file -T --out-tabs -t --tabs" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_csvtk_summary ()
+{
+    local cur word_list
+    word_list=" -n --decimal-width -f --fields -g --groups -h --help -i --ignore-non-numbers -S --rand-seed -s --separater -c --chunk-size -C --comment-char -d --delimiter -E --ignore-empty-row -I --ignore-illegal-row --infile-list -l --lazy-quotes -H --no-header-row -j --num-cpus -D --out-delimiter -o --out-file -T --out-tabs -t --tabs" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_csvtk_tab2csv ()
+{
+    local cur word_list
+    word_list=" -h --help -c --chunk-size -C --comment-char -d --delimiter -E --ignore-empty-row -I --ignore-illegal-row --infile-list -l --lazy-quotes -H --no-header-row -j --num-cpus -D --out-delimiter -o --out-file -T --out-tabs -t --tabs" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_csvtk_transpose ()
+{
+    local cur word_list
+    word_list=" -h --help -c --chunk-size -C --comment-char -d --delimiter -E --ignore-empty-row -I --ignore-illegal-row --infile-list -l --lazy-quotes -H --no-header-row -j --num-cpus -D --out-delimiter -o --out-file -T --out-tabs -t --tabs" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_csvtk_unfold ()
+{
+    local cur word_list
+    word_list=" -f --fields -h --help -s --separater -c --chunk-size -C --comment-char -d --delimiter -E --ignore-empty-row -I --ignore-illegal-row --infile-list -l --lazy-quotes -H --no-header-row -j --num-cpus -D --out-delimiter -o --out-file -T --out-tabs -t --tabs" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_csvtk_uniq ()
+{
+    local cur word_list
+    word_list=" -f --fields -F --fuzzy-fields -h --help -i --ignore-case -n --keep-n -c --chunk-size -C --comment-char -d --delimiter -E --ignore-empty-row -I --ignore-illegal-row --infile-list -l --lazy-quotes -H --no-header-row -j --num-cpus -D --out-delimiter -o --out-file -T --out-tabs -t --tabs" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_csvtk_version ()
+{
+    local cur word_list
+    word_list=" -u --check-update -h --help -c --chunk-size -C --comment-char -d --delimiter -E --ignore-empty-row -I --ignore-illegal-row --infile-list -l --lazy-quotes -H --no-header-row -j --num-cpus -D --out-delimiter -o --out-file -T --out-tabs -t --tabs" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_csvtk_watch ()
+{
+    local cur word_list
+    word_list=" -B --bins -W --delay -y --dump -f --field -h --help -O --image -L --log -x --pass -p --print-freq -Q --quiet -R --reset -c --chunk-size -C --comment-char -d --delimiter -E --ignore-empty-row -I --ignore-illegal-row --infile-list -l --lazy-quotes -H --no-header-row -j --num-cpus -D --out-delimiter -o --out-file -T --out-tabs -t --tabs" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_csvtk_xlsx2csv ()
+{
+    local cur word_list
+    word_list=" -h --help -a --list-sheets -i --sheet-index -n --sheet-name -c --chunk-size -C --comment-char -d --delimiter -E --ignore-empty-row -I --ignore-illegal-row --infile-list -l --lazy-quotes -H --no-header-row -j --num-cpus -D --out-delimiter -o --out-file -T --out-tabs -t --tabs" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+## -o bashdefault and -o default are fallback
+complete -o bashdefault -o default -F _csvtk csvtk

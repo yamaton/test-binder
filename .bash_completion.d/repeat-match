@@ -1,6 +1,6 @@
 # Auto-generated with h2o
 
-_repeat-match()
+_repeatmatch()
 {
     local i=1 cmd cur word_list
     cur="${COMP_WORDS[COMP_CWORD]}"
@@ -19,7 +19,7 @@ _repeat-match()
 
     case "$cmd" in
       *)
-          word_list="  -E -f -n -t -V" 
+          word_list="  -E -f -n -t -V"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
@@ -27,4 +27,4 @@ _repeat-match()
 }
 
 ## -o bashdefault and -o default are fallback
-complete -o bashdefault -o default -F _repeat-match repeat-match
+complete -o bashdefault -o default -F _repeatmatch repeat-match

@@ -19,7 +19,7 @@ _sql2csv()
 
     case "$cmd" in
       *)
-          word_list="  -h --help -v --verbose -l --linenumbers -V --version --db --query -e --encoding -H --no-header-row" 
+          word_list="  -h --help -v --verbose -l --linenumbers -V --version --db --query -e --encoding -H --no-header-row"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

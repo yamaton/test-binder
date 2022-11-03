@@ -18,23 +18,23 @@ _plass()
     done
 
     case "$cmd" in
-          plass-assemble) _plass_plass-assemble
+          plass-assemble) _plass_plassassemble
             return
             ;;
 
-          plass-nuclassemble) _plass_plass-nuclassemble
+          plass-nuclassemble) _plass_plassnuclassemble
             return
             ;;
 
       *)
-          word_list=" plass-assemble plass-nuclassemble " 
+          word_list=" plass-assemble plass-nuclassemble "
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
 
 }
 
-_plass_plass-assemble ()
+_plass_plassassemble ()
 {
     local cur word_list
     word_list=" --add-self-matches --alph-size --spaced-kmer-mode --spaced-kmer-pattern --mask --mask-lower-case -k --split-memory-limit --wrapped-scoring -e -c -a --cov-mode --min-seq-id --min-aln-len --seq-id-mode --kmer-per-seq --kmer-per-seq-scale --adjust-kmer-len --hash-shift --include-only-extendable --ignore-multi-kmer --num-iterations --rescore-mode --min-length --max-length --max-gaps --contig-start-mode --contig-end-mode --orf-start-mode --forward-frames --reverse-frames --translation-table --translate --use-all-table-starts --id-offset --protein-filter-threshold --filter-proteins --dbtype --shuffle --createdb-mode --sub-mat --db-load-mode --threads --compressed -v --max-seq-len --delete-tmp-inc --remove-tmp-files --mpi-runner --filter-hits --sort-results --create-lookup --write-lookup" 
@@ -42,7 +42,7 @@ _plass_plass-assemble ()
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_plass_plass-nuclassemble ()
+_plass_plassnuclassemble ()
 {
     local cur word_list
     word_list=" --add-self-matches --alph-size --spaced-kmer-mode --spaced-kmer-pattern --mask --mask-lower-case -k --split-memory-limit --wrapped-scoring -e -c -a --cov-mode --min-seq-id --min-aln-len --seq-id-mode --kmer-per-seq --kmer-per-seq-scale --adjust-kmer-len --hash-shift --include-only-extendable --ignore-multi-kmer --num-iterations --rescore-mode --chop-cycle --cycle-check --min-contig-len --dbtype --shuffle --createdb-mode --id-offset --sub-mat --db-load-mode --threads --compressed -v --max-seq-len --remove-tmp-files --delete-tmp-inc --mpi-runner --filter-hits --sort-results --write-lookup" 

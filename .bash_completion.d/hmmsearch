@@ -19,7 +19,7 @@ _hmmsearch()
 
     case "$cmd" in
       *)
-          word_list="  -h --incE --incT --incdomE --incdomT --cut_ga --cut_nc --cut_tc --max --F1 --F2 --F3 --nobias --nonull2 -Z --domZ --seed --tformat --cpu -o -A --tblout --domtblout --pfamtblout --acc --noali --notextw --textw -E -T --domE --domT" 
+          word_list="  -h --incE --incT --incdomE --incdomT --cut_ga --cut_nc --cut_tc --max --F1 --F2 --F3 --nobias --nonull2 -Z --domZ --seed --tformat --cpu -o -A --tblout --domtblout --pfamtblout --acc --noali --notextw --textw -E -T --domE --domT"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

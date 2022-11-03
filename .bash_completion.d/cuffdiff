@@ -1,0 +1,30 @@
+# Auto-generated with h2o
+
+_cuffdiff()
+{
+    local i=1 cmd cur word_list
+    cur="${COMP_WORDS[COMP_CWORD]}"
+
+    # take the last word that's NOT starting with -
+    while [[ ( "$i" < "$COMP_CWORD" ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          -*) ;;
+          *)
+            cmd="$s"
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    case "$cmd" in
+      *)
+          word_list="  -o --output-dir -L --labels --FDR -M --mask-file -C --contrast-file -b --frag-bias-correct -u --multi-read-correct -p --num-threads --no-diff --no-js-tests -T --time-series --library-type --dispersion-method --library-norm-method -m --frag-len-mean -s --frag-len-std-dev -c --min-alignment-count --max-mle-iterations --compatible-hits-norm --total-hits-norm -v --verbose -q --quiet --seed --no-update-check --emit-count-tables --max-bundle-frags --num-frag-count-draws --num-frag-assign-draws --max-frag-multihits --min-outlier-p --min-reps-for-js-test --no-effective-length-correction --no-length-correction -N --upper-quartile-norm --geometric-norm --raw-mapped-norm --poisson-dispersion --read-skip-fraction --no-read-pairs --trim-read-length --no-scv-correction"
+          COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+          ;;
+    esac
+
+}
+
+## -o bashdefault and -o default are fallback
+complete -o bashdefault -o default -F _cuffdiff cuffdiff

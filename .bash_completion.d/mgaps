@@ -19,7 +19,7 @@ _mgaps()
 
     case "$cmd" in
       *)
-          word_list="  -C -d -e -f -l -s" 
+          word_list="  -C -d -e -f -l -s"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

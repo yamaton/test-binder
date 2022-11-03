@@ -19,7 +19,7 @@ _esearch()
 
     case "$cmd" in
       *)
-          word_list="  -db -query -q -sort -days -datetype -mindate -maxdate -field -pairs -spell -help -label" 
+          word_list="  -db -query -q -sort -days -datetype -mindate -maxdate -field -pairs -spell -help -label"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

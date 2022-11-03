@@ -19,7 +19,7 @@ _vcfsamplediff()
 
     case "$cmd" in
       *)
-          word_list="  -s --strict" 
+          word_list="  -s --strict"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

@@ -19,7 +19,7 @@ _hypo()
 
     case "$cmd" in
       *)
-          word_list="  -r --reads-short -d --draft -b --bam-sr -c --coverage-short -s --size-ref -B --bam-lr -o --output -t --threads -p --processing-size -k --kind-sr -m --match-sr -x --mismatch-sr -g --gap-sr -M --match-lr -X --mismatch-lr -G --gap-lr -n --ned-th -q --qual-map-th -i --intermed -h --help" 
+          word_list="  -r --reads-short -d --draft -b --bam-sr -c --coverage-short -s --size-ref -B --bam-lr -o --output -t --threads -p --processing-size -k --kind-sr -m --match-sr -x --mismatch-sr -g --gap-sr -M --match-lr -X --mismatch-lr -G --gap-lr -n --ned-th -q --qual-map-th -i --intermed -h --help"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

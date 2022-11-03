@@ -1,6 +1,6 @@
 # Auto-generated with h2o
 
-_unicycler_polish()
+_unicyclerpolish()
 {
     local i=1 cmd cur word_list
     cur="${COMP_WORDS[COMP_CWORD]}"
@@ -19,7 +19,7 @@ _unicycler_polish()
 
     case "$cmd" in
       *)
-          word_list="  -h --help -a --assembly -1 --short1 -2 --short2 --pb_bax --pb_bam --pb_fasta --long_reads --no_fix_local --min_insert --max_insert --min_align_length --homopolymer --large --illumina_alt --freebayes_qual_cutoff --threads --verbosity --samtools --bowtie2 --minimap2 --freebayes --pitchfork --bax2bam --pbalign --arrow --pilon --java --ale --racon --minimap --nucmer --showsnps" 
+          word_list="  -h --help -a --assembly -1 --short1 -2 --short2 --pb_bax --pb_bam --pb_fasta --long_reads --no_fix_local --min_insert --max_insert --min_align_length --homopolymer --large --illumina_alt --freebayes_qual_cutoff --threads --verbosity --samtools --bowtie2 --minimap2 --freebayes --pitchfork --bax2bam --pbalign --arrow --pilon --java --ale --racon --minimap --nucmer --showsnps"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
@@ -27,4 +27,4 @@ _unicycler_polish()
 }
 
 ## -o bashdefault and -o default are fallback
-complete -o bashdefault -o default -F _unicycler_polish unicycler_polish
+complete -o bashdefault -o default -F _unicyclerpolish unicycler_polish

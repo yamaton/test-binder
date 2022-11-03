@@ -19,7 +19,7 @@ _elink()
 
     case "$cmd" in
       *)
-          word_list="  -related -target -name -db -id -cmd -mode -holding -batch -help -label" 
+          word_list="  -related -target -name -db -id -cmd -mode -holding -batch -help -label"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

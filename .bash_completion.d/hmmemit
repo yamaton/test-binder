@@ -19,7 +19,7 @@ _hmmemit()
 
     case "$cmd" in
       *)
-          word_list="  -h -o -N -a -c -C -p -L --local --unilocal --glocal --uniglocal --minl --minu --seed" 
+          word_list="  -h -o -N -a -c -C -p -L --local --unilocal --glocal --uniglocal --minl --minu --seed"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

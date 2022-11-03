@@ -1,6 +1,6 @@
 # Auto-generated with h2o
 
-_delta-filter()
+_deltafilter()
 {
     local i=1 cmd cur word_list
     cur="${COMP_WORDS[COMP_CWORD]}"
@@ -19,7 +19,7 @@ _delta-filter()
 
     case "$cmd" in
       *)
-          word_list="  -1 -g -h -i -l -m -q -r -u -o" 
+          word_list="  -1 -g -h -i -l -m -q -r -u -o"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
@@ -27,4 +27,4 @@ _delta-filter()
 }
 
 ## -o bashdefault and -o default are fallback
-complete -o bashdefault -o default -F _delta-filter delta-filter
+complete -o bashdefault -o default -F _deltafilter delta-filter

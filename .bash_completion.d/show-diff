@@ -1,6 +1,6 @@
 # Auto-generated with h2o
 
-_show-diff()
+_showdiff()
 {
     local i=1 cmd cur word_list
     cur="${COMP_WORDS[COMP_CWORD]}"
@@ -19,7 +19,7 @@ _show-diff()
 
     case "$cmd" in
       *)
-          word_list="  -f -h -H -q -r" 
+          word_list="  -f -h -H -q -r"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
@@ -27,4 +27,4 @@ _show-diff()
 }
 
 ## -o bashdefault and -o default are fallback
-complete -o bashdefault -o default -F _show-diff show-diff
+complete -o bashdefault -o default -F _showdiff show-diff

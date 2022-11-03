@@ -19,7 +19,7 @@ _raven()
 
     case "$cmd" in
       *)
-          word_list="  --weaken -p --polishing-rounds -m --match -n --mismatch -g --gap --graphical-fragment-assembly --resume --disable-checkpoints -t --threads --version -h --help" 
+          word_list="  --weaken -p --polishing-rounds -m --match -n --mismatch -g --gap --graphical-fragment-assembly --resume --disable-checkpoints -t --threads --version -h --help"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

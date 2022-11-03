@@ -43,7 +43,7 @@ _delly()
             ;;
 
       *)
-          word_list=" call merge filter lr cnv classify " 
+          word_list=" call merge filter lr cnv classify "
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

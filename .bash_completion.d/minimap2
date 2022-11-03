@@ -19,7 +19,7 @@ _minimap2()
 
     case "$cmd" in
       *)
-          word_list="  -H -k -w -I -d -f -g -G -F -r -n -m -X -p -N -A -B -O -E -z -s -u -a -o -L -R -c --cs --MD --eqx -Y -t -K --version -x" 
+          word_list="  -x -H -k -w -I -d -f -g -G -F -r -n -m -X -p -N -A -B -O -E -z -s -u -a -o -L -R -c --cs --MD --eqx -Y -t -K --version"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

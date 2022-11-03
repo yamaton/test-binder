@@ -19,7 +19,7 @@ _hmmbuild()
 
     case "$cmd" in
       *)
-          word_list="  -h -n -o -O --amino --dna --rna --fast --hand --symfrac --fragthresh --wpb --wgsc --wblosum --wnone --wgiven --wid --eent --eclust --enone --eset --ere --esigma --eid --pnone --plaplace --singlemx --mx --mxfile --popen --pextend --EmL --EmN --EvL --EvN --EfL --EfN --Eft --cpu --stall --informat --seed --w_beta --w_length --maxinsertlen" 
+          word_list="  -h -n -o -O --amino --dna --rna --fast --hand --symfrac --fragthresh --wpb --wgsc --wblosum --wnone --wgiven --wid --eent --eclust --enone --eset --ere --esigma --eid --pnone --plaplace --singlemx --mx --mxfile --popen --pextend --EmL --EmN --EvL --EvN --EfL --EfN --Eft --cpu --stall --informat --seed --w_beta --w_length --maxinsertlen"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

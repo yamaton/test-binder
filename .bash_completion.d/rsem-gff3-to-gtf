@@ -1,6 +1,6 @@
 # Auto-generated with h2o
 
-_rsem-gff3-to-gtf()
+_rsemgff3togtf()
 {
     local i=1 cmd cur word_list
     cur="${COMP_WORDS[COMP_CWORD]}"
@@ -19,7 +19,7 @@ _rsem-gff3-to-gtf()
 
     case "$cmd" in
       *)
-          word_list="  -h --help --make-genes-as-transcripts --RNA-patterns --extract-sequences" 
+          word_list="  -h --help --make-genes-as-transcripts --RNA-patterns --extract-sequences"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
@@ -27,4 +27,4 @@ _rsem-gff3-to-gtf()
 }
 
 ## -o bashdefault and -o default are fallback
-complete -o bashdefault -o default -F _rsem-gff3-to-gtf rsem-gff3-to-gtf
+complete -o bashdefault -o default -F _rsemgff3togtf rsem-gff3-to-gtf

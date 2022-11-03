@@ -19,7 +19,7 @@ _hmmpgmd()
 
     case "$cmd" in
       *)
-          word_list="  -h --master --worker --cport --wport --ccncts --wcncts --pid --seqdb --hmmdb --cpu" 
+          word_list="  -h --master --worker --cport --wport --ccncts --wcncts --pid --seqdb --hmmdb --cpu"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

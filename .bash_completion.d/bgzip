@@ -19,7 +19,7 @@ _bgzip()
 
     case "$cmd" in
       *)
-          word_list="  -b --offset -c --stdout -d --decompress -f --force -g --rebgzip -h --help -i --index -I --index-name -k --keep -l --compress-level -r --reindex -s --size -t --test -@ --threads" 
+          word_list="  -b --offset -c --stdout -d --decompress -f --force -g --rebgzip -h --help -i --index -I --index-name -k --keep -l --compress-level -r --reindex -s --size -t --test -@ --threads"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

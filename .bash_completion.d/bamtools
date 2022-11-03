@@ -71,7 +71,7 @@ _bamtools()
             ;;
 
       *)
-          word_list=" convert count coverage filter header index merge random resolve revert sort split stats " 
+          word_list=" convert count coverage filter header index merge random resolve revert sort split stats "
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

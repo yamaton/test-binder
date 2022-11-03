@@ -19,7 +19,7 @@ _canu()
 
     case "$cmd" in
       *)
-          word_list="  -haplotype -correct -trim -assemble -trim-assemble -d -p -s -haplotype -corrected -trimmed -untrimmed -raw -pacbio -nanopore -pacbio-hifi" 
+          word_list="  -haplotype -correct -trim -assemble -trim-assemble -d -p -s -haplotype -corrected -trimmed -untrimmed -raw -pacbio -nanopore -pacbio-hifi"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

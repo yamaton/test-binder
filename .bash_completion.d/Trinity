@@ -19,7 +19,7 @@ _Trinity()
 
     case "$cmd" in
       *)
-          word_list="  --seqType --max_memory --left --right --single --samples_file --include_supertranscripts --SS_lib_type --CPU --min_contig_length --long_reads --genome_guided_bam --long_reads_bam --jaccard_clip --trimmomatic --output --full_cleanup --cite --verbose --version --show_full_usage_info" 
+          word_list="  --seqType --max_memory --left --right --single --samples_file --include_supertranscripts --SS_lib_type --CPU --min_contig_length --long_reads --genome_guided_bam --long_reads_bam --jaccard_clip --trimmomatic --output --full_cleanup --cite --verbose --version --show_full_usage_info --no_super_reads --prep --no_cleanup --no_version_check --no_symlink --monitoring --monitor_sec --no_distributed_trinity_exec --workdir --min_kmer_cov --inchworm_cpu --no_run_inchworm --max_reads_per_graph --min_glue --max_chrysalis_cluster_size --no_bowtie --no_run_chrysalis --bfly_algorithm --bfly_opts --group_pairs_distance --path_reinforcement_distance --no_path_merging --min_per_id_same_path --max_diffs_same_path --max_internal_gap_same_path --bflyHeapSpaceMax --bflyHeapSpaceInit --bflyGCThreads --bflyCPU --bflyCalculateCPU --bfly_jar --quality_trimming_params --normalize_max_read_cov --normalize_by_read_set --just_normalize_reads --no_normalize_reads --no_parallel_norm_stats --genome_guided_max_intron --genome_guided_min_coverage --genome_guided_min_reads_per_partition --grid_exec --grid_node_CPU --grid_node_max_memory --FORCE"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

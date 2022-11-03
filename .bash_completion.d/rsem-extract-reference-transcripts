@@ -1,6 +1,6 @@
 # Auto-generated with h2o
 
-_rsem-extract-reference-transcripts()
+_rsemextractreferencetranscripts()
 {
     local i=1 cmd cur word_list
     cur="${COMP_WORDS[COMP_CWORD]}"
@@ -19,7 +19,7 @@ _rsem-extract-reference-transcripts()
 
     case "$cmd" in
       *)
-          word_list="  " 
+          word_list="  "
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
@@ -27,4 +27,4 @@ _rsem-extract-reference-transcripts()
 }
 
 ## -o bashdefault and -o default are fallback
-complete -o bashdefault -o default -F _rsem-extract-reference-transcripts rsem-extract-reference-transcripts
+complete -o bashdefault -o default -F _rsemextractreferencetranscripts rsem-extract-reference-transcripts

@@ -19,7 +19,7 @@ _sequenceDiversity()
 
     case "$cmd" in
       *)
-          word_list="  -t --target -f --file -y --type -a --af -r --region -w --window" 
+          word_list="  -t --target -f --file -y --type -a --af -r --region -w --window"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

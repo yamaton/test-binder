@@ -19,7 +19,7 @@ _hifiasm()
 
     case "$cmd" in
       *)
-          word_list="  -o -t -h --version -k -w -f -r --min-hist-cnt -a -z -m -p -n -x -y -i --pri-range --lowQ --b-cov --h-cov --m-rate --primary -1 -2 -3 -4 -c -d -l -s -O --purge-cov --n-hap --dbg-gfa --h1 --h2 --n-weight --n-perturb --f-perturb --seed" 
+          word_list="  -o -t -h --version -k -w -f -r --min-hist-cnt -a -z -m -p -n -x -y -i --pri-range --lowQ --b-cov --h-cov --m-rate --primary -1 -2 -3 -4 -c -d -l -s -O --purge-cov --n-hap --dbg-gfa --h1 --h2 --n-weight --n-perturb --f-perturb --seed"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

@@ -43,7 +43,7 @@ _bwa()
             ;;
 
       *)
-          word_list=" index mem aln samse sampe bwasw " 
+          word_list=" index mem aln samse sampe bwasw "
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

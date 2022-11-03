@@ -19,7 +19,7 @@ _wgsim()
 
     case "$cmd" in
       *)
-          word_list="  -e -d -s -N -1 -2 -r -R -X -S -A -h" 
+          word_list="  -e -d -s -N -1 -2 -r -R -X -S -A -h"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

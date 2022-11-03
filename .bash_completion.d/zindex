@@ -19,7 +19,7 @@ _zindex()
 
     case "$cmd" in
       *)
-          word_list="  --index-file -p --pipe --tab-delimiter -d --delimiter -c --config -f --field --skip-first --capture --regex --checkpoint-every -w --warnings -s --sparse -u --unique -n --numeric --color --colour --debug -v --verbose -- --ignore_rest --version -h --help" 
+          word_list="  --index-file -p --pipe --tab-delimiter -d --delimiter -c --config -f --field --skip-first --capture --regex --checkpoint-every -w --warnings -s --sparse -u --unique -n --numeric --color --colour --debug -v --verbose -- --ignore_rest --version -h --help"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

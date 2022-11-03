@@ -19,7 +19,7 @@ _vcfannotate()
 
     case "$cmd" in
       *)
-          word_list="  -b --bed -k --key -d --default" 
+          word_list="  -b --bed -k --key -d --default"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

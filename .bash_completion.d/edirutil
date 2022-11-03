@@ -19,7 +19,7 @@ _edirutil()
 
     case "$cmd" in
       *)
-          word_list="  -db -web -key -count -step -silent -verbose -debug" 
+          word_list="  -db -web -key -count -step -silent -verbose -debug"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

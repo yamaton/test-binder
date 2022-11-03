@@ -19,7 +19,7 @@ _hmmstat()
 
     case "$cmd" in
       *)
-          word_list="  -h" 
+          word_list="  -h"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

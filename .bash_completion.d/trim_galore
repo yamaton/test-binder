@@ -1,0 +1,30 @@
+# Auto-generated with h2o
+
+_trimgalore()
+{
+    local i=1 cmd cur word_list
+    cur="${COMP_WORDS[COMP_CWORD]}"
+
+    # take the last word that's NOT starting with -
+    while [[ ( "$i" < "$COMP_CWORD" ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          -*) ;;
+          *)
+            cmd="$s"
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    case "$cmd" in
+      *)
+          word_list="  -h --help -v --version -q --quality --phred33 --phred64 --fastqc --fastqc_args -a --adapter -a2 --adapter2 --illumina --nextera --small_rna --consider_already_trimmed --max_length --stringency -e --gzip --dont_gzip --length --max_n --trim-n -o --output_dir --no_report_file --suppress_warn --clip_R1 --clip_R2 --three_prime_clip_R1 --three_prime_clip_R2 --2colour --nextseq --path_to_cutadapt --basename -j --cores --hardtrim5 --hardtrim3 --clock --polyA --implicon --rrbs --non_directional --keep --paired -t --trim1 --retain_unpaired -r1 --length_1 -r2 --length_2"
+          COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+          ;;
+    esac
+
+}
+
+## -o bashdefault and -o default are fallback
+complete -o bashdefault -o default -F _trimgalore trim_galore

@@ -19,7 +19,7 @@ _epost()
 
     case "$cmd" in
       *)
-          word_list="  -help -db -id -format -input -label" 
+          word_list="  -help -db -id -format -input -label"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

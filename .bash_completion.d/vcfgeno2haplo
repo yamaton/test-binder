@@ -19,7 +19,7 @@ _vcfgeno2haplo()
 
     case "$cmd" in
       *)
-          word_list="  -h --help -v --version -r --reference -w --window-size -o --only-variants" 
+          word_list="  -h --help -v --version -r --reference -w --window-size -o --only-variants"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

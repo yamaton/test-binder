@@ -1,6 +1,6 @@
 # Auto-generated with h2o
 
-_fetch-pubmed()
+_fetchpubmed()
 {
     local i=1 cmd cur word_list
     cur="${COMP_WORDS[COMP_CWORD]}"
@@ -19,7 +19,7 @@ _fetch-pubmed()
 
     case "$cmd" in
       *)
-          word_list="  -strict -mixed -path -all -fresh" 
+          word_list="  -strict -mixed -path -all -fresh"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
@@ -27,4 +27,4 @@ _fetch-pubmed()
 }
 
 ## -o bashdefault and -o default are fallback
-complete -o bashdefault -o default -F _fetch-pubmed fetch-pubmed
+complete -o bashdefault -o default -F _fetchpubmed fetch-pubmed

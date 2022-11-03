@@ -19,7 +19,7 @@ _hmmconvert()
 
     case "$cmd" in
       *)
-          word_list="  -h -a -b -2 --outfmt" 
+          word_list="  -h -a -b -2 --outfmt"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

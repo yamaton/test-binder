@@ -19,7 +19,7 @@ _duphold()
 
     case "$cmd" in
       *)
-          word_list="  -v --vcf -b --bam -f --fasta -s --snp -t --threads -o --output -d --drop -h --help" 
+          word_list="  -v --vcf -b --bam -f --fasta -s --snp -t --threads -o --output -d --drop -h --help"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

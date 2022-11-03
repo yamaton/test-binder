@@ -19,7 +19,7 @@ _anacapa()
 
     case "$cmd" in
       *)
-          word_list="  -i -o -d -a -t -u -l -f -r -g -c -p -q -m -x -y -b -e -k -h" 
+          word_list="  -i -o -d -a -t -u -l -f -r -g -c -p -q -m -x -y -b -e -k -h"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

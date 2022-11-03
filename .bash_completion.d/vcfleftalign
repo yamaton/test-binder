@@ -19,7 +19,7 @@ _vcfleftalign()
 
     case "$cmd" in
       *)
-          word_list="  -r --reference -w --window" 
+          word_list="  -r --reference -w --window"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

@@ -19,7 +19,7 @@ _bioawk()
 
     case "$cmd" in
       *)
-          word_list="  -t -c -f -v -F" 
+          word_list="  -t -c -f -v -F -H"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

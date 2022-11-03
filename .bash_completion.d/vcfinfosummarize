@@ -19,7 +19,7 @@ _vcfinfosummarize()
 
     case "$cmd" in
       *)
-          word_list="  -f --field -i --info -a --average -m --median -n --min -x --max -h --help -v --version" 
+          word_list="  -f --field -i --info -a --average -m --median -n --min -x --max -h --help -v --version"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

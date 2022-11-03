@@ -19,7 +19,7 @@ _genotypeSummary()
 
     case "$cmd" in
       *)
-          word_list="  -t --target -f --file -y --type -r --region -s --snp -a --ancestral" 
+          word_list="  -t --target -f --file -y --type -r --region -s --snp -a --ancestral"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

@@ -1,6 +1,6 @@
 # Auto-generated with h2o
 
-_rsem-prepare-reference()
+_rsempreparereference()
 {
     local i=1 cmd cur word_list
     cur="${COMP_WORDS[COMP_CWORD]}"
@@ -19,7 +19,7 @@ _rsem-prepare-reference()
 
     case "$cmd" in
       *)
-          word_list="  --gtf --gff3 --gff3-RNA-patterns --gff3-genes-as-transcripts --trusted-sources --transcript-to-gene-map --allele-to-gene-map --polyA --polyA-length --no-polyA-subset --bowtie --bowtie-path --bowtie2 --bowtie2-path --star --star-path --star-sjdboverhang --hisat2-hca --hisat2-path -p --num-threads -q --quiet -h --help --prep-pRSEM --mappability-bigwig-file" 
+          word_list="  --gtf --gff3 --gff3-RNA-patterns --gff3-genes-as-transcripts --trusted-sources --transcript-to-gene-map --allele-to-gene-map --polyA --polyA-length --no-polyA-subset --bowtie --bowtie-path --bowtie2 --bowtie2-path --star --star-path --star-sjdboverhang --hisat2-hca --hisat2-path -p --num-threads -q --quiet -h --help --prep-pRSEM --mappability-bigwig-file"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
@@ -27,4 +27,4 @@ _rsem-prepare-reference()
 }
 
 ## -o bashdefault and -o default are fallback
-complete -o bashdefault -o default -F _rsem-prepare-reference rsem-prepare-reference
+complete -o bashdefault -o default -F _rsempreparereference rsem-prepare-reference

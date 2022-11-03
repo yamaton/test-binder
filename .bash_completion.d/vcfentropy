@@ -19,7 +19,7 @@ _vcfentropy()
 
     case "$cmd" in
       *)
-          word_list="  -f --fasta-reference -w --window-size" 
+          word_list="  -f --fasta-reference -w --window-size"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

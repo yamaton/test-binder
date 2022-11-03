@@ -19,7 +19,7 @@ _csvpy()
 
     case "$cmd" in
       *)
-          word_list="  -h --help -d --delimiter -t --tabs -q --quotechar -u --quoting -b --no-doublequote -p --escapechar -z --maxfieldsize -e --encoding -L --locale -S --skipinitialspace --blanks --date-format --datetime-format -H --no-header-row -K --skip-lines -v --verbose -l --linenumbers --zero -V --version --dict --agate" 
+          word_list="  -h --help -d --delimiter -t --tabs -q --quotechar -u --quoting -b --no-doublequote -p --escapechar -z --maxfieldsize -e --encoding -L --locale -S --skipinitialspace --blanks --date-format --datetime-format -H --no-header-row -K --skip-lines -v --verbose -l --linenumbers --zero -V --version --dict --agate"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

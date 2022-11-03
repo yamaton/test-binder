@@ -1,6 +1,6 @@
 # Auto-generated with h2o
 
-_archive-pubmed()
+_archivepubmed()
 {
     local i=1 cmd cur word_list
     cur="${COMP_WORDS[COMP_CWORD]}"
@@ -19,7 +19,7 @@ _archive-pubmed()
 
     case "$cmd" in
       *)
-          word_list="  -path -temp -work -working" 
+          word_list="  -path -temp -work -working"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
@@ -27,4 +27,4 @@ _archive-pubmed()
 }
 
 ## -o bashdefault and -o default are fallback
-complete -o bashdefault -o default -F _archive-pubmed archive-pubmed
+complete -o bashdefault -o default -F _archivepubmed archive-pubmed

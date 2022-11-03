@@ -19,7 +19,7 @@ _tabix()
 
     case "$cmd" in
       *)
-          word_list="  -0 --zero-based -b --begin -c --comment -C --csi -e --end -f --force -m --min-shift -p --preset -s --sequence -S --skip-lines -h --print-header -H --only-header -l --list-chroms -r --reheader -R --regions -T --targets -D --cache --separate-regions --verbosity" 
+          word_list="  -0 --zero-based -b --begin -c --comment -C --csi -e --end -f --force -m --min-shift -p --preset -s --sequence -S --skip-lines -h --print-header -H --only-header -l --list-chroms -r --reheader -R --regions -T --targets -D --cache --separate-regions --verbosity"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

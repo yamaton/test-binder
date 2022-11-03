@@ -1,6 +1,6 @@
 # Auto-generated with h2o
 
-_rsem-run-em()
+_rsemrunem()
 {
     local i=1 cmd cur word_list
     cur="${COMP_WORDS[COMP_CWORD]}"
@@ -19,7 +19,7 @@ _rsem-run-em()
 
     case "$cmd" in
       *)
-          word_list="  -p -b -q --gibbs-out --sampling --seed --append-names" 
+          word_list="  -p -b -q --gibbs-out --sampling --seed --append-names"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
@@ -27,4 +27,4 @@ _rsem-run-em()
 }
 
 ## -o bashdefault and -o default are fallback
-complete -o bashdefault -o default -F _rsem-run-em rsem-run-em
+complete -o bashdefault -o default -F _rsemrunem rsem-run-em

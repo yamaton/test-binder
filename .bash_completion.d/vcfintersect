@@ -19,7 +19,7 @@ _vcfintersect()
 
     case "$cmd" in
       *)
-          word_list="  -b --bed -R --region -S --start-only -v --invert -i --intersect-vcf -u --union-vcf -w --window-size -r --reference -l --loci -m --ref-match -t --tag -V --tag-value -M --merge-from -T --merge-to" 
+          word_list="  -b --bed -R --region -S --start-only -v --invert -i --intersect-vcf -u --union-vcf -w --window-size -r --reference -l --loci -m --ref-match -t --tag -V --tag-value -M --merge-from -T --merge-to"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

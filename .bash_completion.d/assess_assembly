@@ -1,6 +1,6 @@
 # Auto-generated with h2o
 
-_assess_assembly()
+_assessassembly()
 {
     local i=1 cmd cur word_list
     cur="${COMP_WORDS[COMP_CWORD]}"
@@ -19,7 +19,7 @@ _assess_assembly()
 
     case "$cmd" in
       *)
-          word_list="  -h -r -i -c -C -H -t -p -T -b -l -e" 
+          word_list="  -h -r -i -d -c -C -H -t -p -b -l -e -y -a"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
@@ -27,4 +27,4 @@ _assess_assembly()
 }
 
 ## -o bashdefault and -o default are fallback
-complete -o bashdefault -o default -F _assess_assembly assess_assembly
+complete -o bashdefault -o default -F _assessassembly assess_assembly

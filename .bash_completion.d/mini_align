@@ -1,6 +1,6 @@
 # Auto-generated with h2o
 
-_mini_align()
+_minialign()
 {
     local i=1 cmd cur word_list
     cur="${COMP_WORDS[COMP_CWORD]}"
@@ -19,7 +19,7 @@ _mini_align()
 
     case "$cmd" in
       *)
-          word_list="  -h -r -i -I -f -a -P -A -n -c -t -p -m -s -X -x -M -S -O -E" 
+          word_list="  -h -r -i -I -d -f -a -P -y -A -n -c -t -p -m -s -X -x -M -S -O -E"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
@@ -27,4 +27,4 @@ _mini_align()
 }
 
 ## -o bashdefault and -o default are fallback
-complete -o bashdefault -o default -F _mini_align mini_align
+complete -o bashdefault -o default -F _minialign mini_align

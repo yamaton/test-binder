@@ -18,7 +18,7 @@ _nanopolish()
     done
 
     case "$cmd" in
-          call-methylation) _nanopolish_call-methylation
+          call-methylation) _nanopolish_callmethylation
             return
             ;;
 
@@ -42,7 +42,7 @@ _nanopolish()
             return
             ;;
 
-          phase-reads) _nanopolish_phase-reads
+          phase-reads) _nanopolish_phasereads
             return
             ;;
 
@@ -63,14 +63,14 @@ _nanopolish()
             ;;
 
       *)
-          word_list=" call-methylation eventalign extract getmodel index methyltrain phase-reads polya scorereads variants vcf2fasta " 
+          word_list=" call-methylation eventalign extract getmodel index methyltrain phase-reads polya scorereads variants vcf2fasta "
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
 
 }
 
-_nanopolish_call-methylation ()
+_nanopolish_callmethylation ()
 {
     local cur word_list
     word_list=" -v --verbose --version --help -r --reads -b --bam -g --genome -q --methylation -t --threads --watch --watch-write-bam -c --watch-process-total -i --watch-process-index --progress -K --batchsize" 
@@ -118,7 +118,7 @@ _nanopolish_methyltrain ()
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_nanopolish_phase-reads ()
+_nanopolish_phasereads ()
 {
     local cur word_list
     word_list=" -v --verbose --version --help -r --reads -b --bam -g --genome -w --window -t --threads --progress" 

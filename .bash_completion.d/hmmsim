@@ -19,7 +19,7 @@ _hmmsim()
 
     case "$cmd" in
       *)
-          word_list="  -h -a -v -L -N -o --afile --efile --ffile --pfile --xfile --fs --sw --ls --s --vit --fwd --hyb --msv --fast --tmin --tmax --tpoints --tlinear --EmL --EmN --EvL --EvN --EfL --EfN --Eft --stall --seed --bgflat --bgcomp --x-no-lengthmodel --nu --pthresh" 
+          word_list="  -h -a -v -L -N -o --afile --efile --ffile --pfile --xfile --fs --sw --ls --s --vit --fwd --hyb --msv --fast --tmin --tmax --tpoints --tlinear --EmL --EmN --EvL --EvN --EfL --EfN --Eft --stall --seed --bgflat --bgcomp --x-no-lengthmodel --nu --pthresh"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

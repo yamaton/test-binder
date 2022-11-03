@@ -19,7 +19,7 @@ _vcfcheck()
 
     case "$cmd" in
       *)
-          word_list="  -f --fasta-reference -x --exclude-failures -k --keep-failures -h --help -v --version" 
+          word_list="  -f --fasta-reference -x --exclude-failures -k --keep-failures -h --help -v --version"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

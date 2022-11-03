@@ -1,0 +1,30 @@
+# Auto-generated with h2o
+
+_fastqdump()
+{
+    local i=1 cmd cur word_list
+    cur="${COMP_WORDS[COMP_CWORD]}"
+
+    # take the last word that's NOT starting with -
+    while [[ ( "$i" < "$COMP_CWORD" ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          -*) ;;
+          *)
+            cmd="$s"
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    case "$cmd" in
+      *)
+          word_list="  -A --accession --table --split-spot -N --minSpotId -X --maxSpotId --spot-groups -W --clip -M --minReadLen -R --read-filter -E --qual-filter --qual-filter-1 --aligned --unaligned --aligned-region --matepair_distance --skip-technical -O --outdir -Z --stdout --gzip --bzip2 --split-files --split-3 -G --spot-group -T --group-in-dirs -K --keep-empty-files -C --dumpcs -B --dumpbase --fasta --suppress-qual-for-cskey -F --origfmt -I --readids --helicos --defline-seq --defline-qual --ngc --perm --location --cart --disable-multithreading -V --version -v --verbose -L --log-level --option-file -h --help"
+          COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+          ;;
+    esac
+
+}
+
+## -o bashdefault and -o default are fallback
+complete -o bashdefault -o default -F _fastqdump fastq-dump

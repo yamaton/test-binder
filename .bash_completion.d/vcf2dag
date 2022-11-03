@@ -19,7 +19,7 @@ _vcf2dag()
 
     case "$cmd" in
       *)
-          word_list="  -r --reference" 
+          word_list="  -r --reference"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

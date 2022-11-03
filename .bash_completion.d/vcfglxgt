@@ -19,7 +19,7 @@ _vcfglxgt()
 
     case "$cmd" in
       *)
-          word_list="  -n --fix-null-genotypes" 
+          word_list="  -n --fix-null-genotypes"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

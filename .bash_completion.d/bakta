@@ -19,7 +19,7 @@ _bakta()
 
     case "$cmd" in
       *)
-          word_list="  --db -d --min-contig-length -m --prefix -p --output -o --genus --species --strain --plasmid --complete --prodigal-tf --translation-table --gram --locus --locus-tag --keep-contig-headers --replicons -r --compliant --proteins --skip-trna --skip-tmrna --skip-rrna --skip-ncrna --skip-ncrna-region --skip-crispr --skip-cds --skip-sorf --skip-gap --skip-ori --help -h --verbose -v --threads -t --tmp-dir --version" 
+          word_list="  --db -d --min-contig-length -m --prefix -p --output -o --genus --species --strain --plasmid --complete --prodigal-tf --translation-table --gram --locus --locus-tag --keep-contig-headers --replicons -r --compliant --proteins --skip-trna --skip-tmrna --skip-rrna --skip-ncrna --skip-ncrna-region --skip-crispr --skip-cds --skip-sorf --skip-gap --skip-ori --help -h --verbose -v --threads -t --tmp-dir --version"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

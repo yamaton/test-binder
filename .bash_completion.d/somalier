@@ -30,12 +30,12 @@ _somalier()
             return
             ;;
 
-          find-sites) _somalier_find-sites
+          find-sites) _somalier_findsites
             return
             ;;
 
       *)
-          word_list=" extract relate ancestry find-sites " 
+          word_list=" extract relate ancestry find-sites "
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
@@ -66,7 +66,7 @@ _somalier_ancestry ()
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_somalier_find-sites ()
+_somalier_findsites ()
 {
     local cur word_list
     word_list=" -x --exclude -i --include --gnotate-exclude --snp-dist --min-AN --min-AF -h --help" 

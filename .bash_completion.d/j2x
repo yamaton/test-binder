@@ -19,7 +19,7 @@ _j2x()
 
     case "$cmd" in
       *)
-          word_list="  -input -output -set -rec -nest -timer -help" 
+          word_list="  -input -output -set -rec -nest -timer -help"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

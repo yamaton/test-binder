@@ -19,7 +19,7 @@ _espell()
 
     case "$cmd" in
       *)
-          word_list="  -help -db -q -query" 
+          word_list="  -help -db -q -query"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

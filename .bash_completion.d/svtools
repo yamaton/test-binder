@@ -75,7 +75,7 @@ _svtools()
             ;;
 
       *)
-          word_list=" vcftobedpe bedpetovcf bedpetobed12 vcfsort bedpesort prune varlookup afreq lsort lmerge genotype copynumber vcfpaste classify --help --version --contact" 
+          word_list=" vcftobedpe bedpetovcf bedpetobed12 vcfsort bedpesort prune varlookup afreq lsort lmerge genotype copynumber vcfpaste classify --help --version --contact"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

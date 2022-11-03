@@ -19,7 +19,7 @@ _miniasm()
 
     case "$cmd" in
       *)
-          word_list="  -R -m -i -s -c -o -h -I -g -d -e -f -n -r -F -p -b -1 -2 -V" 
+          word_list="  -R -m -i -s -c -o -h -I -g -d -e -f -n -r -F -p -b -1 -2 -V"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

@@ -19,7 +19,7 @@ _masurca()
 
     case "$cmd" in
       *)
-          word_list="  -v --version -o --output -g --generate -p --path -l --ld-library-path --skip-checking -h --help" 
+          word_list="  -v --version -o --output -g --generate -p --path -l --ld-library-path --skip-checking -h --help"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

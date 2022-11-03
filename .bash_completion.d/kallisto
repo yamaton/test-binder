@@ -1,0 +1,122 @@
+# Auto-generated with h2o
+
+_kallisto()
+{
+    local i=1 cmd cur word_list
+    cur="${COMP_WORDS[COMP_CWORD]}"
+
+    # take the last word that's NOT starting with -
+    while [[ ( "$i" < "$COMP_CWORD" ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          -*) ;;
+          *)
+            cmd="$s"
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    case "$cmd" in
+          index) _kallisto_index
+            return
+            ;;
+
+          quant) _kallisto_quant
+            return
+            ;;
+
+          quant-tcc) _kallisto_quanttcc
+            return
+            ;;
+
+          bus) _kallisto_bus
+            return
+            ;;
+
+          merge) _kallisto_merge
+            return
+            ;;
+
+          h5dump) _kallisto_h5dump
+            return
+            ;;
+
+          inspect) _kallisto_inspect
+            return
+            ;;
+
+          version) _kallisto_version
+            return
+            ;;
+
+          cite) _kallisto_cite
+            return
+            ;;
+
+      *)
+          word_list=" index quant quant-tcc bus merge h5dump inspect version cite "
+          COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+          ;;
+    esac
+
+}
+
+_kallisto_index ()
+{
+    local cur word_list
+    word_list=" -i --index -k --kmer-size --make-unique" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_kallisto_quant ()
+{
+    local cur word_list
+    word_list=" -i --index -o --output-dir --bias -b --bootstrap-samples --seed --plaintext --fusion --single --single-overhang --fr-stranded --rf-stranded -l --fragment-length -s --sd -t --threads --pseudobam --genomebam -g --gtf -c --chromosomes --verbose" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_kallisto_quanttcc ()
+{
+    local cur word_list
+    word_list=" -o --output-dir -i --index -T --txnames -e --ec-file -f --fragment-file -l --fragment-length -s --sd -t --threads -g --genemap -G --gtf -b --bootstrap-samples --seed" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_kallisto_bus ()
+{
+    local cur word_list
+    word_list=" -i --index -o --output-dir -x --technology -l --list -B --batch -t --threads -b --bam -n --num -T --tag --fr-stranded --rf-stranded --unstranded --paired --genomebam -g --gtf -c --chromosomes --verbose" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_kallisto_merge ()
+{
+    local cur word_list
+    word_list=" -i --index -o --output-dir" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_kallisto_h5dump ()
+{
+    local cur word_list
+    word_list=" -o --output-dir" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_kallisto_inspect ()
+{
+    local cur word_list
+    word_list=" -G --gfa -g --gtf -b --bed" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+## -o bashdefault and -o default are fallback
+complete -o bashdefault -o default -F _kallisto kallisto

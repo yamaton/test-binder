@@ -19,7 +19,7 @@ _bowtie2()
 
     case "$cmd" in
       *)
-          word_list="  -q --tab5 --tab6 --qseq -f -r -F -c -s --skip -u --upto -5 --trim5 -3 --trim3 --trim-to --phred33 --phred64 --int-quals -N -L -i --n-ceil --dpad --gbar --ignore-quals --nofw --norc --no-1mm-upfront --end-to-end --local --ma --mp --np --rdg --rfg --score-min -k -a --all -D -R -I --minins -X --maxins --fr --rf --ff --no-mixed --no-discordant --dovetail --no-contain --no-overlap --align-paired-reads --preserve-tags -t --time --un --al --un-conc --al-conc --quiet --met-file --met-stderr --met --no-unal --no-head --no-sq --rg-id --rg --omit-sec-seq --sam-no-qname-trunc --xeq --soft-clipped-unmapped-tlen --sam-append-comment -p --threads --reorder --mm --qc-filter --seed --non-deterministic --version -h --help" 
+          word_list="  -x -1 -2 -U --interleaved -b -S -q --tab5 --tab6 --qseq -f -r -F -c -s --skip -u --upto -5 --trim5 -3 --trim3 --trim-to --phred33 --phred64 --int-quals -N -L -i --n-ceil --dpad --gbar --ignore-quals --nofw --norc --no-1mm-upfront --end-to-end --local --ma --mp --np --rdg --rfg --score-min -k -a --all -D -R -I --minins -X --maxins --fr --rf --ff --no-mixed --no-discordant --dovetail --no-contain --no-overlap --align-paired-reads --preserve-tags -t --time --un --al --un-conc --al-conc --quiet --met-file --met-stderr --met --no-unal --no-head --no-sq --rg-id --rg --omit-sec-seq --sam-no-qname-trunc --xeq --soft-clipped-unmapped-tlen --sam-append-comment -p --threads --reorder --mm --qc-filter --seed --non-deterministic --version -h --help"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

@@ -19,7 +19,7 @@ _vcfcombine()
 
     case "$cmd" in
       *)
-          word_list="  -h --help -v --version -r --region" 
+          word_list="  -h --help -v --version -r --region"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

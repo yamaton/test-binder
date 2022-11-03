@@ -19,7 +19,7 @@ _megahit()
 
     case "$cmd" in
       *)
-          word_list="  -1 -2 --12 -r --read --min-count --k-list --k-min --k-max --k-step --no-mercy --bubble-level --merge-level --prune-level --prune-depth --disconnect-ratio --low-local-ratio --max-tip-len --cleaning-rounds --no-local --kmin-1pass --presets -m --memory --mem-flag -t --num-cpu-threads --no-hw-accel -o --out-dir --out-prefix --min-contig-len --keep-tmp-files --tmp-dir --continue --test -h --help -v --version" 
+          word_list="  -1 -2 --12 -r --read --min-count --k-list --k-min --k-max --k-step --no-mercy --bubble-level --merge-level --prune-level --prune-depth --disconnect-ratio --low-local-ratio --max-tip-len --cleaning-rounds --no-local --kmin-1pass --presets -m --memory --mem-flag -t --num-cpu-threads --no-hw-accel -o --out-dir --out-prefix --min-contig-len --keep-tmp-files --tmp-dir --continue --test -h --help -v --version"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

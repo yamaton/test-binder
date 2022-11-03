@@ -19,7 +19,7 @@ _fastqc()
 
     case "$cmd" in
       *)
-          word_list="  -h --help -v --version -o --outdir --casava --nano --nofilter --extract -j --java --noextract --nogroup --min_length -f --format -t --threads -c --contaminants -a --adapters -l --limits" 
+          word_list="  -h --help -v --version -o --outdir --casava --nano --nofilter --extract -j --java --noextract --nogroup --min_length -f --format -t --threads -c --contaminants -a --adapters -l --limits"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

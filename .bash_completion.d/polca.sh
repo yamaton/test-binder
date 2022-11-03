@@ -1,6 +1,6 @@
 # Auto-generated with h2o
 
-_polca.sh()
+_polcash()
 {
     local i=1 cmd cur word_list
     cur="${COMP_WORDS[COMP_CWORD]}"
@@ -19,7 +19,7 @@ _polca.sh()
 
     case "$cmd" in
       *)
-          word_list="  -a -r -m -t" 
+          word_list="  -a -r -m -t"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
@@ -27,4 +27,4 @@ _polca.sh()
 }
 
 ## -o bashdefault and -o default are fallback
-complete -o bashdefault -o default -F _polca.sh polca.sh
+complete -o bashdefault -o default -F _polcash polca.sh

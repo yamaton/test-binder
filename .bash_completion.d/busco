@@ -19,7 +19,7 @@ _busco()
 
     case "$cmd" in
       *)
-          word_list="  -i --in -o --out -m --mode -l --lineage_dataset --augustus --augustus_parameters --augustus_species --auto-lineage --auto-lineage-euk --auto-lineage-prok -c --cpu --config --datasets_version --download_base_url --download_path -e --evalue -f --force -h --help --limit --list-datasets --long --metaeuk_parameters --metaeuk_rerun_parameters --offline --out_path -q --quiet -r --restart --update-data -v --version" 
+          word_list="  -i --in -o --out -m --mode -l --lineage_dataset --augustus --augustus_parameters --augustus_species --auto-lineage --auto-lineage-euk --auto-lineage-prok -c --cpu --config --datasets_version --download --download_base_url --download_path -e --evalue -f --force -h --help --limit --list-datasets --long --metaeuk_parameters --metaeuk_rerun_parameters --offline --out_path -q --quiet -r --restart --tar --update-data -v --version"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

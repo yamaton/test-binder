@@ -19,7 +19,7 @@ _esummary()
 
     case "$cmd" in
       *)
-          word_list="  -format -mode -style -db -id -seq_start -seq_stop -strand -chr_start -chr_stop -complexity -extend -extrafeat -raw -json -help" 
+          word_list="  -format -mode -style -db -id -seq_start -seq_stop -strand -chr_start -chr_stop -complexity -extend -extrafeat -raw -json -help"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

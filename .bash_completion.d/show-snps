@@ -1,6 +1,6 @@
 # Auto-generated with h2o
 
-_show-snps()
+_showsnps()
 {
     local i=1 cmd cur word_list
     cur="${COMP_WORDS[COMP_CWORD]}"
@@ -19,7 +19,7 @@ _show-snps()
 
     case "$cmd" in
       *)
-          word_list="  -C -h -H -I -l -q -r -S -T -x" 
+          word_list="  -C -h -H -I -l -q -r -S -T -x"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
@@ -27,4 +27,4 @@ _show-snps()
 }
 
 ## -o bashdefault and -o default are fallback
-complete -o bashdefault -o default -F _show-snps show-snps
+complete -o bashdefault -o default -F _showsnps show-snps

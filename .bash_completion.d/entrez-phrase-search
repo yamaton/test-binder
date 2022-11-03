@@ -1,6 +1,6 @@
 # Auto-generated with h2o
 
-_entrez-phrase-search()
+_entrezphrasesearch()
 {
     local i=1 cmd cur word_list
     cur="${COMP_WORDS[COMP_CWORD]}"
@@ -19,7 +19,7 @@ _entrez-phrase-search()
 
     case "$cmd" in
       *)
-          word_list="  -help -count -counts -string -db -database -field" 
+          word_list="  -help -count -counts -string -db -database -field"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
@@ -27,4 +27,4 @@ _entrez-phrase-search()
 }
 
 ## -o bashdefault and -o default are fallback
-complete -o bashdefault -o default -F _entrez-phrase-search entrez-phrase-search
+complete -o bashdefault -o default -F _entrezphrasesearch entrez-phrase-search

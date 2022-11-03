@@ -1,6 +1,6 @@
 # Auto-generated with h2o
 
-_hisat2_extract_snps_haplotypes_VCF.py()
+_hisat2extractsnpshaplotypesVCFpy()
 {
     local i=1 cmd cur word_list
     cur="${COMP_WORDS[COMP_CWORD]}"
@@ -19,7 +19,7 @@ _hisat2_extract_snps_haplotypes_VCF.py()
 
     case "$cmd" in
       *)
-          word_list="  -h --help --reference-type --inter-gap --intra-gap --non-rs --genotype-vcf --genotype-gene-list --extra-files -v --verbose" 
+          word_list="  -h --help --reference-type --inter-gap --intra-gap --non-rs --genotype-vcf --genotype-gene-list --extra-files -v --verbose"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
@@ -27,4 +27,4 @@ _hisat2_extract_snps_haplotypes_VCF.py()
 }
 
 ## -o bashdefault and -o default are fallback
-complete -o bashdefault -o default -F _hisat2_extract_snps_haplotypes_VCF.py hisat2_extract_snps_haplotypes_VCF.py
+complete -o bashdefault -o default -F _hisat2extractsnpshaplotypesVCFpy hisat2_extract_snps_haplotypes_VCF.py

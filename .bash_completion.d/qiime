@@ -27,7 +27,7 @@ _qiime()
             ;;
 
       *)
-          word_list=" tools dev --version --help" 
+          word_list=" tools dev --version --help"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
@@ -54,7 +54,7 @@ _qiime_tools ()
     while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
         local s="${COMP_WORDS[subcommand_index}"
         case "$s" in
-          cast-metadata) _qiime_cast-metadata
+          cast-metadata) _qiime_castmetadata
             return
             ;;
 
@@ -74,7 +74,7 @@ _qiime_tools ()
             return
             ;;
 
-          inspect-metadata) _qiime_inspect-metadata
+          inspect-metadata) _qiime_inspectmetadata
             return
             ;;
 
@@ -96,7 +96,7 @@ _qiime_tools ()
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_tools_cast-metadata ()
+_tools_castmetadata ()
 {
     local cur word_list
     word_list=" --cast --ignore-extra --error-on-missing --output-file --help" 
@@ -136,7 +136,7 @@ _tools_import ()
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_tools_inspect-metadata ()
+_tools_inspectmetadata ()
 {
     local cur word_list
     word_list=" --tsv --help" 
@@ -180,27 +180,27 @@ _qiime_dev ()
     while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
         local s="${COMP_WORDS[subcommand_index}"
         case "$s" in
-          assert-result-data) _qiime_assert-result-data
+          assert-result-data) _qiime_assertresultdata
             return
             ;;
 
-          assert-result-type) _qiime_assert-result-type
+          assert-result-type) _qiime_assertresulttype
             return
             ;;
 
-          export-default-theme) _qiime_export-default-theme
+          export-default-theme) _qiime_exportdefaulttheme
             return
             ;;
 
-          import-theme) _qiime_import-theme
+          import-theme) _qiime_importtheme
             return
             ;;
 
-          refresh-cache) _qiime_refresh-cache
+          refresh-cache) _qiime_refreshcache
             return
             ;;
 
-          reset-theme) _qiime_reset-theme
+          reset-theme) _qiime_resettheme
             return
             ;;
 
@@ -214,7 +214,7 @@ _qiime_dev ()
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_dev_assert-result-data ()
+_dev_assertresultdata ()
 {
     local cur word_list
     word_list=" --zip-data-path --expression --help" 
@@ -222,7 +222,7 @@ _dev_assert-result-data ()
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_dev_assert-result-type ()
+_dev_assertresulttype ()
 {
     local cur word_list
     word_list=" --qiime-type --help" 
@@ -230,7 +230,7 @@ _dev_assert-result-type ()
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_dev_export-default-theme ()
+_dev_exportdefaulttheme ()
 {
     local cur word_list
     word_list=" --output-path --help" 
@@ -238,7 +238,7 @@ _dev_export-default-theme ()
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_dev_import-theme ()
+_dev_importtheme ()
 {
     local cur word_list
     word_list=" --theme --help" 
@@ -246,7 +246,7 @@ _dev_import-theme ()
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_dev_refresh-cache ()
+_dev_refreshcache ()
 {
     local cur word_list
     word_list=" --help" 
@@ -254,7 +254,7 @@ _dev_refresh-cache ()
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_dev_reset-theme ()
+_dev_resettheme ()
 {
     local cur word_list
     word_list=" --yes" 

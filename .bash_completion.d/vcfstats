@@ -19,7 +19,7 @@ _vcfstats()
 
     case "$cmd" in
       *)
-          word_list="  -r --region -a --add-info -t --add-type -l --no-length-frequency -m --match-score -x --mismatch-score -o --gap-open-penalty -e --gap-extend-penalty" 
+          word_list="  -r --region -a --add-info -t --add-type -l --no-length-frequency -m --match-score -x --mismatch-score -o --gap-open-penalty -e --gap-extend-penalty"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

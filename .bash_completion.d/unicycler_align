@@ -1,6 +1,6 @@
 # Auto-generated with h2o
 
-_unicycler_align()
+_unicycleralign()
 {
     local i=1 cmd cur word_list
     cur="${COMP_WORDS[COMP_CWORD]}"
@@ -19,7 +19,7 @@ _unicycler_align()
 
     case "$cmd" in
       *)
-          word_list="  -h --help --ref --reads --sam --contamination --scores --low_score --keep_bad --sensitivity --threads --verbosity --min_len --allowed_overlap" 
+          word_list="  -h --help --ref --reads --sam --contamination --scores --low_score --keep_bad --sensitivity --threads --verbosity --min_len --allowed_overlap"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
@@ -27,4 +27,4 @@ _unicycler_align()
 }
 
 ## -o bashdefault and -o default are fallback
-complete -o bashdefault -o default -F _unicycler_align unicycler_align
+complete -o bashdefault -o default -F _unicycleralign unicycler_align

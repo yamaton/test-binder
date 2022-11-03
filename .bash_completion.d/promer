@@ -19,7 +19,7 @@ _promer()
 
     case "$cmd" in
       *)
-          word_list="  --mum --mumcand --mumreference --maxmatch -b -c --delta --nodelta --depend -d --extend --noextend -g -h --help -l -m -o --coords --optimize --nooptimize -p -V --version -x" 
+          word_list="  --mum --mumcand --mumreference --maxmatch -b -c --delta --nodelta --depend -d --extend --noextend -g -h --help -l -m -o --coords --optimize --nooptimize -p -V --version -x"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

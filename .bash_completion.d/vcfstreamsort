@@ -19,7 +19,7 @@ _vcfstreamsort()
 
     case "$cmd" in
       *)
-          word_list="  -h --help -w --window -a --all" 
+          word_list="  -h --help -w --window -a --all"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

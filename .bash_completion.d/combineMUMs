@@ -19,7 +19,7 @@ _combineMUMs()
 
     case "$cmd" in
       *)
-          word_list="  -D -n -N -q -r -S -t -v -W -x -e" 
+          word_list="  -D -n -N -q -r -S -t -v -W -x -e"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

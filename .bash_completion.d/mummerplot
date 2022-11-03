@@ -19,7 +19,7 @@ _mummerplot()
 
     case "$cmd" in
       *)
-          word_list="  -b --color --nocolor -c --coverage -c --nocoverage --depend -f --filter -h --help -l --layout --fat -p -rv -r -q -R -Q -r -q -s -S --SNP -t -t -x -y -V --version" 
+          word_list="  -b --color --nocolor -c --coverage -c --nocoverage --depend -f --filter -h --help -l --layout --fat -p -rv -r -q -R -Q -r -q -s -S --SNP -t -t -x -y -V --version"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

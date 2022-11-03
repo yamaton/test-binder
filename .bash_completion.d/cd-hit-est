@@ -1,0 +1,30 @@
+# Auto-generated with h2o
+
+_cdhitest()
+{
+    local i=1 cmd cur word_list
+    cur="${COMP_WORDS[COMP_CWORD]}"
+
+    # take the last word that's NOT starting with -
+    while [[ ( "$i" < "$COMP_CWORD" ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          -*) ;;
+          *)
+            cmd="$s"
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    case "$cmd" in
+      *)
+          word_list="  -i -j -o -op -c -G -b -M -T -n -l -d -s -S -aL -AL -aS -AS -A -uL -uS -U -B -P -cx -cy -ap -p -g -r -mask -match -mismatch -gap -gap-ext -bak -sc -sf -h"
+          COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+          ;;
+    esac
+
+}
+
+## -o bashdefault and -o default are fallback
+complete -o bashdefault -o default -F _cdhitest cd-hit-est

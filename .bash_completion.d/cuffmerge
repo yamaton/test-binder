@@ -1,0 +1,34 @@
+# Auto-generated with h2o
+
+_cuffmerge()
+{
+    local i=1 cmd cur word_list
+    cur="${COMP_WORDS[COMP_CWORD]}"
+
+    # take the last word that's NOT starting with -
+    while [[ ( "$i" < "$COMP_CWORD" ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          -*) ;;
+          *)
+            cmd="$s"
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    case "$cmd" in
+          cuffmerge) _cuffmerge_cuffmerge
+            return
+            ;;
+
+      *)
+          word_list=" cuffmerge -h --help -o -g --ref-gtf -s --ref-sequence --min-isoform-fraction -p --num-threads --keep-tmp"
+          COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+          ;;
+    esac
+
+}
+
+## -o bashdefault and -o default are fallback
+complete -o bashdefault -o default -F _cuffmerge cuffmerge

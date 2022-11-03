@@ -87,7 +87,7 @@ _seqtk()
             ;;
 
       *)
-          word_list=" seq comp sample subseq fqchk mergepe trimfq hety gc mutfa mergefa famask dropse rename randbase cutN listhet " 
+          word_list=" seq comp sample subseq fqchk mergepe trimfq hety gc mutfa mergefa famask dropse rename randbase cutN listhet "
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

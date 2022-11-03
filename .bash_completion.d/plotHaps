@@ -19,7 +19,7 @@ _plotHaps()
 
     case "$cmd" in
       *)
-          word_list="  -t --target -r --region -f --file -y --type" 
+          word_list="  -t --target -r --region -f --file -y --type"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

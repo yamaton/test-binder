@@ -19,7 +19,7 @@ _vcfrandomsample()
 
     case "$cmd" in
       *)
-          word_list="  -r --rate -s --scale-by -p --random-seed -q --pseudorandom-seed" 
+          word_list="  -r --rate -s --scale-by -p --random-seed -q --pseudorandom-seed"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

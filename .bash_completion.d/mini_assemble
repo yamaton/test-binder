@@ -1,6 +1,6 @@
 # Auto-generated with h2o
 
-_mini_assemble()
+_miniassemble()
 {
     local i=1 cmd cur word_list
     cur="${COMP_WORDS[COMP_CWORD]}"
@@ -19,7 +19,7 @@ _mini_assemble()
 
     case "$cmd" in
       *)
-          word_list="  -h -i -r -o -p -t -m -n -w -k -K -c -e -l -x" 
+          word_list="  -h -i -r -o -p -t -m -n -w -k -K -c -e -l -x"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
@@ -27,4 +27,4 @@ _mini_assemble()
 }
 
 ## -o bashdefault and -o default are fallback
-complete -o bashdefault -o default -F _mini_assemble mini_assemble
+complete -o bashdefault -o default -F _miniassemble mini_assemble

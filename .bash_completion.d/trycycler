@@ -43,7 +43,7 @@ _trycycler()
             ;;
 
       *)
-          word_list=" subsample cluster reconcile msa partition consensus -h --help --version" 
+          word_list=" subsample cluster reconcile msa partition consensus -h --help --version"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

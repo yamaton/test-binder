@@ -1,6 +1,6 @@
 # Auto-generated with h2o
 
-_assess_homopolymers()
+_assesshomopolymers()
 {
     local i=1 cmd cur word_list
     cur="${COMP_WORDS[COMP_CWORD]}"
@@ -18,31 +18,31 @@ _assess_homopolymers()
     done
 
     case "$cmd" in
-          count) _assess_homopolymers_count
+          count) _assesshomopolymers_count
             return
             ;;
 
-          analyse) _assess_homopolymers_analyse
+          analyse) _assesshomopolymers_analyse
             return
             ;;
 
       *)
-          word_list=" count analyse -h --help" 
+          word_list=" count analyse -h --help"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
 
 }
 
-_assess_homopolymers_count ()
+_assesshomopolymers_count ()
 {
     local cur word_list
-    word_list=" -h --help -o --output_dir -l --homo_len -b --bed" 
+    word_list=" -h --help -o --output_dir -t --threads -l --homo_len -b --bed" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_assess_homopolymers_analyse ()
+_assesshomopolymers_analyse ()
 {
     local cur word_list
     word_list=" -h --help -o --output_dir" 
@@ -51,4 +51,4 @@ _assess_homopolymers_analyse ()
 }
 
 ## -o bashdefault and -o default are fallback
-complete -o bashdefault -o default -F _assess_homopolymers assess_homopolymers
+complete -o bashdefault -o default -F _assesshomopolymers assess_homopolymers

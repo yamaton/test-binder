@@ -1,6 +1,6 @@
 # Auto-generated with h2o
 
-_rsem-for-ebseq-generate-ngvector-from-clustering-info()
+_rsemforebseqgeneratengvectorfromclusteringinfo()
 {
     local i=1 cmd cur word_list
     cur="${COMP_WORDS[COMP_CWORD]}"
@@ -19,7 +19,7 @@ _rsem-for-ebseq-generate-ngvector-from-clustering-info()
 
     case "$cmd" in
       *)
-          word_list="  " 
+          word_list="  "
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
@@ -27,4 +27,4 @@ _rsem-for-ebseq-generate-ngvector-from-clustering-info()
 }
 
 ## -o bashdefault and -o default are fallback
-complete -o bashdefault -o default -F _rsem-for-ebseq-generate-ngvector-from-clustering-info rsem-for-ebseq-generate-ngvector-from-clustering-info
+complete -o bashdefault -o default -F _rsemforebseqgeneratengvectorfromclusteringinfo rsem-for-ebseq-generate-ngvector-from-clustering-info

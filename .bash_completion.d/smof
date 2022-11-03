@@ -95,7 +95,7 @@ _smof()
             ;;
 
       *)
-          word_list=" cut clean consensus filter grep md5sum head permute reverse sample sniff sort split stat subseq tail translate uniq wc -h --help -v --version" 
+          word_list=" cut clean consensus filter grep md5sum head permute reverse sample sniff sort split stat subseq tail translate uniq wc -h --help -v --version"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

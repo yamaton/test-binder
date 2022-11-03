@@ -19,7 +19,7 @@ _pilon()
 
     case "$cmd" in
       *)
-          word_list="  --genome --frags --jumps --unpaired --bam --nanopore --pacbio --output --outdir --changes --vcf --variant --chunksize --diploid --fix --dumpreads --duplicates --iupac --nonpf --targets --verbose --debug --version --defaultqual --flank --gapmargin --K --mindepth --mingap --minmq --minqual --nostrays" 
+          word_list="  --genome --frags --jumps --unpaired --bam --nanopore --pacbio --output --outdir --changes --vcf --variant --chunksize --diploid --fix --dumpreads --duplicates --iupac --nonpf --targets --verbose --debug --version --defaultqual --flank --gapmargin --K --mindepth --mingap --minmq --minqual --nostrays"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

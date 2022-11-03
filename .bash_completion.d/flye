@@ -19,7 +19,7 @@ _flye()
 
     case "$cmd" in
       *)
-          word_list="  -h --help --pacbio-raw --pacbio-corr --pacbio-hifi --nano-raw --nano-corr --subassemblies -g --genome-size -o --out-dir -t --threads -i --iterations -m --min-overlap --asm-coverage --hifi-error --plasmids --meta --keep-haplotypes --trestle --polish-target --resume --resume-from --stop-after --debug -v --version" 
+          word_list="  -h --help --pacbio-raw --pacbio-corr --pacbio-hifi --nano-raw --nano-corr --nano-hq --subassemblies -g --genome-size -o --out-dir -t --threads -i --iterations -m --min-overlap --asm-coverage --hifi-error --read-error --extra-params --plasmids --meta --keep-haplotypes --scaffold --trestle --polish-target --resume --resume-from --stop-after --debug -v --version"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

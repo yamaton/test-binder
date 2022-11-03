@@ -1,6 +1,6 @@
 # Auto-generated with h2o
 
-_unicycler_check()
+_unicyclercheck()
 {
     local i=1 cmd cur word_list
     cur="${COMP_WORDS[COMP_CWORD]}"
@@ -19,7 +19,7 @@ _unicycler_check()
 
     case "$cmd" in
       *)
-          word_list="  -h --help --sam --ref --reads --min_len --error_window_size --depth_window_size --error_rate_threshold --depth_p_val --window_tables --base_tables --html --threads --verbosity" 
+          word_list="  -h --help --sam --ref --reads --min_len --error_window_size --depth_window_size --error_rate_threshold --depth_p_val --window_tables --base_tables --html --threads --verbosity"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
@@ -27,4 +27,4 @@ _unicycler_check()
 }
 
 ## -o bashdefault and -o default are fallback
-complete -o bashdefault -o default -F _unicycler_check unicycler_check
+complete -o bashdefault -o default -F _unicyclercheck unicycler_check

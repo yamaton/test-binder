@@ -19,7 +19,7 @@ _fastqp()
 
     case "$cmd" in
       *)
-          word_list="  -h --help -q --quiet -s --binsize -a --name -n --nreads -p --base-probs -k --kmer -o --output -e --text -t --type -ll --leftlimit -rl --rightlimit -mq --median-qual --aligned-only --unaligned-only -d --count-duplicates" 
+          word_list="  -h --help -q --quiet -s --binsize -a --name -n --nreads -p --base-probs -k --kmer -o --output -e --text -t --type -ll --leftlimit -rl --rightlimit -mq --median-qual --aligned-only --unaligned-only -d --count-duplicates"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

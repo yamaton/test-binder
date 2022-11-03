@@ -19,7 +19,7 @@ _vcfallelicprimitives()
 
     case "$cmd" in
       *)
-          word_list="  -m --use-mnps -t --tag-parsed -L --max-length -k --keep-info -g --keep-geno" 
+          word_list="  -m --use-mnps -t --tag-parsed -L --max-length -k --keep-info -g --keep-geno"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

@@ -1,6 +1,6 @@
 # Auto-generated with h2o
 
-_index-pubmed()
+_indexpubmed()
 {
     local i=1 cmd cur word_list
     cur="${COMP_WORDS[COMP_CWORD]}"
@@ -19,7 +19,7 @@ _index-pubmed()
 
     case "$cmd" in
       *)
-          word_list="  -path -temp -work -working" 
+          word_list="  -path -temp -work -working"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
@@ -27,4 +27,4 @@ _index-pubmed()
 }
 
 ## -o bashdefault and -o default are fallback
-complete -o bashdefault -o default -F _index-pubmed index-pubmed
+complete -o bashdefault -o default -F _indexpubmed index-pubmed

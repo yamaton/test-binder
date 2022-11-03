@@ -19,7 +19,7 @@ _zq()
 
     case "$cmd" in
       *)
-          word_list="  --raw -i --index --index-file -S --separator --no-separator -C --context -B --before-context -A --after-context -w --warnings -n --line-number --force --color --colour --debug -v --verbose -l --line -- --ignore_rest --version -h --help" 
+          word_list="  --raw -i --index --index-file -S --separator --no-separator -C --context -B --before-context -A --after-context -w --warnings -n --line-number --force --color --colour --debug -v --verbose -l --line -- --ignore_rest --version -h --help"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

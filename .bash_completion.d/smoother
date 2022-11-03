@@ -19,7 +19,7 @@ _smoother()
 
     case "$cmd" in
       *)
-          word_list="  -f --file -o --format -w --window -s --step -t --truncate" 
+          word_list="  -f --file -o --format -w --window -s --step -t --truncate"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

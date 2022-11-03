@@ -19,7 +19,7 @@ _econtact()
 
     case "$cmd" in
       *)
-          word_list="  -help -email -tool" 
+          word_list="  -help -email -tool"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

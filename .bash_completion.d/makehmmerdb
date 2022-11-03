@@ -19,7 +19,7 @@ _makehmmerdb()
 
     case "$cmd" in
       *)
-          word_list="  -h --informat --bin_length --sa_freq --block_size" 
+          word_list="  -h --informat --bin_length --sa_freq --block_size"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac

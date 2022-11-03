@@ -19,7 +19,7 @@ _nquire()
 
     case "$cmd" in
       *)
-          word_list="  -help -ftp -get -url -eutils -tag -examples -version" 
+          word_list="  -help -ftp -get -url -eutils -tag -examples -version"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
