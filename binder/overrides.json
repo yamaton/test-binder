@@ -18,5 +18,8 @@
     },
     "@jupyterlab/fileeditor-extension:plugin": {
         "autoClosingBrackets": true
+    },
+    "@jupyterlab/terminal-extension:plugin": {
+        "scrollback": 5000
     }
 }
