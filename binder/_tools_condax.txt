@@ -5,7 +5,7 @@ bakta
 bamtools
 bandage
 barrnap
-bbmap
+bbmapb
 bcftools
 beagle
 bedtools
@@ -46,6 +46,7 @@ hisat2
 htseq
 htslib
 hypo
+interproscan
 iqtree
 ivar
 kalign3
