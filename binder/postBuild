@@ -97,16 +97,18 @@ mamba clean --all --yes --force-pkgs-dirs
 ## zsh setup
 ## (subshelling does not seem to work in postBuild)
 zshdir=~/.config/zsh
-mkdir -p "$zshdir" && cd "$zshdir"
-git clone https://github.com/zsh-users/zsh-syntax-highlighting
-git clone https://github.com/zsh-users/zsh-autosuggestions
-git clone https://github.com/zsh-git-prompt/zsh-git-prompt
-git clone https://github.com/yamaton/zsh-completions-bio
-cd
+mkdir -p "$zshdir"
+pushd "$zshdir"
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting
+    git clone https://github.com/zsh-users/zsh-autosuggestions
+    git clone https://github.com/zsh-git-prompt/zsh-git-prompt
+    git clone https://github.com/yamaton/zsh-completions-bio
+popd
 
 
 ## remove .git in home directory
 rm -rf .git
+rm -f LICENSE README.md
 
 
 ## Install tealdeer
