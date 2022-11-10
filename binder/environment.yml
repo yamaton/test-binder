@@ -51,7 +51,8 @@ dependencies:
   - pip
   - mamba
   - micromamba
+  - theme-darcula
   - pip:
     - igv-notebook
-
-
+    - jupyterlab_legos_ui
+    - jupyterlab_darkside_ui

@@ -47,12 +47,7 @@ popd
 
 
 # Jupyterlab themes
-jupyter labextension install @rahlir/theme-gruvbox
-jupyter labextension install @yeebc/jupyterlab_neon_theme
-jupyter labextension install jupyterlab_legos_ui
-jupyter labextension install jupyterlab_darkside_ui
 jupyter labextension install jupyterlab-tailwind-theme
-jupyter labextension install theme-darcula
 
 
 # Modify detail width of completion items
