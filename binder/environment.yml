@@ -26,6 +26,9 @@ dependencies:
   - r-gplots
   - r-ggplot2
   - r-sleuth
+  - r-ggpubr
+  - r-hrbrthemes
+  - r-ggthemes
   - rpy2
   - bioconductor-tximport
   - bioconductor-biomart
