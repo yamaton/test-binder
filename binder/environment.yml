@@ -16,7 +16,7 @@ dependencies:
   - matplotlib
   - bokeh
   - plotly
-  - r-base
+  - r-base >=4.2
   - r-tidyverse
   - r-markdown
   - r-httr
