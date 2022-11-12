@@ -10,3 +10,4 @@ pigz
 source-highlight
 shellcheck
 zsh
+apt-utils
