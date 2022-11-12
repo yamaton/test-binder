@@ -1,0 +1,2 @@
+binder/assets/autocomplete.gif filter=lfs diff=lfs merge=lfs -text
+binder/assets/hover.gif filter=lfs diff=lfs merge=lfs -text
