@@ -73,6 +73,7 @@ pangolin
 parallel
 pilon
 polypolish
+pomoxis
 porechop
 primer3
 prokka
