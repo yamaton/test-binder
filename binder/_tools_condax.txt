@@ -69,6 +69,7 @@ muscle
 nanoplot
 nanopolish
 ncbi-datasets-cli
+pangolin
 parallel
 pilon
 polypolish
