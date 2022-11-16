@@ -55,6 +55,7 @@ kraken
 kraken2
 macs2
 mafft
+magicblast
 masurca
 megahit
 methyldackel
