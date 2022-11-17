@@ -25,6 +25,7 @@ csvtk
 cufflinks
 cutadapt
 datamash
+delly
 elprep
 emboss
 ensembl-vep
@@ -41,6 +42,7 @@ gfatools
 gff3toddbj
 gffread
 gffutils
+gridss
 hifiasm
 hisat2
 htseq
