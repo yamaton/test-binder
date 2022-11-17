@@ -67,7 +67,7 @@ minimap2
 mmseqs2
 mosdepth
 multiqc
-mummer
+mummer4
 muscle
 nanoplot
 nanopolish
