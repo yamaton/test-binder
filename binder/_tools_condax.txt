@@ -59,6 +59,7 @@ macs2
 mafft
 magicblast
 masurca
+medaka
 megahit
 methyldackel
 miniasm
@@ -92,6 +93,7 @@ seqkit
 seqmagick
 seqtk
 shovill
+skesa
 snippy
 snpeff
 snpsift
