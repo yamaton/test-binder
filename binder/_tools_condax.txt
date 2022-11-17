@@ -87,6 +87,7 @@ sambamba
 samtools
 seqfu
 seqkit
+seqmagick
 seqtk
 shovill
 snippy
