@@ -44,6 +44,7 @@ gff3toddbj
 gffread
 gffutils
 gridss
+hhsuite
 hifiasm
 hisat2
 htseq
@@ -104,6 +105,7 @@ sra-tools
 star
 strelka
 subread
+svtools
 treetime
 trim-galore
 trimmomatic
