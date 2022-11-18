@@ -11,6 +11,7 @@ beagle
 bedtools
 bioawk
 blast
+blat
 blobtools
 bowtie2
 busco
