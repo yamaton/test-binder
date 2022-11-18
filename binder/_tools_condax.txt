@@ -5,7 +5,7 @@ bakta
 bamtools
 bandage
 barrnap
-bbmapb
+bbmap
 bcftools
 beagle
 bedtools
