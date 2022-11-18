@@ -1,3 +1,4 @@
 bio
+fastqp
 phylo-treetime
 git+https://github.com/yamaton/condax
