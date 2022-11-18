@@ -33,6 +33,7 @@ entrez-direct
 fastp
 fastqc
 fasttree
+ffq
 filtlong
 flye
 freebayes
