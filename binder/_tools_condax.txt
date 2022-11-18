@@ -79,6 +79,7 @@ nanopolish
 ncbi-datasets-cli
 pangolin
 parallel
+plass
 pilon
 polypolish
 pomoxis
