@@ -96,9 +96,11 @@ seqmagick
 seqtk
 shovill
 skesa
+smof
 snippy
 snpeff
 snpsift
+somalier
 sortmerna
 spades
 sra-tools
