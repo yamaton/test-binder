@@ -83,7 +83,7 @@ TOOLS=( "$(cat ~/binder/_tools_condax.txt)" )
 for _tool in ${TOOLS[*]}; do
     echo "Installing ${_tool}"
     # retry if nonzero exit status occurs
-    if [[ ! ($(condax install -c conda-forge -c bioconda "$_tool")) ]]; then
+    if [[ ! ($(condax install -c conda-forge -c bioconda --force "$_tool")) ]]; then
         echo "condax retrying... $_tool"
         condax remove "$_tool"
         condax install -c conda-forge -c bioconda --force "$_tool"
