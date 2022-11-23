@@ -14,6 +14,7 @@ blast
 blat
 blobtools
 bowtie2
+brename
 busco
 bwa
 bwa-mem2
@@ -57,6 +58,7 @@ iqtree
 ivar
 kalign3
 kallisto
+kmcp
 kraken
 kraken2
 macs2
