@@ -113,6 +113,7 @@ star
 strelka
 subread
 svtools
+taxonkit
 treetime
 trim-galore
 trimmomatic
@@ -120,6 +121,7 @@ trinity
 trycycler
 ucsc-bedgraphtobigwig
 unicycler
+unikmer
 vcfanno
 vcflib
 vcftools
