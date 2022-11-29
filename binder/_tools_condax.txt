@@ -21,7 +21,7 @@ bwa-mem2
 canu
 cd-hit
 checkm-genome
-clustalw
+clustalo
 crossmap
 csvkit
 csvtk
