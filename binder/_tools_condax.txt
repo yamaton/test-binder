@@ -14,7 +14,6 @@ blast
 blat
 blobtools
 bowtie2
-brename
 busco
 bwa
 bwa-mem2
