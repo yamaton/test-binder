@@ -114,6 +114,7 @@ strelka
 subread
 svtools
 taxonkit
+transdecoder
 treetime
 trim-galore
 trimmomatic
