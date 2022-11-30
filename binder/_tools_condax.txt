@@ -49,6 +49,7 @@ gridss
 hhsuite
 hifiasm
 hisat2
+hmmer
 htseq
 htslib
 hypo
