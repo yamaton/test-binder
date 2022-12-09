@@ -94,6 +94,14 @@ done
 mamba clean --all --yes --force-pkgs-dirs
 
 
+## awscli
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+rm -f awscliv2.zip
+./aws/install --bin-dir /srv/conda/envs/notebook/bin --install-dir /srv/conda/envs/notebook/aws-cli
+rm -rf ./aws
+
+
 ## zsh setup
 ## (subshelling does not seem to work in postBuild)
 zshdir=~/.config/zsh
