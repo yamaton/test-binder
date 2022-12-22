@@ -6,8 +6,6 @@ emacs
 vim
 nano
 neofetch
-pigz
-pbzip2
 source-highlight
 shellcheck
 zsh

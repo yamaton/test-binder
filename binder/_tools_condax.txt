@@ -81,8 +81,10 @@ nanopolish
 ncbi-datasets-cli
 pangolin
 parallel
-plass
+pbzip2
+pigz
 pilon
+plass
 polypolish
 pomoxis
 porechop
