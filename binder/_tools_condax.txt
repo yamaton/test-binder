@@ -134,5 +134,6 @@ yak
 
 bat
 fd-find
+rename
 ripgrep
 xsv
