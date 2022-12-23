@@ -140,6 +140,7 @@ jupyter labextension install 'https://github.com/yamaton/jupyterlab-shell-script
 jupyter serverextension list
 jupyter server extension list
 jupyter labextension list
+jupyter lab extension list
 
 
 ## Change default settings for JupyterLab Extensions
