@@ -132,6 +132,10 @@ curl https://raw.githubusercontent.com/yamaton/dotfiles/master/_setup-tealdeer.s
 jupyter serverextension enable nbgitpuller --sys-prefix
 
 
+## Install jupyterlab-shell-script-file
+jupyter labextension install 'https://github.com/yamaton/jupyterlab-shell-script-file'
+
+
 # List extensions
 jupyter serverextension list
 jupyter server extension list
