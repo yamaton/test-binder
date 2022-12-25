@@ -92,7 +92,7 @@ for _tool in ${TOOLS[*]}; do
 done
 
 ## qiime2 (q2cli)
-wget https://data.qiime2.org/distro/core/qiime2-2022.8-py38-linux-conda.yml -O qiime2.yml
+wget https://data.qiime2.org/distro/core/qiime2-2022.11-py38-linux-conda.yml -O qiime2.yml
 condax install -c conda-forge -c bioconda --force --file qiime2.yml q2cli
 rm -f qiime2.yml
 mamba clean --all --yes --force-pkgs-dirs
