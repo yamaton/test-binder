@@ -18,6 +18,8 @@ dependencies:
   - plotly
   - r-base >=4.2
   - r-tidyverse
+  - r-dplyr
+  - r-tidyr
   - r-markdown
   - r-httr
   - r-shinydashboard
