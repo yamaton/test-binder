@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-## ~/.bashrc is NOT sourced when running bash completion
-
-for bcfile in ~/.bash_completion.d/* ; do
-    . "$bcfile"
-done
