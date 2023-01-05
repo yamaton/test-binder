@@ -10,3 +10,4 @@ source-highlight
 shellcheck
 zsh
 apt-utils
+rsync
