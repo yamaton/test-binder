@@ -132,6 +132,7 @@ trimmomatic
 trinity
 trycycler
 ucsc-bedgraphtobigwig
+ucsc-wigtobigwig
 unicycler
 unikmer
 vcfanno
