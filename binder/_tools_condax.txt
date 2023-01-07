@@ -164,6 +164,7 @@ vcfanno
 vcflib
 vcftools
 velvet
+vg
 wtdbg
 yak
 
