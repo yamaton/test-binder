@@ -10,6 +10,7 @@ bcftools
 beagle
 bedtools
 bioawk
+bismark
 blast
 blat
 blobtools
