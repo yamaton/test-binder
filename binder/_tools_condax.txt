@@ -112,6 +112,7 @@ phylophlan
 pigz
 pilon
 plass
+plink
 polypolish
 pomoxis
 porechop
