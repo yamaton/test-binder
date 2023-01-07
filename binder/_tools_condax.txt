@@ -129,6 +129,7 @@ seqfu
 seqkit
 seqmagick
 seqtk
+shasta
 shovill
 skesa
 smof
