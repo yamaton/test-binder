@@ -21,6 +21,7 @@ canu
 cd-hit
 checkm-genome
 clustalo
+cnvkit
 cromwell
 crossmap
 csvkit
@@ -29,6 +30,7 @@ cufflinks
 cutadapt
 das_tool
 datamash
+deeptools
 diamond
 delly
 dfast
@@ -49,6 +51,7 @@ flye
 foldseek
 freebayes
 gatk4
+gdc-client
 genrich
 gfatools
 gff3toddbj
@@ -62,6 +65,7 @@ hhsuite
 hifiasm
 hisat2
 hmmer
+homer
 htseq
 htslib
 hypo
@@ -92,6 +96,7 @@ miniasm
 minigraph
 minimap2
 miniprot
+mirdeep2
 mmseqs2
 mosdepth
 multiqc
@@ -105,6 +110,7 @@ nanostat
 ncbi-datasets-cli
 nextflow
 octopus
+paml
 pangolin
 parallel
 pbzip2
@@ -123,6 +129,7 @@ pysradb
 quast
 racon
 raven-assembler
+repeatmasker
 rsem
 salmon
 sambamba
@@ -146,6 +153,7 @@ spliceai
 sra-tools
 star
 star-fusion
+stringtie
 strelka
 subread
 svtools
@@ -161,6 +169,7 @@ ucsc-bedgraphtobigwig
 ucsc-wigtobigwig
 unicycler
 unikmer
+varscan
 vcfanno
 vcflib
 vcftools
