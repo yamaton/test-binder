@@ -11,3 +11,4 @@ shellcheck
 zsh
 apt-utils
 rsync
+cmake
