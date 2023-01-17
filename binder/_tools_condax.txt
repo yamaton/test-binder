@@ -86,6 +86,7 @@ lumpy-sv-minimal
 macs2
 mafft
 magicblast
+mash
 masurca
 maxbin2
 medaka
