@@ -53,8 +53,6 @@ dependencies:
   - pysam
   - pipx
   - pip
-  - mamba
-  - micromamba
   - theme-darcula
   - pip:
     - igv-notebook
