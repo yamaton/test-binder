@@ -12,3 +12,4 @@ zsh
 apt-utils
 rsync
 cmake
+iputils-ping
