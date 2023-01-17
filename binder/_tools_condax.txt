@@ -91,6 +91,7 @@ masurca
 maxbin2
 medaka
 megahit
+merqury
 metabat2
 metaplatanus
 methyldackel
@@ -177,6 +178,7 @@ vcflib
 vcftools
 velvet
 vg
+winnowmap
 wtdbg
 yak
 
