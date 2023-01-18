@@ -172,9 +172,6 @@ PROMPT='${SSH_TTY:+"%F{green}%n%F{yellow}@%F{green}%m%F{reset_color} "}%F{green}
 ##
 zstyle ':completion:*' list-colors '=(#b)*(--)( *)=37=1;38;5;103=1;38;5;142' '=*=0'
 
-# Hide (base) when base is active
-PS1="$(echo "$PS1" | sed 's/(base) //')"
-
 ## source-highlight in less
 export LESSOPEN="| /usr/share/source-highlight/src-hilite-lesspipe.sh %s"
 export LESS=" -R "
@@ -189,3 +186,27 @@ export LESS=" -R "
 
 # zoxide
 [[ "$(command -v zoxide)" ]] && eval "$(zoxide init zsh)"
+
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/srv/conda/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/srv/conda/etc/profile.d/conda.sh" ]; then
+        . "/srv/conda/etc/profile.d/conda.sh"
+    else
+        export PATH="/srv/conda/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+
+if [ -f "/srv/conda/etc/profile.d/mamba.sh" ]; then
+    . "/srv/conda/etc/profile.d/mamba.sh"
+fi
+# <<< conda initialize <<<
+
+
+# Hide (base) in prompt at startup
+PS1="$(echo "$PS1" | sed 's/(base) //')"

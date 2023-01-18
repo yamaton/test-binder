@@ -124,3 +124,26 @@ export LESS=" -R "
 # shellcheck source=~/.less_termcap
 [[ -e ~/.less_termcap ]] && source ~/.less_termcap
 
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/srv/conda/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/srv/conda/etc/profile.d/conda.sh" ]; then
+        . "/srv/conda/etc/profile.d/conda.sh"
+    else
+        export PATH="/srv/conda/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+
+if [ -f "/srv/conda/etc/profile.d/mamba.sh" ]; then
+    . "/srv/conda/etc/profile.d/mamba.sh"
+fi
+# <<< conda initialize <<<
+
+
+# Hide (base) in prompt at startup
+PS1="$(echo "$PS1" | sed 's/(base) //')"
