@@ -154,6 +154,28 @@ mkdir -p "$NB_PYTHON_PREFIX"/share/jupyter/lab/settings/
 cp binder/overrides.json "$NB_PYTHON_PREFIX"/share/jupyter/lab/settings/
 
 
+## [NOTE] Place this AFTER conda packages setups.
+##
+## Change conda envs directories and pkgs directories s.t.
+## users can keep user-installed conda packages persistently.
+mkdir -p ~/.local/share/conda/envs
+mkdir -p ~/.local/share/conda/pkgs
+cat << 'EOF' >> ~/.condarc
+channels:
+  - conda-forge
+  - bioconda
+
+envs_dirs:
+  - ~/.local/share/conda/envs
+  - /srv/conda/envs
+
+pkgs_dirs:
+  - ~/.local/share/conda/pkgs
+  - /srv/conda/pkgs
+
+EOF
+
+
 ## Remove cache
 ##
 ## otherwise the size $HOME gets too large that
