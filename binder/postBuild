@@ -133,6 +133,20 @@ rm -f LICENSE README.md
 curl https://raw.githubusercontent.com/yamaton/dotfiles/master/_setup-tealdeer.sh | bash -s -- -f
 
 
+## Install croc
+mkdir -p tmpcroc
+pushd tmpcroc
+  wget https://github.com/schollz/croc/releases/download/v9.6.2/croc_9.6.2_Linux-64bit.tar.gz
+  tar -xvf croc_9.6.2_Linux-64bit.tar.gz
+  mv croc ~/.local/bin
+  mkdir -p "$HOME/.config/bash_completion"
+  mkdir -p "$HOME/.config/zsh/completions"
+  mv bash_autocomplete "$HOME/.config/bash_completion"
+  mv zsh_autocomplete "$HOME/.config/zsh/completions"
+popd
+rm -rf tmpcroc
+
+
 ## Fix 404 Error with nbgitpuller link
 ## https://jupyterhub.github.io/nbgitpuller/install.html#nbgitpuller-link-shows-404-not-found
 jupyter serverextension enable nbgitpuller --sys-prefix
