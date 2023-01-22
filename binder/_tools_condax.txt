@@ -187,3 +187,4 @@ fd-find
 rename
 ripgrep
 xsv
+magic-wormhole
