@@ -57,6 +57,6 @@ dependencies:
   - theme-darcula
   - pip:
     - igv-notebook
-    - jupyterlab-tabular-data-editor
+    - jupyterlab-spreadsheet-editor
     # - jupyterlab_legos_ui
     # - jupyterlab_darkside_ui
