@@ -6,7 +6,7 @@ channels:
 
 dependencies:
   - python=3.10
-  - nodejs=16
+  - nodejs
   - retrolab
   - pandas
   - numpy
