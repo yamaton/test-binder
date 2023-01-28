@@ -53,6 +53,7 @@ foldseek
 freebayes
 gatk4
 gdc-client
+genometools-genometools
 genrich
 gfatools
 gff3toddbj
