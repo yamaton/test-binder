@@ -50,11 +50,6 @@ popd
 jupyter labextension install jupyterlab-tailwind-theme
 
 
-# Modify detail width of completion items
-cat "binder/modify-theme.css" >> "/srv/conda/envs/notebook/share/jupyter/lab/themes/@jupyterlab/theme-dark-extension/index.css"
-cat "binder/modify-theme.css" >> "/srv/conda/envs/notebook/share/jupyter/lab/themes/@jupyterlab/theme-light-extension/index.css"
-
-
 # pipx: install programs in each virtual environment
 export PIPX_HOME=/srv/conda/pipx
 mkdir -p "$PIPX_HOME"
@@ -154,6 +149,13 @@ jupyter serverextension enable nbgitpuller --sys-prefix
 
 ## Install jupyterlab-shell-script-file
 jupyter labextension install 'https://github.com/yamaton/jupyterlab-shell-script-file'
+
+
+# Modify detail width of completion items
+cat "binder/modify-theme.css" >> "/srv/conda/envs/notebook/share/jupyter/lab/themes/@jupyterlab/theme-dark-extension/index.css"
+cat "binder/modify-theme.css" >> "/srv/conda/envs/notebook/share/jupyter/lab/themes/@jupyterlab/theme-light-extension/index.css"
+cat "binder/modify-theme.css" >> "/srv/conda/envs/notebook/share/jupyter/lab/themes/jupyterlab-tailwind-theme/index.css"
+cat "binder/modify-theme.css" >> "/srv/conda/envs/notebook/share/jupyter/labextensions/@telamonian/theme-darcula/themes/@telamonian/theme-darcula/index.css"
 
 
 # List extensions
