@@ -210,3 +210,6 @@ fi
 
 # Hide (base) in prompt at startup
 PS1="$(echo "$PS1" | sed 's/(base) //')"
+
+# Start from ~/work instead of $HOME
+[[ -d ~/work ]] && cd ~/work

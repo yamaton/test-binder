@@ -12,7 +12,7 @@
     "resources": [
       {
         "name": "home_local",
-        "url": "~",
+        "url": "~/work",
         "defaultWritable": true
       }
     ]
