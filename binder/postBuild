@@ -152,10 +152,18 @@ jupyter labextension install 'https://github.com/yamaton/jupyterlab-shell-script
 
 
 # Modify detail width of completion items
-cat "binder/modify-theme.css" >> "/srv/conda/envs/notebook/share/jupyter/lab/themes/@jupyterlab/theme-dark-extension/index.css"
-cat "binder/modify-theme.css" >> "/srv/conda/envs/notebook/share/jupyter/lab/themes/@jupyterlab/theme-light-extension/index.css"
-cat "binder/modify-theme.css" >> "/srv/conda/envs/notebook/share/jupyter/lab/themes/jupyterlab-tailwind-theme/index.css"
-cat "binder/modify-theme.css" >> "/srv/conda/envs/notebook/share/jupyter/labextensions/@telamonian/theme-darcula/themes/@telamonian/theme-darcula/index.css"
+basedir="/srv/conda/envs/notebook/share/jupyter"
+targets=(
+    "${basedir}/lab/themes/@jupyterlab/theme-dark-extension/index.css"
+    "${basedir}/lab/themes/@jupyterlab/theme-light-extension/index.css"
+    "${basedir}/lab/themes/jupyterlab-tailwind-theme/index.css"
+    "${basedir}/labextensions/@telamonian/theme-darcula/themes/@telamonian/theme-darcula/index.css"
+)
+for target in "${targets[@]}"; do
+    if [[ -f $target ]]; then
+        cat "binder/modify-theme.css" >> "$target"
+    fi
+done
 
 
 # List extensions

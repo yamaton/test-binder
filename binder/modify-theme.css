@@ -8,6 +8,7 @@
   font-family: var(--jp-content-font-family) !important;
   font-size: 12px !important;
   text-align: left !important;
+  /* to counter transparent setting making completer descriptions invisible*/
   color: var(--jp-ui-font-color1) !important;
 }
 
