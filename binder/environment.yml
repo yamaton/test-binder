@@ -58,5 +58,6 @@ dependencies:
   - pip:
     - igv-notebook
     - jupyterlab-spreadsheet-editor
+    - jupyter-fs
     # - jupyterlab_legos_ui
     # - jupyterlab_darkside_ui
