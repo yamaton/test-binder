@@ -2,5 +2,7 @@
 export SHELL=/usr/bin/zsh
 
 # - Replaces the back end: NotebookApp --> ServerApp
-# - Set user's default directory to $HOME/work, separating it from $HOME
-exec $(echo "$@" --ServerApp.root_dir=work | sed 's/notebook/lab/g')
+# - Set user's default directory to work, separating it from $HOME
+echo "before: " "$@"
+echo "after : $(echo "$@" | sed 's/notebook/lab/g' | sed s'/NotebookApp/ServerApp/g') --ServerApp.root_dir=work"
+exec $(echo "$@" | sed 's/notebook/lab/g' | sed s'/NotebookApp/ServerApp/g') --ServerApp.root_dir=work

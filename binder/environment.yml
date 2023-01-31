@@ -7,34 +7,36 @@ channels:
 dependencies:
   - python=3.10
   - nodejs=16  # jupyterlab-lsp
-  - pandas
-  - numpy
-  - dask
-  - scikit-learn
-  - scikit-image
-  - matplotlib
-  - bokeh
-  - plotly
+  # - pandas
+  # - numpy
+  # - dask
+  # - scikit-learn
+  # - scikit-image
+  # - matplotlib
+  # - bokeh
+  # - plotly
   - r-base >=4.2
-  - r-tidyverse
-  - r-dplyr
-  - r-tidyr
-  - r-markdown
-  - r-httr
+  - r-irkernel
+  - r-devtools
+  # - r-tidyverse
+  # - r-dplyr
+  # - r-tidyr
+  # - r-markdown
+  # - r-httr
   - r-shinydashboard
-  - r-biocmanager
-  - r-leaflet
-  - r-gplots
-  - r-ggplot2
-  - r-sleuth
-  - r-ggpubr
-  - r-hrbrthemes
-  - r-ggthemes
-  - rpy2
-  - bioconductor-tximport
-  - bioconductor-biomart
-  - bioconductor-edger
-  - bioconductor-deseq2
+  # - r-biocmanager
+  # - r-leaflet
+  # - r-gplots
+  # - r-ggplot2
+  # - r-sleuth
+  # - r-ggpubr
+  # - r-hrbrthemes
+  # - r-ggthemes
+  # - rpy2
+  # - bioconductor-tximport
+  # - bioconductor-biomart
+  # - bioconductor-edger
+  # - bioconductor-deseq2
   - jupyterlab >=3.3.0,<4.0.0a0
   - jupyter_server <2.0.0
   - retrolab >=0.3.0,<0.4
@@ -43,15 +45,15 @@ dependencies:
   - jupyterhub-singleuser >=3.1.0
   - jupyterlab-link-share
   - jupyterlab-copy-relative-path
-  - flake8 >=3.5
-  - pylint
-  - pylsp-mypy
+  # - flake8 >=3.5
+  # - pylint
+  # - pylsp-mypy
   - python-lsp-server
-  - ruamel_yaml
-  - r-languageserver
+  # - ruamel_yaml
+  # - r-languageserver
   - bash_kernel
-  - biopython
-  - pysam
+  # - biopython
+  # - pysam
   - pipx
   - pip
   - theme-darcula
