@@ -1,12 +1,14 @@
 #!/bin/bash
 export SHELL=/usr/bin/zsh
 
-export JUPYTERHUB_SINGLEUSER_APP='jupyter_server.serverapp.ServerApp'
-
-# - Replaces the back end: NotebookApp --> ServerApp
-# - Set user's default directory to work, separating it from $HOME
-# echo "before: " "$@"
-# echo "after : $(echo "$@" | sed 's/notebook/lab/g' | sed s'/NotebookApp/ServerApp/g') --ServerApp.root_dir=work"
-# exec $(echo "$@" | sed 's/notebook/lab/g' | sed s'/NotebookApp/ServerApp/g') --ServerApp.root_dir=work
-
-exec "$@"
+if [[ "$USER" == "jovyan" ]]; then
+    # https://jupyterhub.readthedocs.io/en/stable/reference/config-user-env.html#switching-back-to-the-classic-notebook
+    export JUPYTERHUB_SINGLEUSER_APP='jupyter_server.serverapp.ServerApp'
+    echo "launch command:" "$@"
+    exec "$@"
+else
+    # Replaces the back end: NotebookApp --> ServerApp
+    echo "before:" "$@"
+    echo "after : $(echo "$@" | sed 's/notebook/lab/' | sed 's/NotebookApp/ServerApp/g')"
+    exec $(echo "$@" | sed 's/notebook/lab/' | sed 's/NotebookApp/ServerApp/g')
+fi
