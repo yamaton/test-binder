@@ -1,8 +1,12 @@
 #!/bin/bash
 export SHELL=/usr/bin/zsh
 
+export JUPYTERHUB_SINGLEUSER_APP='jupyter_server.serverapp.ServerApp'
+
 # - Replaces the back end: NotebookApp --> ServerApp
 # - Set user's default directory to work, separating it from $HOME
-echo "before: " "$@"
-echo "after : $(echo "$@" | sed 's/notebook/lab/g' | sed s'/NotebookApp/ServerApp/g') --ServerApp.root_dir=work"
-exec $(echo "$@" | sed 's/notebook/lab/g' | sed s'/NotebookApp/ServerApp/g') --ServerApp.root_dir=work
+# echo "before: " "$@"
+# echo "after : $(echo "$@" | sed 's/notebook/lab/g' | sed s'/NotebookApp/ServerApp/g') --ServerApp.root_dir=work"
+# exec $(echo "$@" | sed 's/notebook/lab/g' | sed s'/NotebookApp/ServerApp/g') --ServerApp.root_dir=work
+
+exec "$@"
