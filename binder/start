@@ -9,7 +9,8 @@ if [[ "$USER" == "jovyan" ]]; then
     exec "$@"
 else
     # Replaces the back end: NotebookApp --> ServerApp
-    echo "before:" "$@"
-    echo "after : $(echo "$@" | sed 's/notebook/lab/' | sed 's/NotebookApp/ServerApp/g')"
-    exec $(echo "$@" | sed 's/notebook/lab/' | sed 's/NotebookApp/ServerApp/g')
+    # echo "before:" "$@"
+    # echo "after : $(echo "$@" | sed 's/notebook/lab/' | sed 's/NotebookApp/ServerApp/g')"
+    # exec $(echo "$@" | sed 's/notebook/lab/' | sed 's/NotebookApp/ServerApp/g')
+    exec "$@"
 fi
