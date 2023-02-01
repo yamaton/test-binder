@@ -179,6 +179,16 @@ mkdir -p "$NB_PYTHON_PREFIX"/share/jupyter/lab/settings/
 cp binder/overrides.json "$NB_PYTHON_PREFIX"/share/jupyter/lab/settings/
 
 
+# Save user-installed R packages in user directory
+## https://stackoverflow.com/a/45228058
+mkdir -p ~/.local/lib/R/library
+cat <<EOF > ~/.Renviron
+R_LIBS_USER=$HOME/.local/lib/R/library/
+R_LIBS_SITE=$NB_PYTHON_PREFIX/lib/R/library
+LD_LIBRARY_PATH=$NB_PYTHON_PREFIX/lib
+EOF
+
+
 ## [NOTE] Place this AFTER conda packages setups.
 ##
 ## Change conda envs directories and pkgs directories s.t.
