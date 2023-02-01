@@ -3,7 +3,8 @@ export SHELL=/usr/bin/zsh
 
 if [[ "$USER" == "jovyan" ]]; then
     # https://jupyterhub.readthedocs.io/en/stable/reference/config-user-env.html#switching-back-to-the-classic-notebook
-    export JUPYTERHUB_SINGLEUSER_APP='jupyter_server.serverapp.ServerApp'
+    # export JUPYTERHUB_SINGLEUSER_APP='jupyter_server.serverapp.ServerApp'
+    export JUPYTERHUB_SINGLEUSER_APP='notebook.notebookapp.NotebookApp'
     echo "launch command:" "$@"
     exec "$@"
 else

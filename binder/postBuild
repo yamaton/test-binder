@@ -180,16 +180,16 @@ cp binder/overrides.json "$NB_PYTHON_PREFIX"/share/jupyter/lab/settings/
 
 
 ## Save user-installed R packages in user directory
-mkdir -p ~/.local/lib/R/library
-cat <<EOF > ~/.Renviron
-R_LIBS_USER=$HOME/.local/lib/R/library/
-R_LIBS_SITE=/srv/conda/envs/notebook/lib/R/library
-EOF
+# mkdir -p ~/.local/lib/R/library
+# cat <<EOF > ~/.Renviron
+# R_LIBS_USER=$HOME/.local/lib/R/library/
+# R_LIBS_SITE=/srv/conda/envs/notebook/lib/R/library
+# EOF
 
-## https://stackoverflow.com/a/45228058
-cat <<EOF >> /etc/rstudio/rserver.conf
-rsession-ld-library-path=/usr/lib64/:/usr/lib/x86_64-linux-gnu:/srv/conda/envs/notebook/lib:/srv/conda/envs/notebook/lib/R/lib:/srv/conda/envs/notebook/x86_64-conda-linux-gnu/lib
-EOF
+# ## https://stackoverflow.com/a/45228058
+# cat <<EOF >> /etc/rstudio/rserver.conf
+# rsession-ld-library-path=/usr/lib64/:/usr/lib/x86_64-linux-gnu:/srv/conda/envs/notebook/lib:/srv/conda/envs/notebook/lib/R/lib:/srv/conda/envs/notebook/x86_64-conda-linux-gnu/lib
+# EOF
 
 ## [NOTE] Place this AFTER conda packages setups.
 ##
