@@ -181,9 +181,16 @@ cp binder/overrides.json "$NB_PYTHON_PREFIX"/share/jupyter/lab/settings/
 # Save user-installed R packages in user directory
 ## https://stackoverflow.com/a/45228058
 mkdir -p ~/.local/lib/R/library
-cat <<EOF > ~/.Renviron
+cat <<EOF >> ~/.Renviron
 R_LIBS_USER=$HOME/.local/lib/R/library/
 EOF
+
+
+## Fix RStudio failing to load conda-managed shared libraries
+## https://github.com/binder-examples/r-conda/issues/5#issuecomment-967446847
+## ... and libattr.so* seems harm than good
+ln -sf "$NB_PYTHON_PREFIX"/lib/*.so* "$NB_PYTHON_PREFIX"/lib/R/lib
+rm -f "$NB_PYTHON_PREFIX"/lib/R/lib/libattr.so*
 
 
 ## [NOTE] Place this AFTER conda packages setups.
