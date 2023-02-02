@@ -59,5 +59,6 @@ dependencies:
     - igv-notebook
     - jupyterlab-spreadsheet-editor
     - jupyter-fs
+    - jupyter_scheduler
     # - jupyterlab_legos_ui
     # - jupyterlab_darkside_ui
