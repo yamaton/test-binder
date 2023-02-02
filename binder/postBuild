@@ -142,11 +142,6 @@ popd
 rm -rf tmpcroc
 
 
-## Fix 404 Error with nbgitpuller link
-## https://jupyterhub.github.io/nbgitpuller/install.html#nbgitpuller-link-shows-404-not-found
-jupyter serverextension enable nbgitpuller --sys-prefix
-
-
 ## Install jupyterlab-shell-script-file
 jupyter labextension install 'https://github.com/yamaton/jupyterlab-shell-script-file'
 
