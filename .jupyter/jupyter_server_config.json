@@ -1,5 +1,13 @@
 {
+  "SingleUserNotebookApp": {
+    "root_dir": "work",
+    "contents_manager_class": "jupyterfs.metamanager.MetaManager",
+    "jpserver_extensions": {
+      "jupyterfs.extension": true
+    }
+  },
   "ServerApp": {
+    "root_dir": "work",
     "contents_manager_class": "jupyterfs.metamanager.MetaManager",
     "jpserver_extensions": {
       "jupyterfs.extension": true
