@@ -113,6 +113,7 @@ nanoq
 nanostat
 ncbi-datasets-cli
 nextflow
+nextpolish
 octopus
 paml
 pangolin
@@ -134,6 +135,7 @@ quast
 racon
 raven-assembler
 repeatmasker
+repeatmodeler
 rsem
 salmon
 sambamba
