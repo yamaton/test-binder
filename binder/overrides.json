@@ -17,7 +17,9 @@
         "flash": false
     },
     "@jupyterlab/fileeditor-extension:plugin": {
-        "autoClosingBrackets": true
+        "editorConfig": {
+            "autoClosingBrackets": true
+        }
     },
     "@jupyterlab/terminal-extension:plugin": {
         "scrollback": 5000,
