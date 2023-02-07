@@ -21,6 +21,11 @@
             "autoClosingBrackets": true
         }
     },
+    "@jupyterlab/console-extension:tracker": {
+        "promptCellConfig": {
+            "autoClosingBrackets": true
+        }
+    },
     "@jupyterlab/terminal-extension:plugin": {
         "scrollback": 5000,
         "theme": "dark"
