@@ -106,6 +106,9 @@ rm -f awscliv2.zip
 ./aws/install --bin-dir /srv/conda/envs/notebook/bin --install-dir /srv/conda/envs/notebook/aws-cli
 rm -rf ./aws
 
+## ffsend
+wget https://github.com/timvisee/ffsend/releases/download/v0.2.76/ffsend-v0.2.76-linux-x64-static -O ~/.local/bin/ffsend
+chmod +x ~/.local/bin/ffsend
 
 ## zsh setup
 ## (subshelling does not seem to work in postBuild)
