@@ -10,6 +10,6 @@ else
     # === For local build with repo2docker ===
     # Replaces the back end: NotebookApp --> ServerApp
     echo "before:" "$@"
-    echo "after : $(echo "$@" | sed 's/notebook/lab/' | sed 's/NotebookApp/ServerApp/g')"
-    exec $(echo "$@" | sed 's/notebook/lab/' | sed 's/NotebookApp/ServerApp/g')
+    echo "after : $(echo "$@" | sed 's/notebook/lab/' | sed 's/NotebookApp/ServerApp/g') --debug"
+    exec $(echo "$@" | sed 's/notebook/lab/' | sed 's/NotebookApp/ServerApp/g') --debug
 fi
