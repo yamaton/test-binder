@@ -1,14 +1,17 @@
 #!/bin/bash
 
-if [[ "$USER" == "jovyan" ]]; then
+if [[ -n $JUPYTERHUB_CLIENT_ID ]]; then
     # === For JupyterHub build ===
     # https://jupyterhub.readthedocs.io/en/stable/reference/config-user-env.html#switching-back-to-the-classic-notebook
     export JUPYTERHUB_SINGLEUSER_APP='jupyter_server.serverapp.ServerApp'
+    echo "🤖 Guess JupyterHub is running..."
+    echo "\$JUPYTERHUB_CLIENT_ID = $JUPYTERHUB_CLIENT_ID"
     echo "launch command:" "$@"
     exec "$@"
 else
     # === For local build with repo2docker ===
     # Replaces the back end: NotebookApp --> ServerApp
+    echo "🐻 Guess Repo2Docker (w/o JupyterHub) is running..."
     echo "before:" "$@"
     echo "after : $(echo "$@" | sed 's/notebook/lab/' | sed 's/NotebookApp/ServerApp/g') --debug"
     exec $(echo "$@" | sed 's/notebook/lab/' | sed 's/NotebookApp/ServerApp/g') --debug
