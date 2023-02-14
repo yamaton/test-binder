@@ -121,6 +121,11 @@ pushd "$zshdir"
     git clone https://github.com/yamaton/zsh-completions-bio
 popd
 
+## Set zsh as the default shell
+if [[ -x /usr/bin/zsh ]]; then
+    export SHELL=/usr/bin/zsh
+fi
+
 
 ## remove .git in home directory
 rm -rf .git

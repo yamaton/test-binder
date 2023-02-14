@@ -1,5 +1,4 @@
 #!/bin/bash
-export SHELL=/usr/bin/zsh
 
 if [[ "$USER" == "jovyan" ]]; then
     # === For JupyterHub build ===
