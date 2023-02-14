@@ -35,12 +35,14 @@ dependencies:
   - bioconductor-biomart
   - bioconductor-edger
   - bioconductor-deseq2
+  ## >>> --- ensure jupyter server ----
   - jupyterlab >=3.3.0,<4.0.0a0
   - jupyter_server <2.0.0
+  - jupyterhub-singleuser >=3.1.0
+  ## <<< ------------------------------
   - retrolab >=0.3.0,<0.4
   - nbgitpuller
   - jupyter-archive
-  - jupyterhub-singleuser >=3.1.0
   - jupyterlab-link-share
   - jupyterlab-copy-relative-path
   - flake8 >=3.5
