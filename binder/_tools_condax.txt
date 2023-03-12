@@ -162,6 +162,7 @@ star-fusion
 stringtie
 strelka
 subread
+svim-asm
 svtools
 svtyper
 taxonkit
