@@ -9,6 +9,10 @@ set -o errexit
 set -o nounset
 
 
+## ffsend
+curl https://raw.githubusercontent.com/yamaton/dotfiles/dev/_setup-ffsend.sh | bash -s -- -f
+
+
 # enable forked bash_kernel
 python -m pip install -U --prefix /srv/conda/envs/notebook git+https://github.com/yamaton/bash_kernel@add-bash-completion
 
@@ -107,9 +111,6 @@ rm -f awscliv2.zip
 ./aws/install --bin-dir /srv/conda/envs/notebook/bin --install-dir /srv/conda/envs/notebook/aws-cli
 rm -rf ./aws
 
-## ffsend
-wget https://github.com/timvisee/ffsend/releases/download/v0.2.76/ffsend-v0.2.76-linux-x64-static -O ~/.local/bin/ffsend
-chmod +x ~/.local/bin/ffsend
 
 ## zsh setup
 ## (subshelling does not seem to work in postBuild)
@@ -133,22 +134,12 @@ rm -rf .git
 rm -f LICENSE README.md
 
 
-## Install tealdeer
+## tealdeer
 curl https://raw.githubusercontent.com/yamaton/dotfiles/master/_setup-tealdeer.sh | bash -s -- -f
 
 
-## Install croc
-mkdir -p tmpcroc
-pushd tmpcroc
-  wget https://github.com/schollz/croc/releases/download/v9.6.2/croc_9.6.2_Linux-64bit.tar.gz
-  tar -xvf croc_9.6.2_Linux-64bit.tar.gz
-  mv croc ~/.local/bin
-  mkdir -p "$HOME/.config/bash_completion"
-  mkdir -p "$HOME/.config/zsh/completions"
-  mv bash_autocomplete "$HOME/.config/bash_completion"
-  mv zsh_autocomplete "$HOME/.config/zsh/completions"
-popd
-rm -rf tmpcroc
+## croc
+curl https://raw.githubusercontent.com/yamaton/dotfiles/dev/_setup-croc.sh | bash -s -- -f
 
 
 ## Install jupyterlab-shell-script-file
