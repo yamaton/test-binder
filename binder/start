@@ -1,5 +1,8 @@
 #!/bin/bash
 
+zshloc="$(command -v zsh)"
+export SHELL="$zshloc"
+
 if [[ -n $JUPYTERHUB_CLIENT_ID ]]; then
     # === For JupyterHub build ===
     # https://jupyterhub.readthedocs.io/en/stable/reference/config-user-env.html#switching-back-to-the-classic-notebook
