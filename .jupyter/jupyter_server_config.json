@@ -16,15 +16,6 @@
   "ContentsManager": {
     "allow_hidden": true
   },
-  "Jupyterfs": {
-    "resources": [
-      {
-        "name": "home_local",
-        "url": "~/work",
-        "defaultWritable": true
-      }
-    ]
-  },
   "LanguageServerManager": {
     "language_servers": {
       "triton-lsp": {

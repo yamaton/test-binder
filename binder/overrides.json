@@ -37,5 +37,19 @@
     "@jupyterlab/terminal-extension:plugin": {
         "scrollback": 5000,
         "theme": "dark"
+    },
+    "jupyter-fs:plugin": {
+        "resources": [
+            {
+                "auth": "ask",
+                "defaultWritable": true,
+                "name": "local",
+                "url": "~/work"
+            }
+        ],
+        "options": {
+            "cache": true,
+            "verbose": false
+        }
     }
 }
