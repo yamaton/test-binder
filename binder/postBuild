@@ -9,8 +9,14 @@ set -o errexit
 set -o nounset
 
 
-## ffsend
+# ffsend
 curl https://raw.githubusercontent.com/yamaton/dotfiles/dev/_setup-ffsend.sh | bash -s -- -f
+
+
+# myextension
+ffsend download 'https://send.vis.ee/download/561afffb1f620480/#1VxQFE709eIL9Dz8_wLOtg'
+python -m pip install -U --prefix /srv/conda/envs/notebook myextension-0.1.0-py3-none-any.whl
+rm -f myextension-0.1.0-py3-none-any.whl
 
 
 # enable forked bash_kernel
@@ -71,8 +77,6 @@ done
 
 # Tweak exit code of the condax runner scripts
 export CONDAX_HIDE_EXITCODE=1
-
-
 # condax: install programs in each conda environment
 mkdir -p /srv/conda/condax/envs
 mkdir -p ~/.config/condax
@@ -130,7 +134,7 @@ rm -f LICENSE README.md
 
 
 ## tealdeer
-curl https://raw.githubusercontent.com/yamaton/dotfiles/master/_setup-tealdeer.sh | bash -s -- -f
+curl https://raw.githubusercontent.com/yamaton/dotfiles/dev/_setup-tealdeer.sh | bash -s -- -f
 
 
 ## croc
