@@ -1,6 +1,6 @@
 {
     "@jupyterlab/apputils-extension:themes": {
-        "theme": "JupyterLab Light"
+        "theme": "JupyterLab Dark"
     },
     "@jupyter-lsp/jupyterlab-lsp:completion": {
         "continuousHinting": true
