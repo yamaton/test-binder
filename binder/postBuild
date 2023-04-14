@@ -83,21 +83,23 @@ mkdir -p ~/.config/condax
 echo "use_lockfiles: false" > ~/.mambarc
 echo "prefix_dir: /srv/conda/condax/envs" > ~/.config/condax/config.yaml
 
+mkdir -p ~/.local/logs
+CONDAX_LOG="$HOME/.local/logs/condax_install_log.txt"
 TOOLS=( "$(cat ~/binder/_tools_condax.txt)" )
 for _tool in ${TOOLS[*]}; do
-    echo "Installing ${_tool}"
+    echo "Installing ${_tool}" | tee -a "$CONDAX_LOG"
     # retry if nonzero exit status occurs
-    if [[ ! ($(condax install -c conda-forge -c bioconda --force "$_tool")) ]]; then
-        echo "condax retrying... $_tool"
-        condax remove "$_tool"
-        condax install -c conda-forge -c bioconda --force "$_tool"
+    if [[ ! ($(condax install -c conda-forge -c bioconda --force "$_tool" 2>&1 | tee -a "$CONDAX_LOG")) ]]; then
+        echo "condax retrying... $_tool" | tee -a "$CONDAX_LOG"
+        condax remove "$_tool" | tee -a "$CONDAX_LOG"
+        condax install -c conda-forge -c bioconda --force "$_tool" 2>&1 | tee -a "$CONDAX_LOG"
     fi
     mamba clean --all --yes --force-pkgs-dirs
 done
 
 ## qiime2 (q2cli)
 wget https://data.qiime2.org/distro/core/qiime2-2023.2-py38-linux-conda.yml -O qiime2.yml
-condax install -c conda-forge -c bioconda --force --file qiime2.yml q2cli
+condax install -c conda-forge -c bioconda --force --file qiime2.yml q2cli 2>&1 | tee -a "$CONDAX_LOG"
 rm -f qiime2.yml
 mamba clean --all --yes --force-pkgs-dirs
 
