@@ -192,3 +192,4 @@ rename
 ripgrep
 xsv
 magic-wormhole
+trash-cli
