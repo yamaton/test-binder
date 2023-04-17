@@ -57,6 +57,7 @@ dependencies:
   - pysam
   - pipx
   - pip
+  - jupyterlab-night
   - theme-darcula
   - pip:
     - igv-notebook
