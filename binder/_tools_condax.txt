@@ -9,6 +9,7 @@ bbmap
 bcftools
 beagle
 bedtools
+bifrost
 bioawk
 bismark
 blast
@@ -19,6 +20,7 @@ busco
 bwa
 bwa-mem2
 canu
+centrifuge
 cd-hit
 checkm-genome
 clustalo
@@ -29,6 +31,7 @@ csvkit
 csvtk
 cufflinks
 cutadapt
+cuttlefish
 das_tool
 datamash
 deeptools
