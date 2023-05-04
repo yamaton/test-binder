@@ -182,13 +182,6 @@ R_LIBS_USER=$HOME/.local/lib/R/library/
 EOF
 
 
-## Fix RStudio failing to load conda-managed shared libraries
-## https://github.com/binder-examples/r-conda/issues/5#issuecomment-967446847
-## ... and libattr.so* seems harm than good
-ln -sf "$NB_PYTHON_PREFIX"/lib/*.so* "$NB_PYTHON_PREFIX"/lib/R/lib
-rm -f "$NB_PYTHON_PREFIX"/lib/R/lib/libattr.so*
-
-
 ## [NOTE] Place this AFTER conda packages setups.
 ##
 ## Change conda envs directories and pkgs directories s.t.
