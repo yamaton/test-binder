@@ -182,6 +182,16 @@ R_LIBS_USER=$HOME/.local/lib/R/library/
 EOF
 
 
+## RStudio configuration
+##  - Set working directory
+##  - Unset LD_LIBRARY_PATH introduced by /etc/rstudio/rserver.conf
+##    to avoid "mv: relocation error" during package installation
+cat <<EOF >> ~/.Rprofile
+setwd("~/work")
+Sys.setenv(LD_LIBRARY_PATH = "")
+EOF
+
+
 ## [NOTE] Place this AFTER conda packages setups.
 ##
 ## Change conda envs directories and pkgs directories s.t.
