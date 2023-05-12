@@ -42,6 +42,7 @@ dependencies:
   - nbgitpuller
   - jupyter-archive
   - jupyterlab-unfold
+  - jlab-enhanced-launcher
   - jupyterlab-link-share
   - jupyterlab-copy-relative-path
   - flake8 >=3.5
