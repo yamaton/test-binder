@@ -59,7 +59,6 @@ dependencies:
   - theme-darcula
   - pip:
     - igv-notebook
-    - jupyter_scheduler
     - git+https://github.com/jupyterlab-contrib/jupyterlab-spreadsheet-editor
     - git+https://github.com/yamaton/jupyter-fs@test
     - git+https://github.com/dunovank/jupyterlab_legos_ui
