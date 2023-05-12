@@ -41,6 +41,7 @@ dependencies:
   - retrolab >=0.3.0,<0.4
   - nbgitpuller
   - jupyter-archive
+  - jupyterlab-unfold
   - jupyterlab-link-share
   - jupyterlab-copy-relative-path
   - flake8 >=3.5
