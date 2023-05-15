@@ -56,8 +56,8 @@ pushd /srv/conda/envs/notebook
 popd
 
 
-# Jupyterlab themes
-jupyter labextension install jupyterlab-tailwind-theme
+# Jupyterlab tailwind themes
+jupyter labextension install 'https://github.com/yamaton/jupyterlab-tailwind-theme/tree/fix-statusbar'
 
 
 # pipx: install programs in each virtual environment
