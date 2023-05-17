@@ -135,6 +135,10 @@ rm -rf .git
 rm -f LICENSE README.md
 
 
+## syntax coloring for bat
+bat cache --build
+
+
 ## tealdeer
 curl https://raw.githubusercontent.com/yamaton/dotfiles/dev/_setup-tealdeer.sh | bash -s -- -f
 

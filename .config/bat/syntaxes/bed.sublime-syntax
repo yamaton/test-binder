@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+# See http://www.sublimetext.com/docs/3/syntax.html
+name: BED
+file_extensions:
+  - bed
+scope: source.bed
+contexts:
+  main:
+    - match: '^(browser|track|#).*$'
+      scope: comment.line.bed
+    - match: '^(chr[0-9XYM]+|scaffold[0-9]+)\b'
+      scope: entity.name.class.bed
+    - match: '\b[0-9]+\b'
+      scope: constant.numeric.bed
+    - match: '\b[\w.-]+\b'
+      scope: string.unquoted.bed

@@ -1,0 +1,33 @@
+%YAML 1.2
+---
+# See http://www.sublimetext.com/docs/3/syntax.html
+name: PDB
+file_extensions:
+  - pdb
+scope: source.pdb
+variables:
+  title: HEADER|OBSLTE|TITLE|SPLIT|CAVEAT|COMPND|SOURCE|KEYWDS|EXPDTA|NUMMDL|MDLTYP|AUTHOR|REVDAT|SPRSDE|JRNL|REMARK|REMARKS
+  sequence: DBREF|DBREF1|DBREF2|SEQADV|SEQRES|MODRES
+  heterogen: HET|HETNAM|HETSYN|FORMUL
+  secondary_structure: HELIX|SHEET|MTRIX1|MTRIX2|MTRIX3
+  coordinate: MODEL|ATOM|ANISOU|TER|HETATM|ENDMDL|CONECT
+  bookkeeping: MASTER|END
+contexts:
+  main:
+    - match: '^({{title}})\b'
+      scope: keyword.control.title.pdb
+      push: inside_title
+    - match: '^({{sequence}})\b'
+      scope: keyword.control.sequence.pdb
+    - match: '^({{heterogen}})\b'
+      scope: keyword.control.heterogen.pdb
+    - match: '^({{secondary_structure}})\b'
+      scope: keyword.control.secondary_structure.pdb
+    - match: '^({{coordinate}})\b'
+      scope: keyword.control.coordinate.pdb
+    - match: '^({{bookkeeping}})\b'
+      scope: keyword.control.bookkeeping.pdb
+  inside_title:
+    - meta_scope: comment.line.pdb
+    - match: '$'
+      pop: true

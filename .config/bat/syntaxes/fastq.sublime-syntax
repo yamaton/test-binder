@@ -1,0 +1,18 @@
+%YAML 1.2
+---
+# See http://www.sublimetext.com/docs/3/syntax.html
+name: FASTQ
+file_extensions:
+  - fq
+  - fastq
+scope: source.fastq
+contexts:
+  main:
+    - match: '@.+'
+      scope: entity.name.class.fastq
+    - match: '^[ACGTURYKMSWBDHVNXacgturykmswbdhvnx-]+$'
+      scope: string.unquoted.fastq
+    - match: '\+.*'
+      scope: constant.numeric.fastq
+    - match: '^[!-~]+$'
+      scope: keyword.operator.fastq

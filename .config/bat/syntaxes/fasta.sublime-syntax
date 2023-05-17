@@ -1,0 +1,20 @@
+%YAML 1.2
+---
+# See http://www.sublimetext.com/docs/3/syntax.html
+name: FASTA
+file_extensions:
+  - fa
+  - fasta
+  - faa
+  - fna
+  - mpfa
+  - mfa
+scope: source.fasta
+contexts:
+  main:
+    - match: ';.*$'
+      scope: comment.line.fasta
+    - match: '>.+$'
+      scope: entity.name.class.fasta
+    - match: '^[ACGTURYKMSWBDHVNXacgturykmswbdhvnx-]+$'
+      scope: string.unquoted.fasta

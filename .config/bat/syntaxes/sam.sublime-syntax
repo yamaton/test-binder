@@ -1,0 +1,158 @@
+%YAML 1.2
+---
+name: SAM
+file_extensions:
+  - sam
+scope: source.sam
+contexts:
+  main:
+    - match: '^@HD'
+      scope: keyword.control.sam
+      push: header_hd_context
+
+    - match: '^@SQ'
+      scope: keyword.control.sam
+      push: header_sq_context
+
+    - match: '^@RG'
+      scope: keyword.control.sam
+      push: header_rg_context
+
+    - match: '^@PG'
+      scope: keyword.control.sam
+      push: header_pg_context
+
+    - match: '^@CO'
+      scope: keyword.control.sam
+      push: header_co_context
+
+    - match: '^[\S]*\t'
+      scope: meta.sequence-alignment.sam
+      push: flag_context
+
+  header_hd_context:
+    - meta_scope: text.header-entry.sam
+    - match: '(?<=VN:)(.+?(?=\s+[A-Z]{2}:)|.+$)'
+      scope: constant.numeric.version.sam
+    - match: '(?<=SO:)(coordinate|queryname(?=\s+[A-Z]{2}:)|.+$)'
+      scope: keyword.sorted.sam
+    - match: '(?<=SO:)(unsorted|unknown(?=\s+[A-Z]{2}:)|.+$)'
+      scope: keyword.unsorted.sam
+    - match: '(?<=GO:)(.+?(?=\s+[A-Z]{2}:)|.+$)'
+      scope: keyword.other.sam
+    - match: '$'
+      pop: true
+
+  header_sq_context:
+    - meta_scope: text.header-entry.sam
+    - match: '(?<=SN:)(.+?(?=\s+[A-Z]{2}:)|.+$)'
+      scope: constant.other.chromosome.sam
+    - match: '(?<=LN:)(.+?(?=\s+[A-Z]{2}:)|.+$)'
+      scope: constant.other.chromosome-start.sam
+    - match: '(?<=AS:)(.+?(?=\s+[A-Z]{2}:)|.+$)'
+      scope: keyword.other.sam
+    - match: '$'
+      pop: true
+
+  header_rg_context:
+    - meta_scope: text.header-entry.sam
+    - match: '(?<=ID:)(.+?(?=\s+[A-Z]{2}:)|.+$)'
+      scope: constant.other.library.sam
+    - match: '(?<=PL:)(.+?(?=\s+[A-Z]{2}:)|.+$)'
+      scope: constant.other.platform.sam
+    - match: '$'
+      pop: true
+
+  header_pg_context:
+    - meta_scope: text.header-entry.sam
+    - match: '(?<=ID:)(.+?(?=\s+[A-Z]{2}:)|.+$)'
+      scope: constant.other.software.sam
+    - match: '(?<=CL:)(.+?(?=\s+[A-Z]{2}:)|.+$)'
+      scope: constant.other.command.sam
+    - match: '$'
+      pop: true
+
+  header_co_context:
+    - meta_scope: text.header-entry.sam
+    - match: '$'
+      pop: true
+
+  flag_context:
+    - match: '[0-9]{1,2}(?=\t)'
+      scope: constant.numeric.flag.sam
+    - match: '[5][1][01]'
+      scope: constant.numeric.flag.sam
+    - match: \t
+      push: rname_context
+
+  rname_context:
+    - match: '.*?(?=\t)'
+      scope: variable.other.sam
+    - match: \t
+      pop: true
+      push: pos_context
+
+  pos_context:
+    - match: '[0-9]+(?=\t)'
+      scope: constant.numeric.position.sam
+    - match: \t
+      pop: true
+      push: mapq_context
+
+  mapq_context:
+    - match: '[0-9]+(?=\t)'
+      scope: constant.numeric.mapping-quality.sam
+    - match: \t
+      pop: true
+      push: cigar_context
+
+  cigar_context:
+    - match: '.*?(?=\t)'
+      scope: string.unquoted.cigar.sam
+    - match: \t
+      pop: true
+      push: rnext_context
+
+  rnext_context:
+    - match: '.*?(?=\t)'
+      scope: variable.other.sam
+    - match: \t
+      pop: true
+      push: pnext_context
+
+  pnext_context:
+    - match: '[0-9]+(?=\t)'
+      scope: constant.numeric.position.sam
+    - match: \t
+      pop: true
+      push: tlen_context
+
+  tlen_context:
+    - match: '.*?(?=\t)'
+      scope: constant.numeric.template-length.sam
+    - match: \t
+      pop: true
+      push: seq_context
+
+  seq_context:
+    - match: '.*?(?=\t)'
+      scope: string.unquoted.sequence.sam
+    - match: \t
+      pop: true
+      push: qual_context
+
+  qual_context:
+    - match: '.*?(?=\t|$)'
+      scope: string.unquoted.quality.sam
+    - match: \t
+      pop: true
+      push: optional_fields_context
+
+  optional_fields_context:
+    - match: '.*?(?=\t|$)'
+      scope: string.unquoted.optional-fields.sam
+    - match: \t
+      pop: true
+      push: optional_fields_context
+    - match: '$'
+      pop: true

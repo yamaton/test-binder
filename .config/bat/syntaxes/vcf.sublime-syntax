@@ -1,0 +1,60 @@
+%YAML 1.2
+---
+# See http://www.sublimetext.com/docs/3/syntax.html
+name: VCF
+file_extensions:
+  - vcf
+scope: source.vcf
+
+contexts:
+  main:
+    - include: comments
+    - include: header
+    - include: fields
+
+  comments:
+    - match: '^##'
+      scope: comment.line.vcf
+      push:
+        - meta_scope: comment.line.vcf
+        - match: $
+          pop: true
+
+  header:
+    - match: '^#CHROM(\s+\w*)+$'
+      scope: entity.name.section.vcf
+
+  fields:
+    - include: chrom
+    - include: position
+    - include: ref_and_alt
+    - include: tags
+
+  chrom:
+    - match: '^[\w]+'
+      scope: variable.language.vcf.chrom
+
+  position:
+    - match: '(?<=\s)(-)?[0-9.]+(?=\s)'
+      scope: variable.language.vcf.position
+
+  ref_and_alt:
+    - match: '(?<=[\s\t])(A|C|G|T|U)(?=[A-Z,]+[\s\t])'
+      scope: constant.language.vcf.nt
+      push:
+        - meta_scope: constant.language.vcf.nt
+        - match: '[\s\t]'
+          pop: true
+
+    - match: '(?<=[\s\t])(A|C|G|T|U)(?=[\s\t])'
+      scope: constant.language.vcf.nt
+
+  tags:
+    - match: '(?<=[\s\t;])[A-Za-z0-9]+='
+      scope: storage.type.variable.vcf
+      push:
+        - meta_scope: string.vcf
+        - match: '(?<=)[A-Za-z0-9\-\.,]+(?=[;\t\s])'
+          scope: storage.type.variable.vcf
+        - match: '[\t\s;]'
+          pop: true
