@@ -130,16 +130,6 @@ pushd "$zshdir"
 popd
 
 
-## biosyntax
-highlightdir=~/.local/share/source-highlight
-mkdir -p "$highlightdir"
-pushd "$highlightdir"
-    git clone https://github.com/bioSyntax/bioSyntax
-    mv bioSyntax/less/* .
-    mv src-hilite-lesspipe-bio-LINUX.sh src-hilite-lesspipe-bio.sh
-    rm -rf bioSyntax
-popd
-
 ## remove .git in home directory
 rm -rf .git
 rm -f LICENSE README.md
