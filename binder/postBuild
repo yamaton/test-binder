@@ -14,7 +14,7 @@ curl https://raw.githubusercontent.com/yamaton/dotfiles/dev/_setup-ffsend.sh | b
 
 
 # myextension
-ffsend download 'https://send.vis.ee/download/561afffb1f620480/#1VxQFE709eIL9Dz8_wLOtg'
+ffsend download 'https://send.vis.ee/download/fbec07b1811fa7ae/#FEIrWzq5SDtYQEKkgfs5OA'
 python -m pip install -U --prefix /srv/conda/envs/notebook myextension-0.1.0-py3-none-any.whl
 rm -f myextension-0.1.0-py3-none-any.whl
 
