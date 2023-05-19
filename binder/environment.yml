@@ -6,7 +6,7 @@ channels:
 
 dependencies:
   - python=3.10
-  - nodejs=16  # jupyterlab-lsp
+  - nodejs >=16,!=17,<19  # jupyterlab-lsp
   - pandas
   - numpy
   - dask
@@ -34,7 +34,7 @@ dependencies:
   - bioconductor-edger
   - bioconductor-deseq2
   ## >>> --- ensure jupyter server ----
-  - jupyterlab >=3.3.0,<4.0.0a0
+  - jupyterlab >=3.6.0,<4.0.0a0  # jupyterlab-lsp
   - jupyter_server <2.0.0
   - jupyterhub-singleuser >=3.1.0
   ## <<< ------------------------------
