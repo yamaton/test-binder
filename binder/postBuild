@@ -14,50 +14,13 @@ curl https://raw.githubusercontent.com/yamaton/dotfiles/dev/_setup-ffsend.sh | b
 
 
 # myextension
-ffsend download 'https://send.vis.ee/download/561afffb1f620480/#1VxQFE709eIL9Dz8_wLOtg'
+ffsend download 'https://send.vis.ee/download/a96a794633ff3b2d/#lThUJGike-jiZ4GXrSFesA'
 python -m pip install -U --prefix /srv/conda/envs/notebook myextension-0.1.0-py3-none-any.whl
 rm -f myextension-0.1.0-py3-none-any.whl
 
 
 # enable forked bash_kernel
 python -m pip install -U --prefix /srv/conda/envs/notebook git+https://github.com/yamaton/bash_kernel@add-bash-completion
-
-
-# install triton-lsp
-# This path must be consistent with what's written in
-# .jupyter/jupyter_server_config.json
-mkdir -p /srv/conda/envs/notebook/etc/jupyter
-npm install --prefix /srv/conda/envs/notebook/etc/jupyter yamaton/triton-lsp#dev
-
-
-# install custom jupyterlab-lsp
-pushd /srv/conda/envs/notebook
-    wget https://github.com/yamaton/jupyterlab-lsp/archive/refs/heads/dev.zip
-    unzip dev.zip
-    rm -f dev.zip
-    pushd jupyterlab-lsp-dev
-        # Build labextensions
-        jlpm bootstrap
-
-        # Do a dev install of the server side
-        pushd python_packages/jupyter_lsp
-            python setup.py sdist bdist_wheel
-            python -m pip install -e . --ignore-installed --no-deps -vv
-            jupyter serverextension enable --sys-prefix --py jupyter_lsp
-        popd
-
-        # Install the labextension
-        pushd python_packages/jupyterlab_lsp
-            python setup.py sdist bdist_wheel
-            python -m pip install -e . --ignore-installed --no-deps -vv
-            jupyter labextension develop . --overwrite
-        popd
-    popd
-popd
-
-
-# Jupyterlab themes
-jupyter labextension install jupyterlab-tailwind-theme
 
 
 # pipx: install programs in each virtual environment
@@ -95,26 +58,6 @@ for _tool in ${TOOLS[*]}; do
     mamba clean --all --yes --force-pkgs-dirs
 done
 
-## qiime2 (q2cli)
-wget https://data.qiime2.org/distro/core/qiime2-2023.2-py38-linux-conda.yml -O qiime2.yml
-condax install -c conda-forge -c bioconda --force --file qiime2.yml q2cli
-rm -f qiime2.yml
-mamba clean --all --yes --force-pkgs-dirs
-
-# brename
-wget https://github.com/shenwei356/brename/releases/download/v2.12.0/brename_linux_amd64.tar.gz
-tar -xvf brename_linux_amd64.tar.gz
-mkdir -p  ~/.local/bin
-mv -f ./brename ~/.local/bin
-rm -f brename_linux_amd64.tar.gz
-
-## awscli
-curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-unzip awscliv2.zip
-rm -f awscliv2.zip
-./aws/install --bin-dir /srv/conda/envs/notebook/bin --install-dir /srv/conda/envs/notebook/aws-cli
-rm -rf ./aws
-
 
 ## zsh setup
 ## (subshelling does not seem to work in postBuild)
@@ -131,14 +74,6 @@ popd
 ## remove .git in home directory
 rm -rf .git
 rm -f LICENSE README.md
-
-
-## tealdeer
-curl https://raw.githubusercontent.com/yamaton/dotfiles/dev/_setup-tealdeer.sh | bash -s -- -f
-
-
-## croc
-curl https://raw.githubusercontent.com/yamaton/dotfiles/dev/_setup-croc.sh | bash -s -- -f
 
 
 ## Install jupyterlab-shell-script-file
