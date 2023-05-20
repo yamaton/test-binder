@@ -1,4 +1,5 @@
 bio
 fastqp
 toil
+conda-lock
 git+https://github.com/yamaton/condax
