@@ -59,6 +59,7 @@ dependencies:
   - theme-darcula
   - pip:
     - igv-notebook
+    - git+https://github.com/triton-lab/myextension
     - git+https://github.com/yamaton/jupyter-fs@test
     # - git+https://github.com/dunovank/jupyterlab_legos_ui
     # - git+https://github.com/dunovank/jupyterlab_darkside_ui

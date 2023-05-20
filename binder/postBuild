@@ -13,12 +13,6 @@ set -o nounset
 curl https://raw.githubusercontent.com/yamaton/dotfiles/dev/_setup-ffsend.sh | bash -s -- -f
 
 
-# myextension
-ffsend download 'https://send.vis.ee/download/fbec07b1811fa7ae/#FEIrWzq5SDtYQEKkgfs5OA'
-python -m pip install -U --prefix /srv/conda/envs/notebook myextension-0.1.0-py3-none-any.whl
-rm -f myextension-0.1.0-py3-none-any.whl
-
-
 # enable forked bash_kernel
 python -m pip install -U --prefix /srv/conda/envs/notebook git+https://github.com/yamaton/bash_kernel@add-bash-completion
 
