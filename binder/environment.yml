@@ -61,5 +61,5 @@ dependencies:
     - igv-notebook
     - git+https://github.com/triton-lab/myextension
     - git+https://github.com/yamaton/jupyter-fs@test
-    - git+https://github.com/yamaton/jupyterlab_legos_ui@update-target
-    - git+https://github.com/yamaton/jupyterlab_darkside_ui@update-target
+    # - git+https://github.com/yamaton/jupyterlab_legos_ui@update-target
+    # - git+https://github.com/yamaton/jupyterlab_darkside_ui@update-target
