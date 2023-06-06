@@ -3,6 +3,10 @@
 zshloc="$(command -v zsh)"
 export SHELL="$zshloc"
 
+# Default timezone is non-standard '/UTC',
+# which triggers an error in `tzlocal` with python<=3.8
+export TZ=Etc/UTC
+
 if [[ -n $JUPYTERHUB_CLIENT_ID ]]; then
     # === For JupyterHub build ===
     # https://jupyterhub.readthedocs.io/en/stable/reference/config-user-env.html#switching-back-to-the-classic-notebook
