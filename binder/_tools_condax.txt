@@ -100,6 +100,7 @@ metabat2
 metaplatanus
 methyldackel
 miniasm
+minibusco
 minigraph
 minimap2
 miniprot
