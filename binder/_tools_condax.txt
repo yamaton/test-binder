@@ -97,6 +97,7 @@ medaka
 megahit
 merqury
 metabat2
+metaphlan
 metaplatanus
 methyldackel
 miniasm
