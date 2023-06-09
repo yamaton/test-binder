@@ -73,12 +73,14 @@ hmmer
 homer
 htseq
 htslib
+humann
 hypo
 interproscan
 iqtree
 ivar
 kalign3
 kallisto
+kaiju
 khmer
 kneaddata
 kmc
@@ -108,6 +110,8 @@ miniprot
 mirdeep2
 mmseqs2
 mosdepth
+mothur
+motus
 multiqc
 mummer4
 muscle
