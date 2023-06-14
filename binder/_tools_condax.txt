@@ -25,6 +25,7 @@ cd-hit
 checkm-genome
 clustalo
 cnvkit
+compleasm
 cromwell
 crossmap
 csvkit
@@ -103,7 +104,6 @@ metaphlan
 metaplatanus
 methyldackel
 miniasm
-minibusco
 minigraph
 minimap2
 miniprot
