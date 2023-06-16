@@ -185,7 +185,8 @@ EOF
 ##  - Unset LD_LIBRARY_PATH introduced by /etc/rstudio/rserver.conf
 ##    to avoid "mv: relocation error" during package installation
 cat <<EOF >> ~/.Rprofile
-setwd("~/work")
+## For unknown reasons this messes up pwd of Python notebook/console
+# setwd("~/work")
 Sys.setenv(LD_LIBRARY_PATH = "")
 EOF
 
