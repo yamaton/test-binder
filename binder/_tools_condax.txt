@@ -202,3 +202,4 @@ ripgrep
 xsv
 magic-wormhole
 trash-cli
+rclone
