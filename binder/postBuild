@@ -13,8 +13,8 @@ set -o nounset
 curl https://raw.githubusercontent.com/yamaton/dotfiles/dev/_setup-ffsend.sh | bash -s -- -f
 
 
-# enable forked bash_kernel
-python -m pip install -U --prefix /srv/conda/envs/notebook git+https://github.com/yamaton/bash_kernel@add-bash-completion
+# install forked bash_kernel
+python -m bash_kernel.install --prefix /srv/conda/envs/notebook
 
 
 # install triton-lsp

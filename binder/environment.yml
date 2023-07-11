@@ -49,7 +49,6 @@ dependencies:
   - python-lsp-server
   - ruamel_yaml
   - r-languageserver
-  - bash_kernel
   - biopython
   - pysam
   - pipx
@@ -62,5 +61,6 @@ dependencies:
     - git+https://github.com/triton-lab/myextension.git
     - git+https://github.com/yamaton/jupyter-fs@test
     - git+https://github.com/yamaton/jupyterlab-qzv@dev
+    - git+https://github.com/yamaton/bash_kernel@dev
     # - git+https://github.com/yamaton/jupyterlab_legos_ui@update-target
     # - git+https://github.com/yamaton/jupyterlab_darkside_ui@update-target
