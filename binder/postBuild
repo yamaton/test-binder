@@ -225,3 +225,7 @@ rm -rf ~/.yarn
 
 ## syntax coloring for bat
 bat cache --build
+
+
+## show the end of postBuild
+echo "Done postBuild"
