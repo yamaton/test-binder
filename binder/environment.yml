@@ -35,7 +35,7 @@ dependencies:
   ## >>> --- ensure jupyter server ----
   - jupyterlab >=3.6.0,<4.0.0a0  # jupyterlab-lsp
   # [NOTE] jupyterhub 1.5.0 and jupyterhub-singleuser 4.0.0 fails to auth
-  - jupyter_server <2.0.0
+  - jupyter_server >=2,<3
   - jupyterhub-singleuser >=3.1.0,<4
   ## <<< ------------------------------
   - nbgitpuller
