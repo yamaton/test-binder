@@ -59,7 +59,7 @@ dependencies:
   - pip:
     - igv-notebook
     ## Enable if using jupyterlab 4
-    # - git+https://github.com/timkpaine/jupyter-fs
+    - git+https://github.com/jpmorganchase/jupyter-fs
     - git+https://github.com/triton-lab/myextension@main
     - git+https://github.com/yamaton/jupyterlab-qzv@dev
     - git+https://github.com/yamaton/bash_kernel@dev
