@@ -58,8 +58,9 @@ dependencies:
   - theme-darcula
   - pip:
     - igv-notebook
-    - git+https://github.com/triton-lab/myextension.git
-    - git+https://github.com/yamaton/jupyter-fs@test
+    ## Enable if using jupyterlab 4
+    # - git+https://github.com/timkpaine/jupyter-fs
+    - git+https://github.com/triton-lab/myextension
     - git+https://github.com/yamaton/jupyterlab-qzv@dev
     - git+https://github.com/yamaton/bash_kernel@dev
     # - git+https://github.com/yamaton/jupyterlab_legos_ui@update-target
