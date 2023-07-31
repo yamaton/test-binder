@@ -1,5 +1,6 @@
 bio
 fastqp
 toil
+s3cmd
 conda-lock
 git+https://github.com/yamaton/condax
