@@ -4,22 +4,32 @@
 c = get_config() # noqa: F821  # pyright: ignore[reportUndefinedVariable]
 
 
-# jupyter-fs configs
+# Isolate user's workspace from the configs at $HOME
 c.SingleUserNotebookApp.root_dir = "work"
+c.ServerApp.root_dir = "work"
+
+
+# >>>---------------------
+# jupyter-fs configs
 c.SingleUserNotebookApp.contents_manager_class = "jupyterfs.metamanager.MetaManager"
 c.SingleUserNotebookApp.jpserver_extensions = {
     "jupyterfs.extension": True
 }
 
-c.ServerApp.root_dir = "work"
 c.ServerApp.contents_manager_class = "jupyterfs.metamanager.MetaManager"
 c.ServerApp.jpserver_extensions = {
     "jupyterfs.extension": True
 }
+# <<<---------------------
 
+
+# Allow the server to serve hidden files
+# Displaying hidden files is another thing: "View" -> "Show Hidden Files"
+# https://jupyterlab.readthedocs.io/en/latest/user/files.html#displaying-hidden-files
+# [NOTE] jupyter-fs requires this setting.
+c.ContentsManager.allow_hidden = True
 
 # Enable deleting non-empty directories
-c.ContentsManager.allow_hidden = True
 c.FileContentsManager.always_delete_dir = True
 
 
