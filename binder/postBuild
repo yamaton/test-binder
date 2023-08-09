@@ -121,8 +121,8 @@ popd
 
 
 ## remove .git in home directory
-rm -rf .git
-rm -f LICENSE README.md
+rm -rf .git .checkm .subversion
+rm -f LICENSE README.md .gitattributes .gitignore .wget-hsts
 
 
 ## tealdeer
