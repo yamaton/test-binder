@@ -36,14 +36,14 @@ pushd /srv/conda/envs/notebook
         # Do a dev install of the server side
         pushd python_packages/jupyter_lsp
             python setup.py sdist bdist_wheel
-            python -m pip install -e . --ignore-installed --no-deps -vv
+            python -m pip install -e . --ignore-installed --no-deps -vv --no-cache-dir
             jupyter serverextension enable --sys-prefix --py jupyter_lsp
         popd
 
         # Install the labextension
         pushd python_packages/jupyterlab_lsp
             python setup.py sdist bdist_wheel
-            python -m pip install -e . --ignore-installed --no-deps -vv
+            python -m pip install -e . --ignore-installed --no-deps -vv --no-cache-dir
             jupyter labextension develop . --overwrite
         popd
     popd
@@ -60,12 +60,7 @@ mkdir -p "$PIPX_HOME"
 TOOLS=( "$(cat ~/binder/_tools_pipx.txt)" )
 for _tool in ${TOOLS[*]}; do
     echo "Installing ${_tool}"
-    # retry if nonzero exit status occurs
-    if [[ ! ($(pipx install "$_tool")) ]]; then
-        echo "pipx retrying... $_tool"
-        pipx uninstall "$_tool"
-        pipx install "$_tool"
-    fi
+    pipx install --pip-args='--no-cache-dir' "$_tool"
 done
 
 
