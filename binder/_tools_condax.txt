@@ -195,6 +195,9 @@ winnowmap
 wtdbg
 yak
 
+bandage
+igv
+
 bat
 fd-find
 rename
