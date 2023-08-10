@@ -102,9 +102,8 @@ rm -f brename_linux_amd64.tar.gz
 ## awscli
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
 unzip awscliv2.zip
-rm -f awscliv2.zip
 ./aws/install --bin-dir /srv/conda/envs/notebook/bin --install-dir /srv/conda/envs/notebook/aws-cli
-rm -rf ./aws
+rm -rf awscliv2.zip ./aws
 
 
 ## zsh setup
@@ -112,11 +111,11 @@ rm -rf ./aws
 zshdir=~/.config/zsh
 mkdir -p "$zshdir"
 pushd "$zshdir"
-    git clone https://github.com/zsh-users/zsh-syntax-highlighting
-    git clone https://github.com/zsh-users/zsh-autosuggestions
-    git clone https://github.com/zsh-git-prompt/zsh-git-prompt
-    git clone https://github.com/yamaton/zsh-completions-bio
-    git clone https://github.com/yamaton/zsh-completions-extra
+    git clone --depth 1 https://github.com/zsh-users/zsh-syntax-highlighting
+    git clone --depth 1 https://github.com/zsh-users/zsh-autosuggestions
+    git clone --depth 1 https://github.com/zsh-git-prompt/zsh-git-prompt
+    git clone --depth 1 https://github.com/yamaton/zsh-completions-bio
+    git clone --depth 1 https://github.com/yamaton/zsh-completions-extra
 popd
 
 
