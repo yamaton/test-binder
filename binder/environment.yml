@@ -54,14 +54,15 @@ dependencies:
   - pysam
   - pipx
   - pip
-  - jupyterlab-night
   - jupyterlab-spreadsheet-editor
   - theme-darcula
+  - jupyterlab-night
+  - jupyterlab_miami_nights
   - pip:
     - git+https://github.com/jpmorganchase/jupyter-fs
     - git+https://github.com/triton-lab/myextension@main
     - git+https://github.com/yamaton/jupyterlab-qzv@dev
     - git+https://github.com/yamaton/bash_kernel@dev
     - git+https://github.com/yamaton/jupyter-remote-desktop-proxy@test
-    # - git+https://github.com/yamaton/jupyterlab_legos_ui@update-target
-    # - git+https://github.com/yamaton/jupyterlab_darkside_ui@update-target
+    - git+https://github.com/yamaton/jupyterlab_legos_ui
+    - git+https://github.com/yamaton/jupyterlab_darkside_ui
