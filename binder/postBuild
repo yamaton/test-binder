@@ -86,25 +86,6 @@ for _tool in ${TOOLS[*]}; do
     mamba clean --all --yes --force-pkgs-dirs
 done
 
-## qiime2 (q2cli)
-wget https://data.qiime2.org/distro/core/qiime2-2023.5-py38-linux-conda.yml -O qiime2.yml
-condax install -c conda-forge -c bioconda --force --file qiime2.yml q2cli 2>&1 | tee -a "$CONDAX_LOG"
-rm -f qiime2.yml
-mamba clean --all --yes --force-pkgs-dirs
-
-# brename
-wget https://github.com/shenwei356/brename/releases/download/v2.13.0/brename_linux_amd64.tar.gz
-tar -xvf brename_linux_amd64.tar.gz
-mkdir -p  ~/.local/bin
-mv -f ./brename ~/.local/bin
-rm -f brename_linux_amd64.tar.gz
-
-## awscli
-curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-unzip awscliv2.zip
-./aws/install --bin-dir /srv/conda/envs/notebook/bin --install-dir /srv/conda/envs/notebook/aws-cli
-rm -rf awscliv2.zip ./aws
-
 
 ## zsh setup
 ## (subshelling does not seem to work in postBuild)
