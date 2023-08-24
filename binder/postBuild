@@ -218,7 +218,6 @@ rm -rf ~/.npm
 rm -rf ~/.yarn
 rm -rf /tmp/yarn-*
 rm -rf /tmp/v8-*
-rm -rf /var/cache/man  # man is generally unavailable anyway
 
 ## syntax coloring for bat
 bat cache --build
