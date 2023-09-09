@@ -63,6 +63,7 @@ gfatools
 gff3toddbj
 gffread
 gffutils
+graphaligner
 graphlan
 gridss
 guessmylt
@@ -94,8 +95,10 @@ macs2
 mafft
 magicblast
 mash
+mashmap
 masurca
 maxbin2
+mbg
 medaka
 megahit
 merqury
@@ -190,6 +193,7 @@ vcfanno
 vcflib
 vcftools
 velvet
+verkko
 vg
 winnowmap
 wtdbg
