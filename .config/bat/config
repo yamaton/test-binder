@@ -28,3 +28,4 @@
 --map-syntax "*.gff:Comma Separated Values"
 --map-syntax "*.gff3:Comma Separated Values"
 --map-syntax "*.sam:Comma Separated Values"
+--map-syntax "*.nf:Groovy"
