@@ -195,6 +195,7 @@ vcftools
 velvet
 verkko
 vg
+vsearch
 winnowmap
 wtdbg
 yak
