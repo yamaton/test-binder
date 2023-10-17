@@ -1,12 +1,19 @@
 #!/bin/bash
 
+
+# Set $SHELL if zsh is available
 zshloc="$(command -v zsh)"
-export SHELL="$zshloc"
+if [[ -n "$zshloc" ]]; then
+    export SHELL="$zshloc"
+fi
+
 
 # Default timezone is non-standard '/UTC',
 # which triggers an error in `tzlocal` with python<=3.8
 export TZ=Etc/UTC
 
+
+# A hack to force running Jupyter Server backend
 if [[ -n $JUPYTERHUB_CLIENT_ID ]]; then
     # === For JupyterHub build ===
     # https://jupyterhub.readthedocs.io/en/stable/reference/config-user-env.html#switching-back-to-the-classic-notebook
