@@ -18,3 +18,4 @@ speedtest-cli
 xorg
 dbus-x11
 libgl1-mesa-glx
+bind9-dnsutils
