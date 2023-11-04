@@ -7,6 +7,7 @@
 # > script to avoid errors being silently ignored.
 set -o errexit
 set -o nounset
+set -o pipefail
 
 
 # ffsend
@@ -26,8 +27,8 @@ npm install --prefix /srv/conda/envs/notebook/etc/jupyter yamaton/triton-lsp#dev
 
 # install custom jupyterlab-lsp
 pushd /srv/conda/envs/notebook
-    wget https://github.com/yamaton/jupyterlab-lsp/archive/refs/heads/dev.zip
-    unzip dev.zip
+    wget -N https://github.com/yamaton/jupyterlab-lsp/archive/refs/heads/dev.zip
+    unzip -o dev.zip
     rm -f dev.zip
     pushd jupyterlab-lsp-dev
         # Build labextensions
@@ -60,7 +61,7 @@ mkdir -p "$PIPX_HOME"
 TOOLS=( "$(cat ~/binder/_tools_pipx.txt)" )
 for _tool in ${TOOLS[*]}; do
     echo "Installing ${_tool}"
-    pipx install --pip-args='--no-cache-dir' "$_tool"
+    pipx install --force --pip-args='--no-cache-dir' "$_tool"
 done
 
 
@@ -74,6 +75,7 @@ echo "prefix_dir: /srv/conda/condax/envs" > ~/.config/condax/config.yaml
 
 mkdir -p ~/.local/logs
 CONDAX_LOG="$HOME/.local/logs/condax_install_log.txt"
+rm -f "$CONDAX_LOG"
 TOOLS=( "$(cat ~/binder/_tools_condax.txt)" )
 for _tool in ${TOOLS[*]}; do
     echo "Installing ${_tool}" | tee -a "$CONDAX_LOG"
@@ -87,21 +89,21 @@ for _tool in ${TOOLS[*]}; do
 done
 
 ## qiime2 (q2cli)
-wget https://data.qiime2.org/distro/core/qiime2-2023.7-py38-linux-conda.yml -O qiime2.yml
+wget -N https://data.qiime2.org/distro/core/qiime2-2023.7-py38-linux-conda.yml -O qiime2.yml
 condax install -c conda-forge -c bioconda --force --file qiime2.yml q2cli 2>&1 | tee -a "$CONDAX_LOG"
 rm -f qiime2.yml
 mamba clean --all --yes --force-pkgs-dirs
 
 # brename
-wget https://github.com/shenwei356/brename/releases/download/v2.13.0/brename_linux_amd64.tar.gz
+wget -N https://github.com/shenwei356/brename/releases/download/v2.13.0/brename_linux_amd64.tar.gz
 tar -xvf brename_linux_amd64.tar.gz
 mkdir -p  ~/.local/bin
 mv -f ./brename ~/.local/bin
 rm -f brename_linux_amd64.tar.gz
 
 ## awscli
-curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-unzip awscliv2.zip
+wget -N "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -O "awscliv2.zip"
+unzip -o awscliv2.zip
 ./aws/install --bin-dir /srv/conda/envs/notebook/bin --install-dir /srv/conda/envs/notebook/aws-cli
 rm -rf awscliv2.zip ./aws
 
@@ -164,13 +166,13 @@ jupyter lab extension list
 
 ## Change default settings for JupyterLab Extensions
 mkdir -p "$NB_PYTHON_PREFIX"/share/jupyter/lab/settings/
-cp binder/overrides.json "$NB_PYTHON_PREFIX"/share/jupyter/lab/settings/
+cp -f binder/overrides.json "$NB_PYTHON_PREFIX"/share/jupyter/lab/settings/
 
 
 # Save user-installed R packages in user directory
 ## https://stackoverflow.com/a/45228058
 mkdir -p ~/.local/lib/R/library
-cat <<EOF >> ~/.Renviron
+cat <<EOF > ~/.Renviron
 R_LIBS_USER=$HOME/.local/lib/R/library/
 EOF
 
@@ -179,7 +181,7 @@ EOF
 ##  - Set working directory
 ##  - Unset LD_LIBRARY_PATH introduced by /etc/rstudio/rserver.conf
 ##    to avoid "mv: relocation error" during package installation
-cat <<EOF >> ~/.Rprofile
+cat <<EOF > ~/.Rprofile
 ## For unknown reasons this messes up pwd of Python notebook/console
 # setwd("~/work")
 Sys.setenv(LD_LIBRARY_PATH = "")
@@ -192,7 +194,7 @@ EOF
 ## users can keep user-installed conda packages persistently.
 mkdir -p ~/.local/share/conda/envs
 mkdir -p ~/.local/share/conda/pkgs
-cat << 'EOF' >> ~/.condarc
+cat << 'EOF' > ~/.condarc
 channels:
   - conda-forge
   - bioconda
