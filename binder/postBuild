@@ -65,8 +65,6 @@ for _tool in ${TOOLS[*]}; do
 done
 
 
-# Tweak exit code of the condax runner scripts
-export CONDAX_HIDE_EXITCODE=1
 # condax: install programs in each conda environment
 mkdir -p /srv/conda/condax/envs
 mkdir -p ~/.config/condax
