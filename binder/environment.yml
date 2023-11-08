@@ -61,7 +61,6 @@ dependencies:
   - jupyterlab-night
   - jupyterlab_miami_nights
   - pip:
-    - git+https://github.com/jpmorganchase/jupyter-fs
     - git+https://github.com/triton-lab/myextension
     - git+https://github.com/yamaton/jupyterlab-qzv@dev
     - git+https://github.com/yamaton/bash_kernel@dev
