@@ -1,4 +1,5 @@
 {
     "initial_working_directory": "~/work",
+    "editor_theme": "Monokai",
     "posix_terminal_shell": "zsh"
 }
