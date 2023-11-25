@@ -1,3 +1,4 @@
+abricate
 abyss
 agat
 any2fasta
@@ -39,6 +40,7 @@ deeptools
 diamond
 delly
 dfast
+dragonflye
 drep
 duphold
 dwgsim
