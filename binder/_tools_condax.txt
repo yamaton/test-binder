@@ -113,6 +113,7 @@ minigraph
 minimap2
 miniprot
 mirdeep2
+mlst
 mmseqs2
 mosdepth
 mothur
@@ -128,6 +129,7 @@ nanostat
 ncbi-datasets-cli
 nextflow
 nextpolish
+nullarbor
 octopus
 paml
 pangolin
