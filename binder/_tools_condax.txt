@@ -2,6 +2,7 @@ abricate
 abyss
 agat
 any2fasta
+badread
 bakta
 bamtools
 bandage
