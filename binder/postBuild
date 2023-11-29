@@ -32,8 +32,8 @@ jupyter labextension install 'https://github.com/yamaton/jupyterlab-tailwind-the
 # pipx: install programs in each virtual environment
 export PIPX_HOME=/srv/conda/pipx
 mkdir -p "$PIPX_HOME"
-TOOLS=( "$(cat ~/binder/_tools_pipx.txt)" )
-for _tool in ${TOOLS[*]}; do
+readarray -t TOOLS < "$HOME/binder/_tools_pipx.txt"
+for _tool in "${TOOLS[@]}"; do
     echo "Installing ${_tool}"
     pipx install --force --pip-args='--no-cache-dir' "$_tool"
 done
@@ -48,9 +48,9 @@ echo "prefix_dir: /srv/conda/condax/envs" > ~/.config/condax/config.yaml
 mkdir -p ~/.local/logs
 CONDAX_LOG="$HOME/.local/logs/condax_install_log.txt"
 rm -f "$CONDAX_LOG"
-TOOLS=( "$(cat ~/binder/_tools_condax.txt)" )
+readarray -t TOOLS < "$HOME/binder/_tools_condax.txt"
 max_attempts=3
-for _tool in ${TOOLS[*]}; do
+for _tool in "${TOOLS[@]}"; do
     attempt_num=1
     echo "Installing ${_tool}" | tee -a "$CONDAX_LOG"
     while [ $attempt_num -le $max_attempts ]; do
