@@ -2,6 +2,7 @@ abricate
 abyss
 agat
 any2fasta
+arriba
 badread
 bakta
 bamtools
@@ -49,11 +50,13 @@ elprep
 emboss
 ensembl-vep
 entrez-direct
+expansionhunter
 fastp
 fastqc
 fastqe
 fasttree
 ffq
+fgbio
 filtlong
 flye
 foldseek
@@ -66,6 +69,7 @@ gfatools
 gff3toddbj
 gffread
 gffutils
+glnexus
 graphaligner
 graphlan
 gridss
@@ -92,6 +96,7 @@ kmc
 kmcp
 kraken
 kraken2
+lofreq
 lumpy-sv
 lumpy-sv-minimal
 macs2
