@@ -26,6 +26,7 @@ canu
 centrifuge
 cd-hit
 checkm-genome
+circlator
 clustalo
 cnvkit
 compleasm
