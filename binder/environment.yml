@@ -60,6 +60,7 @@ dependencies:
   - theme-darcula
   - jupyterlab-night
   - jupyterlab_miami_nights
+  - perl  # required by rstudio/tinytex
   - pip:
     - git+https://github.com/jpmorganchase/jupyter-fs
     - git+https://github.com/triton-lab/myextension@main
